@@ -6,7 +6,7 @@
 
     Set rs = Server.CreateObject("ADODB.Recordset")
     Set rs1 = Server.CreateObject("ADODB.Recordset")
-    sql="select * from TaiKhoan where TenTK like '" & uname & "' and MatKhau like " & UPass & " "
+    sql="select * from TaiKhoan where TenTK like '" & uname & "' and MatKhau like '" & UPass & "' "
 
     rs.open sql, conn
 
