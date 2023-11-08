@@ -108,6 +108,17 @@ transition: font-size 0.25s
 
 .dropdown:hover .dropdown-content {
   display: block;
+  
+}
+.drop{
+  background-color: black;
+  color:white;
+  border: none;
+    outline: none;
+}
+.drop:hover{
+  font-size: large;
+  cursor: pointer;
 }
 .App {
   --vertical-nav-width: 232px;

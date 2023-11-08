@@ -1,5 +1,4 @@
 <!--#include file="connection.asp"-->
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -21,21 +20,25 @@
               <polyline points="16 4 7 12 16 20" fill="none" stroke="#fff"></polyline>
             </svg>
           </div>
-            <div class="search-container">
-  <form role="search">
-    <div class="search-box">
-      <button type="submit" class="search-button">
-        <svg role="img" aria-hidden="true" class="search-icon" viewBox="0 0 16 16">
-          <path d="M7 1.75a5.25 5.25 0 1 0 0 10.5 5.25 5.25 0 0 0 0-10.5zM.25 7a6.75 6.75 0 1 1 12.096 4.12l3.184 3.185a.75.75 0 1 1-1.06 1.06L11.304 12.2A6.75 6.75 0 0 1 .25 7z"></path>
-        </svg>
-      </button>
-      <input class="search-input" type="text" placeholder="Bạn muốn nghe gì?" />
-    </div>
-  </form>
-</div>
 
         </div>
-        <div class="dropdown">
+<%
+if Session("UID") <> "" and Session("UNAME") <> "" then
+    ' Lấy UID và UNAME từ Session
+    Dim UID
+    Dim UNAME
+    UID = Session("UID")
+    UNAME = Session("UNAME")
+  else
+  UID=""
+  UNAME=""
+    end if
+Set rs = Server.CreateObject("ADODB.Recordset")
+sql="select * from TaiKhoan where IDTK like '" & UID & "'"
+rs.open sql, conn
+  if(not rs.eof) then 
+%>
+         <div class="dropdown">
           <button class="App__user">
             <div class="App__figure">
               <svg width="16" height="16" fill="currentColor" viewBox="0 0 18 20" xmlns="http://www.w3.org/2000/svg"
@@ -45,7 +48,7 @@
                   fill="#fff"></path>
               </svg>
             </div>
-            <span class="App__username">Yourname</span>
+            <span class="App__username"><%=UNAME%></span>
             <div class="App__expand-arrow">
               <svg role="img" height="16" width="16" viewBox="0 0 16 16">
                 <path d="M13 10L8 4.206 3 10z" fill="#fff"></path>
@@ -53,22 +56,48 @@
             </div>
           </button>
           <div class="dropdown-content">
-            <a href="#">Account</a>
-            <a href="#">Setting</a>
-            <a href="#">Logout</a>
+             <form method=POST action="">
+            <input type="submit" class="drop"  name="AccButton" value="Account"/>
+           </form>
+            <%
+If Request.Form("LogoutButton") = "Logout" Then
+    Session.Abandon()
+   Response.Redirect("app.asp")
+
+End If
+%>
+           <form method=POST action="app.asp">
+            <input type="submit" class="drop"  name="LogoutButton" value="Logout"/>
+           </form>
+          </div>
+        </div> 
+        <% else %>
+        <div class="signup-login-wrapper">
+          <div class="signup-login">
+            <div class="signup" data-target-page="signup.asp" >
+              <a >Sign Up</a>
+            </div>
+            <div class="login"data-target-page="login.asp">
+              <a>Login</a>
+            </div>
           </div>
         </div>
+<% 
+end if 
+rs.close
+conn.close
+%>
       </div>
     </div>
     <div class="App__nav-bar">
       <div class="App__logo">
         <svg viewBox="0 0 254 37" fill="none" xmlns="http://www.w3.org/2000/svg">
-           <text x="38" y="25" fill="#fff"style="font-size: 35px;">SpotiFake</text>
+          <text x="38" y="25" fill="#fff" style="font-size: 35px;">SpotiFake</text>
         </svg>
 
       </div>
       <div class="App__categories-nav">
-        <div class="App__category-item" data-target-page="app.html" >
+        <div id="DivApp" class="App__category-item" data-target-page="app.asp">
           <div class="icon"><svg viewBox="0 0 576 512" width="100" title="home">
               <path
                 d="M280.37 148.26L96 300.11V464a16 16 0 0 0 16 16l112.06-.29a16 16 0 0 0 15.92-16V368a16 16 0 0 1 16-16h64a16 16 0 0 1 16 16v95.64a16 16 0 0 0 16 16.05L464 480a16 16 0 0 0 16-16V300L295.67 148.26a12.19 12.19 0 0 0-15.3 0zM571.6 251.47L488 182.56V44.05a12 12 0 0 0-12-12h-56a12 12 0 0 0-12 12v72.61L318.47 43a48 48 0 0 0-61 0L4.34 251.47a12 12 0 0 0-1.6 16.9l25.5 31A12 12 0 0 0 45.15 301l235.22-193.74a12.19 12.19 0 0 1 15.3 0L530.9 301a12 12 0 0 0 16.9-1.6l25.5-31a12 12 0 0 0-1.7-16.93z"
@@ -76,7 +105,7 @@
             </svg></div>
           <span>Home</span>
         </div>
-        <div id="DivSearch" class="App__category-item" data-target-page="app_search.html">
+        <div class="App__category-item" data-target-page="app_search.asp">
           <div class="icon"><svg viewBox="0 0 512 512" width="100" title="search">
               <path
                 d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"
@@ -138,7 +167,7 @@
       </div>
 
     </div>
-  
+
     <div class="App__main-view">
       <div class="App__top-gradient"></div>
       <div class="App__header-placeholder"></div>

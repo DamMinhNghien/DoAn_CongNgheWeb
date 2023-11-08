@@ -4,7 +4,20 @@
     box-sizing: border-box;
     font-family: "Poppins", sans-serif;
 }
+ .top-align {
+    text-align: center;
+    font-size: 40px;
+    font-weight: bold;
+    color: white;
 
+ }
+ .top-align a {
+     color: black;
+
+ }
+ .top-align:active{
+    color: white
+ }
 body {
     display: flex;
     justify-content: center;
@@ -66,11 +79,11 @@ body {
 }
 
 .wrapper .remember-forgot {
-    display: flex;
+    
     justify-content: space-between;
     font-size: 14.5px;
     margin: -15px 0 15px;
-    
+   text-align: center;
 }
 
 .remember-forgot label input {
