@@ -13,6 +13,7 @@
 
 
 
+
 // Thêm một trình nghe sự kiện cho tất cả các phần tử có lớp "App__category-item"
 function handleItemClick(selector) {
   const items = document.querySelectorAll(selector);
@@ -29,18 +30,30 @@ function handleItemClick(selector) {
 handleItemClick('.App__category-item');
 handleItemClick('.signup');
 handleItemClick('.login');
+handleItemClick('.songdetail');
+
+ function redirectFunction(tid,tname,timage) {
+      // Specify the URL you want to redirect to
+     var destinationPage = "app_topic_song.asp?TId=" + encodeURIComponent(tid) + "&TName=" + encodeURIComponent(tname)+ "&TImage=" + encodeURIComponent(timage);
+      // Redirect to the specified page
+      window.location.href = destinationPage;
+   }
 // Kiểm tra URL của trang hiện tại
 var currentURL = window.location.href;
 
 // Kiểm tra xem trang hiện tại có phải là trang "app.html" không
-if (currentURL.includes("app_search.html")) {
+if (currentURL.includes("app_search.asp")) {
   // Nếu trang là "app.html", thì đổi lớp CSS của phần tử div
   var DivSearch = document.getElementById('DivSearch');
 
   DivSearch.classList.add('App__category-item--selected');
 }
-else if (currentURL.includes("app.html")){
+else if (currentURL.includes("app.asp")) {
   var DivApp = document.getElementById('DivApp');
+  DivApp.classList.add('App__category-item--selected');
+}
+else if(currentURL.includes("topic.asp")){
+  var DivApp = document.getElementById('DivTopic');
   DivApp.classList.add('App__category-item--selected');
 }
 

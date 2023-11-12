@@ -150,113 +150,63 @@
             <hr>
          </div>
       </div>
-      <div class="App__main-view">
-         <div class="App__top-gradient"></div>
-         <div class="App__header-placeholder"></div>
-         <br>
-         <h1 style="color: white;text-align: center;">Where every song is a story, welcome to SpotiFake</h1>
-         <section class="App__section App__your-shows">
-            <div class="App__section-header">
-               <h2>SpotiFake topic</h2>
-               <a href="app_topic.asp" style="color: gray;">SEE ALL</a>
-            </div>
-            <%
-               Set rs1 = Server.CreateObject("ADODB.Recordset")
-                sql1="SELECT IDChuDe, TenChuDe, AnhPLM FROM ChuDe"
-                rs1.open sql1, conn 
-               
-                %>
-            <div class="App__section-grid-container">
-               <% if(rs1.eof)then
-                  response.write("không có chủ đề!")
-                  else 
-                  counter = 0
-                   while not rs1.EOF and counter<5
-                   tid=rs1("IDChuDe")
-                   tname=rs1("TenChuDe")
-                   timage=rs1("AnhPLM")
-                   %>
-               <div class="App__section-grid-item" onclick="redirectFunction('<%=tid %>','<%=tname %>','<%=timage%>')" >
-                  <div class="image-container">
-                     <img class="round-border-image" src="images\<%=rs1("AnhPLM")%>">
-                     <div class="play-button">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;">
-                           <path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z"></path>
-                           <path d="m9 17 8-5-8-5z"></path>
-                        </svg>
-                     </div>
-                  </div>
-                  <h3><%=rs1("TenChuDe")%></h3>
+  <div class="App__main-view">
+   <div class="App__top-gradient"></div>
+   <div class="App__header-placeholder"></div>
+   <br>
+    <div class="song_infor">
+     <div class="playlist-content">
+               <div class="playlist-cover-song">
+                  <img src="images\ro.jpg" alt="">
                </div>
-               <%
-                  counter = counter + 1
-                  rs1.movenext
-                  wend
-                  end if
-                  rs1.close
-                  conn.close
-                  %>
-         </section>
-         <section class="App__section App__your-shows">
-         <div class="App__section-header">
-         <h3>Your top mixes</h3>
-         <span>SEE ALL</span>
-         </div>
-         <div class="App__section-grid-container">
-         <div class="App__section-grid-item">
-         <div class="featured-image"></div>
-         <h3>TED Radio Hour</h3>
-         <span>NPR</span>
-         </div>
-         <div class="App__section-grid-item">
-         <div class="featured-image"></div>
-         <h3>Short Wave</h3>
-         <span>NPR</span>
-         </div>
-         <div class="App__section-grid-item">
-         <div class="featured-image"></div>
-         <h3>Post Reports</h3>
-         <span>The Washington Post</span>
-         </div>
-         <div class="App__section-grid-item">
-         <div class="featured-image"></div>
-         <h3>Planet Money</h3>
-         <span>NPR</span>
-         </div>
-         <div class="App__section-grid-item">
-         <div class="featured-image"></div>
-         <h3>How I Built this...</h3>
-         <span>NPR</span>
-         </div>
-         <div class="App__section-grid-item">
-         <div class="featured-image"></div>
-         <h3>TED Radio Hour</h3>
-         <span>NPR</span>
-         </div>
-         <div class="App__section-grid-item">
-         <div class="featured-image"></div>
-         <h3>Short Wave</h3>
-         <span>NPR</span>
-         </div>
-         <div class="App__section-grid-item">
-         <div class="featured-image"></div>
-         <h3>Post Reports</h3>
-         <span>The Washington Post</span>
-         </div>
-         <div class="App__section-grid-item">
-         <div class="featured-image"></div>
-         <h3>Planet Money</h3>
-         <span>NPR</span>
-         </div>
-         <div class="App__section-grid-item">
-         <div class="featured-image"></div>
-         <h3>How I Built this...</h3>
-         <span>NPR</span>
-         </div>
-         </div>
-         </section>
+               <div class="playlist-info">
+                  <div class="playlist-title">Ronaldo</div>
+                  <div class="playlist-description">A soundtrack to fuel your good mood while on the road.</div>
+                  <div style="height: 10px;"></div>
+                  <div class="playlist-stats">
+                     <span> Spotify ·</span>
+                     <span>5,131,321 likes · </span>
+                     <span>100 songs, </span>
+                     <span>6 hr 57 min </span>
+                  </div>
+               </div>
+            </div></div>
+  <br>
+   <div class="App__main-song">
+      <div class="left">
+         <iframe width="700" height="400" src="https://www.youtube.com/embed/y5mZWkXDWUI?si=2VKoz6AaaFptjVVn" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+       <div class="star-rating">
+  <input type="radio" id="star1" name="rating" value="1">
+  <label for="star1">★</label>
+  <input type="radio" id="star2" name="rating" value="2">
+  <label for="star2">★</label>
+  <input type="radio" id="star3" name="rating" value="3">
+  <label for="star3">★</label>
+  <input type="radio" id="star4" name="rating" value="4">
+  <label for="star4">★</label>
+  <input type="radio" id="star5" name="rating" value="5">
+  <label for="star5">★</label>
+</div>
+
+         <div class="comments-container">
+            <div class="comment-box">
+               <textarea class="comment-input" placeholder="Write a comment..."></textarea>
+               <button onclick="postComment()">Post</button>
+            </div> 
+            <!-- Comment list will be displayed here -->
+            <div class="comment">
+               <img src="images\mtp.jpg" alt="Commenter Avatar" width="50" height="50">
+               <div class="comment-content">
+                  <strong>Commenter Name</strong>
+                  <p style="font-size: 12px">This is a sample comment. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+               </div>
+            </div>
          </div>
       </div>
+      <div class="right" style="background-color: red;">
+         
+         </div>
+</div>
       <script src="javascript.js"></script>
    </body>
 </html>

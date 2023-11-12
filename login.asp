@@ -11,12 +11,13 @@
 </head>
 
 <body>
+
 <div class="top-align" >
         <a href="app.asp">SpotiFake</a>
     <br>
     <br>
     <div class="wrapper">
-        <form method="post" action="login_action.asp">
+        <form method=POST action="login_action.asp">
             <h1>Login</h1>
             <div class="input-box">
                 <input style="border-color: black;" type="text" placeholder="Username"name="UName" required>
