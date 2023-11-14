@@ -152,22 +152,23 @@
             <div class="App__header-placeholder"></div>
             <br>
             <%
-            tid=request.querystring("TId")
-
-            Set rs1 = Server.CreateObject("ADODB.Recordset")
-sql1 = "SELECT BaiHat.IDBaiHat, BaiHat.TenBaiHat, BaiHat.NgayPhatHanh, BaiHat.QuocGia, CaSi.TenCaSi, BaiHat.AnhBH, ChuDe.TenChuDe, ChuDe.MoTaChuDe,ChuDe.AnhPLM FROM BaiHat JOIN CaSi ON BaiHat.BiDanh = CaSi.BiDanh JOIN ChuDe ON BaiHat.IDChuDe = ChuDe.IDChuDe WHERE BaiHat.IDChuDe LIKE '" & tid & "'"
-                rs1.open sql1, conn
+            topid=request.querystring("Topid")
+                  Set rs1 = Server.CreateObject("ADODB.Recordset")
+                  Set rs2 = Server.CreateObject("ADODB.Recordset")
+            sql1="select * from TopBXH "
+          rs1.open sql1, conn
+          sql2=rs1("TopSQL")
+          rs2.open sql2, conn
             %>
-            <h1 style="color: white;text-align: center;">SpotiFake topic playlist</h1>
+
             <div class="playlist-content">
                <div class="playlist-cover">
-                  <img src="images\<%=rs1("AnhPLM")%>" alt="">
+                  <img src="images\<%=rs1("AnhTOP")%>" alt="">
                </div>
                <div class="playlist-info">
-                  <div class="playlist-public"> Topic</div>
-                  <div class="playlist-title"><%=rs1("TenChuDe")%></div>
-                  <div class="playlist-description">A soundtrack to fuel your good mood while on the road.</div>
-                  <div style="height: 10px;"></div>
+                  <div class="playlist-title"><%=rs1("TenTop")%></div>
+                  <div class="playlist-description"><%=rs1("MotaTop")%></div>
+                  <div style="height: 60px;"></div>
                   <div class="playlist-stats">
                      <span> Spotify ·</span>
                      <span>5,131,321 likes · </span>
@@ -200,34 +201,44 @@ sql1 = "SELECT BaiHat.IDBaiHat, BaiHat.TenBaiHat, BaiHat.NgayPhatHanh, BaiHat.Qu
                      <tr>
                         <th>#</th>
                         <th>Title</th>
-                        <th>Release date</th>
                         <th>Country</th>
+                        <th>View</th>
                         <th>Rating</th>
                      </tr>
-                     <%Songid=rs1("IDBaiHat")%>
-                     <tr class="songdetail" onclick="redirectFunction1('<%=Songid%>')" >
-                        <td><%=rs1("IDBaiHat")%></td>
-                        <td class="song-title">
-                           <div class="song-image">
-                              <img src="images\<%=rs1("AnhBH")%>" alt="">
-                           </div>
-                           <div class="song-name-album">
-                              <div class="song-name"><%=rs1("TenBaiHat")%></div>
-                              <div class="song-artist"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" style="fill: white;transform: ;msFilter:;"><path d="M12 16c2.206 0 4-1.794 4-4V6c0-2.217-1.785-4.021-3.979-4.021a.933.933 0 0 0-.209.025A4.006 4.006 0 0 0 8 6v6c0 2.206 1.794 4 4 4z"></path><path d="M11 19.931V22h2v-2.069c3.939-.495 7-3.858 7-7.931h-2c0 3.309-2.691 6-6 6s-6-2.691-6-6H4c0 4.072 3.061 7.436 7 7.931z"></path></svg><%=rs1("TenCaSi")%></div>
-                           </div>
-                        </td>
-                        <td class="song-album"><%=rs1("NgayPhatHanh")%></td>
-                        <td class="song-date-added"><%=rs1("QuocGia")%></td>
-                        <td class="song-duration" style="font-size: 13px;">4  <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" style="fill: white;transform: ;msFilter:;"><path d="M21.947 9.179a1.001 1.001 0 0 0-.868-.676l-5.701-.453-2.467-5.461a.998.998 0 0 0-1.822-.001L8.622 8.05l-5.701.453a1 1 0 0 0-.619 1.713l4.213 4.107-1.49 6.452a1 1 0 0 0 1.53 1.057L12 18.202l5.445 3.63a1.001 1.001 0 0 0 1.517-1.106l-1.829-6.4 4.536-4.082c.297-.268.406-.686.278-1.065z"></path></svg></td>
-                     </tr>
-                    
-                  </table>
-               </div>
+                     
+                     <%
+                      count=1
+Do While Not rs2.EOF
+    Songid = rs2("IDBaiHat")
+%>
+    <tr class="songdetail" onclick="redirectFunction1('<%=Songid%>')">
+        <td><%=count%></td>
+        <td class="song-title">
+            <div class="song-image">
+                <img src="images\<%=rs2("AnhBH")%>" alt="">
             </div>
-         </div>
-      </div>
-      <%
-      conn.close%>
+            <div class="song-name-album">
+                <div class="song-name"><%=rs2("TenBaiHat")%></div>
+                <div class="song-artist">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" style="fill: white;transform: ;msFilter:;">
+                        <path d="M12 16c2.206 0 4-1.794 4-4V6c0-2.217-1.785-4.021-3.979-4.021a.933.933 0 0 0-.209.025A4.006 4.006 0 0 0 8 6v6c0 2.206 1.794 4 4 4z"></path>
+                        <path d="M11 19.931V22h2v-2.069c3.939-.495 7-3.858 7-7.931h-2c0 3.309-2.691 6-6 6s-6-2.691-6-6H4c0 4.072 3.061 7.436 7 7.931z"></path>
+                    </svg><%=rs2("TenCaSi")%> - <%=rs2("BiDanh")%>
+                </div>
+            </div>
+        </td>
+        <td class="song-date-added"><%=rs2("QuocGia")%></td>
+        <td class="song-album"><%=rs2("LuotXem")%></td>
+        <td class="song-duration" style="font-size: 13px;"><%=rs2("DiemDG")%><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" style="fill: white;transform: ;msFilter:;"><path d="M21.947 9.179a1.001 1.001 0 0 0-.868-.676l-5.701-.453-2.467-5.461a.998.998 0 0 0-1.822-.001L8.622 8.05l-5.701.453a1 1 0 0 0-.619 1.713l4.213 4.107-1.49 6.452a1 1 0 0 0 1.53 1.057L12 18.202l5.445 3.63a1.001 1.001 0 0 0 1.517-1.106l-1.829-6.4 4.536-4.082c.297-.268.406-.686.278-1.065z"></path></svg></td>
+    </tr>
+<%
+count=count+1
+    rs2.MoveNext
+Loop
+count=1
+rs2.Close
+%>
+
       <script src="javascript.js"></script>
    </body>
 </html>

@@ -13,7 +13,7 @@
       <div class="App__top-bar"> 
          <div class="App__header">
            <div class="App__song-navigation-prev">
-                     <svg role="img" focusable="false" height="24" width="24" viewBox="0 0 24 24">
+                     <svg role="img" focusable="false" height="24" width="24" viewBox="0 0 24 24"onclick="goBack()">
                         <polyline points="16 4 7 12 16 20" fill="none" stroke="#fff"></polyline>
                      </svg>
                   </div>
@@ -70,12 +70,10 @@
             <% else %>
             <div class="signup-login-wrapper">
                <div class="signup-login">
-                  <div class="signup" data-target-page="signup.asp" >
-                     <a >Sign Up</a>
-                  </div>
-                  <div class="login"data-target-page="login.asp">
-                     <a>Login</a>
-                  </div>
+                  <a href="./signup.asp" class="signup" >
+                     Sign Up</a>
+                     <a class="login" href="./login.asp">
+                     Login</a>
                </div>
             </div>
             <% 
@@ -92,7 +90,7 @@
                </svg>
             </div>
          <div class="App__categories-nav">
-            <div id="DivApp" class="App__category-item" data-target-page="app.asp">
+            <div id="DivApp" class="App__category-item" onclick="redirectFunction2('app.asp')">
                <div class="icon">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: white;transform: ;msFilter:;">
                      <path d="M3 13h1v7c0 1.103.897 2 2 2h12c1.103 0 2-.897 2-2v-7h1a1 1 0 0 0 .707-1.707l-9-9a.999.999 0 0 0-1.414 0l-9 9A1 1 0 0 0 3 13zm7 7v-5h4v5h-4zm2-15.586 6 6V15l.001 5H16v-5c0-1.103-.897-2-2-2h-4c-1.103 0-2 .897-2 2v5H6v-9.586l6-6z"></path>
@@ -100,7 +98,7 @@
                </div>
                <span>Home</span>
             </div>
-            <div class="App__category-item" data-target-page="app_search.asp">
+            <div class="App__category-item" onclick="redirectFunction2('app_search.asp')">
                <div class="icon">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: white;transform: ;msFilter:;">
                      <path d="M10 18a7.952 7.952 0 0 0 4.897-1.688l4.396 4.396 1.414-1.414-4.396-4.396A7.952 7.952 0 0 0 18 10c0-4.411-3.589-8-8-8s-8 3.589-8 8 3.589 8 8 8zm0-14c3.309 0 6 2.691 6 6s-2.691 6-6 6-6-2.691-6-6 2.691-6 6-6z"></path>
@@ -129,7 +127,7 @@
                </div>
                <span>Create Playlist</span>
             </div>
-            <div class="App__category-item" data-target-page="app_topic.asp">
+            <div class="App__category-item" onclick="redirectFunction2('app_topic.asp')">
                <div class="icon">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: white;transform: ;msFilter:;">
                      <path d="M19 10H5c-1.103 0-2 .897-2 2v8c0 1.103.897 2 2 2h14c1.103 0 2-.897 2-2v-8c0-1.103-.897-2-2-2zM5 6h14v2H5zm2-4h10v2H7z"></path>
@@ -137,7 +135,7 @@
                </div>
                <span>Song topic</span>
             </div>
-            <div class="App__category-item">
+            <div class="App__category-item" onclick="redirectFunction2('app_top.asp')">
                <div class="icon">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: white;transform: ;msFilter:;">
                      <path d="M6 18.573c2.206 0 4-1.794 4-4V4.428L19 7.7v7.43a3.953 3.953 0 0 0-2-.557c-2.206 0-4 1.794-4 4s1.794 4 4 4 4-1.794 4-4V7a.998.998 0 0 0-.658-.939l-11-4A.999.999 0 0 0 8 3v8.13a3.953 3.953 0 0 0-2-.557c-2.206 0-4 1.794-4 4s1.794 4 4 4z"></path>
@@ -196,67 +194,6 @@
                   rs1.close
                   conn.close
                   %>
-         </section>
-         <section class="App__section App__your-shows">
-         <div class="App__section-header">
-         <h3>Your top mixes</h3>
-         <span>SEE ALL</span>
-         </div>
-         <div class="App__section-grid-container">
-         <div class="App__section-grid-item">
-         <div class="featured-image"></div>
-         <h3>TED Radio Hour</h3>
-         <span>NPR</span>
-         </div>
-         <div class="App__section-grid-item">
-         <div class="featured-image"></div>
-         <h3>Short Wave</h3>
-         <span>NPR</span>
-         </div>
-         <div class="App__section-grid-item">
-         <div class="featured-image"></div>
-         <h3>Post Reports</h3>
-         <span>The Washington Post</span>
-         </div>
-         <div class="App__section-grid-item">
-         <div class="featured-image"></div>
-         <h3>Planet Money</h3>
-         <span>NPR</span>
-         </div>
-         <div class="App__section-grid-item">
-         <div class="featured-image"></div>
-         <h3>How I Built this...</h3>
-         <span>NPR</span>
-         </div>
-         <div class="App__section-grid-item">
-         <div class="featured-image"></div>
-         <h3>TED Radio Hour</h3>
-         <span>NPR</span>
-         </div>
-         <div class="App__section-grid-item">
-         <div class="featured-image"></div>
-         <h3>Short Wave</h3>
-         <span>NPR</span>
-         </div>
-         <div class="App__section-grid-item">
-         <div class="featured-image"></div>
-         <h3>Post Reports</h3>
-         <span>The Washington Post</span>
-         </div>
-         <div class="App__section-grid-item">
-         <div class="featured-image"></div>
-         <h3>Planet Money</h3>
-         <span>NPR</span>
-         </div>
-         <div class="App__section-grid-item">
-         <div class="featured-image"></div>
-         <h3>How I Built this...</h3>
-         <span>NPR</span>
-         </div>
-         </div>
-         </section>
-         </div>
-      </div>
       <script src="javascript.js"></script>
    </body>
 </html>

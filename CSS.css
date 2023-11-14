@@ -33,7 +33,10 @@
   color: gold;
   text-shadow: 0 0 10px gold;
 }
-
+.songdetail:hover{
+  cursor:pointer;
+  background-color:#333333;
+}
 .song_infor{
     width:100%;
   
@@ -50,10 +53,25 @@
   display: flex;
 }
 .App__main-song .left{
-  flex:6
+  flex:6;
 }
 .App__main-song .right {
   flex: 4;
+  
+}
+.Search1{
+  display:flex;
+  margin-left:20px;
+  margin-right:20px;
+    color:white;
+}
+.left1{
+  flex:5;
+ 
+}
+.right1 {
+  flex:5;
+ 
 }
 .like-and-share .right {
 }
@@ -157,7 +175,7 @@ body {
 }
 .playlist-cover img {
   margin-left:35px;
-
+object-fit:cover;
   width: 150px;
   height:150px;
   box-shadow: 0px 2px 35px -1px rgba(0, 0, 0, 0.45);
@@ -176,7 +194,7 @@ body {
 }
 
 .playlist-title {
-  font-size: 50px;
+  font-size: 40px;
   font-weight: 1000;
 
   margin-top: 10px;
@@ -186,7 +204,7 @@ body {
 .playlist-description {
   font-size: 16px;
   font-weight: 400;
-  margin-top: 20px;
+  margin-top: 10px;
   color: #b5b5b5;
 }
 
@@ -297,6 +315,7 @@ body {
 
 .song-image img {
   width: 34px;
+  object-fit:cover;
   height: 34px;
 }
 
@@ -345,7 +364,10 @@ body {
   justify-content: center;
   align-items: center;
 }
-
+.App__song-navigation-prev{
+  cursor:pointer;
+  margin-top:12px;
+}
 .App__section-grid-item:hover .play-button {
   opacity: 1;
   background-color: #1db954;
@@ -368,6 +390,7 @@ body {
 .signup {
   background-color: #000;
   color: #888;
+  text-decoration:none;
   padding: 10px 30px;
   border-radius: 20px;
   margin-left: 10px;
@@ -382,6 +405,7 @@ body {
   margin-left: 10px;
   cursor: pointer;
   transition: font-size 0.25s;
+  text-decoration:none;
 }
 .signup:hover {
   color: white;
@@ -392,13 +416,14 @@ body {
   font-size: large;
 }
 .search-box {
+  margin-right:800px;
   display: flex;
   background-color: black;
   border-radius: 25px;
   border: 2px solid white;
   /* Thêm viền trắng */
   overflow: hidden;
-  width: 330px;
+  width: 350px;
   height: 50px;
 }
 

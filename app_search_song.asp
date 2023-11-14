@@ -147,7 +147,7 @@
                </div>
                <span>Song topic</span>
             </div>
-            <div class="App__category-item"onclick="redirectFunction2('app_top.asp')">
+            <div class="App__category-item">
                <div class="icon">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: white;transform: ;msFilter:;">
                      <path d="M6 18.573c2.206 0 4-1.794 4-4V4.428L19 7.7v7.43a3.953 3.953 0 0 0-2-.557c-2.206 0-4 1.794-4 4s1.794 4 4 4 4-1.794 4-4V7a.998.998 0 0 0-.658-.939l-11-4A.999.999 0 0 0 8 3v8.13a3.953 3.953 0 0 0-2-.557c-2.206 0-4 1.794-4 4s1.794 4 4 4z"></path>
@@ -164,109 +164,112 @@
          <div class="App__top-gradient"></div>
          <div class="App__header-placeholder"></div>
          <br>
-         <h1 style="color: white;text-align: center;">Where every song is a story, welcome to SpotiFake</h1>
-         <section class="App__section App__your-shows">
-            <div class="App__section-header">
-               <h2>SpotiFake topic</h2>
-               <a href="app_topic.asp" style="color: gray;">SEE ALL</a>
-            </div>
-            <%
-               Set rs1 = Server.CreateObject("ADODB.Recordset")
-                sql1="SELECT IDChuDe, TenChuDe, AnhPLM FROM ChuDe"
-                rs1.open sql1, conn 
-               
-                %>
-            <div class="App__section-grid-container">
-               <% if(rs1.eof)then
-                  response.write("không có chủ đề!")
-                  else 
-                  counter = 0
-                   while not rs1.EOF and counter<5
-                   tid=rs1("IDChuDe")
-                   tname=rs1("TenChuDe")
-                   timage=rs1("AnhPLM")
-                   %>
-               <div class="App__section-grid-item" onclick="redirectFunction('<%=tid %>','<%=tname %>','<%=timage%>')" >
-                  <div class="image-container">
-                     <img class="round-border-image" src="images\<%=rs1("AnhPLM")%>">
-                     <div class="play-button">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;">
-                           <path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z"></path>
-                           <path d="m9 17 8-5-8-5z"></path>
-                        </svg>
-                     </div>
-                  </div>
-                  <h3><%=rs1("TenChuDe")%></h3>
-               </div>
-               <%
-                  counter = counter + 1
-                  rs1.movenext
-                  wend
-                  end if
-                  rs1.close
-                  conn.close
-                  %>
-         </section>
-         <section class="App__section App__your-shows">
-         <div class="App__section-header">
-         <h3>Your top mixes</h3>
-         <span>SEE ALL</span>
-         </div>
-         <div class="App__section-grid-container">
-         <div class="App__section-grid-item">
-         <div class="featured-image"></div>
-         <h3>TED Radio Hour</h3>
-         <span>NPR</span>
-         </div>
-         <div class="App__section-grid-item">
-         <div class="featured-image"></div>
-         <h3>Short Wave</h3>
-         <span>NPR</span>
-         </div>
-         <div class="App__section-grid-item">
-         <div class="featured-image"></div>
-         <h3>Post Reports</h3>
-         <span>The Washington Post</span>
-         </div>
-         <div class="App__section-grid-item">
-         <div class="featured-image"></div>
-         <h3>Planet Money</h3>
-         <span>NPR</span>
-         </div>
-         <div class="App__section-grid-item">
-         <div class="featured-image"></div>
-         <h3>How I Built this...</h3>
-         <span>NPR</span>
-         </div>
-         <div class="App__section-grid-item">
-         <div class="featured-image"></div>
-         <h3>TED Radio Hour</h3>
-         <span>NPR</span>
-         </div>
-         <div class="App__section-grid-item">
-         <div class="featured-image"></div>
-         <h3>Short Wave</h3>
-         <span>NPR</span>
-         </div>
-         <div class="App__section-grid-item">
-         <div class="featured-image"></div>
-         <h3>Post Reports</h3>
-         <span>The Washington Post</span>
-         </div>
-         <div class="App__section-grid-item">
-         <div class="featured-image"></div>
-         <h3>Planet Money</h3>
-         <span>NPR</span>
-         </div>
-         <div class="App__section-grid-item">
-         <div class="featured-image"></div>
-         <h3>How I Built this...</h3>
-         <span>NPR</span>
-         </div>
-         </div>
-         </section>
-         </div>
-      </div>
+         <br>
+      <%
+Dim searchKeyword
+searchKeyword = Request.Form("timkiem")
+ ' Tạo truy vấn SQL để tìm kiếm các bản ghi có chứa từ khóa trong TenChuDe hoặc TenBaiHat
+    Set rs = Server.CreateObject("ADODB.Recordset")
+    Set rs1 = Server.CreateObject("ADODB.Recordset")
+
+    strSQL = "SELECT BaiHat.TenBaiHat, BaiHat.AnhBH, BaiHat.BiDanh, DanhGia.DiemDG, CaSi.TenCaSi FROM BaiHat LEFT JOIN DanhGia ON BaiHat.IDBaiHat = DanhGia.IDBaiHat JOIN CaSi ON BaiHat.BiDanh = CaSi.BiDanh WHERE TenBaiHat LIKE N'%" & searchKeyword & "%' ORDER BY TenBaiHat"
+    strSQL1 = "SELECT * FROM CaSi WHERE TenCaSi LIKE N'%" & searchKeyword & "%' ORDER BY TenCaSi"
+
+    rs.Open strSQL, conn
+    rs1.Open strSQL1, conn
+' if searchKeyword <> "" and rs1.eof and  rs.eof then
+'      Response.Write "<p style='color:white;margin-left:80px;'>Không tìm thấy kết quả nào!</p>"
+'      end if
+If searchKeyword <> "" and not rs1.eof or not rs.eof Then
+%>
+
+<div class="Search1">
+    <div class="left1">
+        
+        <table width="100%" align="center" style="border-collapse: collapse;">
+            <tr>
+                <th style="width:100%; text-align: left; font-size:20px;">List of singers</th>
+            </tr>
+            <% If Not rs1.EOF Then
+        Do While Not rs1.EOF %>
+            <tr   >
+                <td style="text-align: center;">
+                    <div style="display: flex; align-items: center;">
+                        <img style="object-fit:cover;border-radius: 50%; height: 100px; width: 100px; margin-right: 10px;margin-bottom: 10px;" src="images/<%=rs1("AnhCS")%>">
+                        <div>
+                            <a style="font-size: 20px;"><%=rs1("TenCaSi")%> -</a>
+                        </div>
+                        <div style="margin-left: 10px;">
+                            <a style="font-size: 20px;"><%=rs1("BiDanh")%></a>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+              <% rs1.MoveNext
+        Loop
+        Else
+        %><tr>
+        <td>
+            <%  Response.Write "<p>Không tìm thấy kết quả.</p>"%>
+              </td>
+        </tr>
+        <% End If
+        %>
+        </table>
+      
+    </div>
+
+    <div class="right1">
+       
+        <table width="100%" align="center" style="border-collapse: collapse;">
+            <tr>
+                <th style="width:100%; text-align: left; font-size:20px;">List of songs</th>
+                <th></th>
+            </tr>
+          <% 
+          If Not rs.EOF Then
+        Do While Not rs.EOF %>
+            <tr>
+                <td style=" text-align: center;">
+                    <div style="display: flex; align-items: center;">
+                        <img style="object-fit:cover;height: 100px; width: 100px; margin-right: 10px;margin-bottom: 10px;" src="images/<%=rs("AnhBH")%>">
+                        <div>
+                            <a style="font-size: 20px;"><%=rs("TenBaiHat")%></a>
+                            <br>
+                            <a class="playlist-description" style="float: left;"><%=rs("TenCaSi")%> - <%=rs("BiDanh")%></a>
+                        </div>
+                  <td>
+                        <div style="margin-left: 150px;">
+                            <a style="font-size: 20px;">4★</a>
+                        </div>
+                  </td>
+                    </div>
+                </td>
+            </tr>
+                 <% rs.MoveNext
+        Loop
+        Else %><tr>
+        <td>
+            <%  Response.Write "<p>Không tìm thấy kết quả.</p>"%>
+              </td>
+        </tr>
+        <%  End If
+      
+        rs1.close
+        rs.close
+        conn.Close
+        else
+        
+          Response.Write "<p style='color:white;margin-left:80px;'>Không tìm thấy kết quả nào!</p>"
+      End if
+        %>
+    </div>
+        </table>
+   
+</div>
+
       <script src="javascript.js"></script>
    </body>
 </html>
+
+

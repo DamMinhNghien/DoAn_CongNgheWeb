@@ -13,10 +13,11 @@
       <div class="App__top-bar"> 
          <div class="App__header">
            <div class="App__song-navigation-prev">
-                     <svg role="img" focusable="false" height="24" width="24" viewBox="0 0 24 24">
+                     <svg role="img" focusable="false" height="24" width="24" viewBox="0 0 24 24" onclick="goBack()">
                         <polyline points="16 4 7 12 16 20" fill="none" stroke="#fff"></polyline>
                      </svg>
                   </div>
+                  
             <%
                if Session("UID") <> "" and Session("UNAME") <> "" then
                    ' Lấy UID và UNAME từ Session
@@ -70,12 +71,10 @@
             <% else %>
             <div class="signup-login-wrapper">
                <div class="signup-login">
-                  <div class="signup" data-target-page="signup.asp" >
-                     <a >Sign Up</a>
-                  </div>
-                  <div class="login"data-target-page="login.asp">
-                     <a>Login</a>
-                  </div>
+                  <a href="./signup.asp" class="signup" >
+                     Sign Up</a>
+                     <a class="login" href="./login.asp">
+                     Login</a>
                </div>
             </div>
             <% 
@@ -92,7 +91,7 @@
                </svg>
             </div>
          <div class="App__categories-nav">
-            <div id="DivApp" class="App__category-item" data-target-page="app.asp">
+            <div id="DivApp" class="App__category-item" onclick="redirectFunction2('app.asp')">
                <div class="icon">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: white;transform: ;msFilter:;">
                      <path d="M3 13h1v7c0 1.103.897 2 2 2h12c1.103 0 2-.897 2-2v-7h1a1 1 0 0 0 .707-1.707l-9-9a.999.999 0 0 0-1.414 0l-9 9A1 1 0 0 0 3 13zm7 7v-5h4v5h-4zm2-15.586 6 6V15l.001 5H16v-5c0-1.103-.897-2-2-2h-4c-1.103 0-2 .897-2 2v5H6v-9.586l6-6z"></path>
@@ -100,7 +99,7 @@
                </div>
                <span>Home</span>
             </div>
-            <div class="App__category-item" data-target-page="app_search.asp">
+            <div class="App__category-item" onclick="redirectFunction2('app_search.asp')">
                <div class="icon">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: white;transform: ;msFilter:;">
                      <path d="M10 18a7.952 7.952 0 0 0 4.897-1.688l4.396 4.396 1.414-1.414-4.396-4.396A7.952 7.952 0 0 0 18 10c0-4.411-3.589-8-8-8s-8 3.589-8 8 3.589 8 8 8zm0-14c3.309 0 6 2.691 6 6s-2.691 6-6 6-6-2.691-6-6 2.691-6 6-6z"></path>
@@ -129,7 +128,7 @@
                </div>
                <span>Create Playlist</span>
             </div>
-            <div class="App__category-item" data-target-page="app_topic.asp">
+            <div class="App__category-item" onclick="redirectFunction2('app_topic.asp')">
                <div class="icon">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: white;transform: ;msFilter:;">
                      <path d="M19 10H5c-1.103 0-2 .897-2 2v8c0 1.103.897 2 2 2h14c1.103 0 2-.897 2-2v-8c0-1.103-.897-2-2-2zM5 6h14v2H5zm2-4h10v2H7z"></path>
@@ -150,31 +149,61 @@
             <hr>
          </div>
       </div>
-  <div class="App__main-view">
-   <div class="App__top-gradient"></div>
-   <div class="App__header-placeholder"></div>
-   <br>
+ <div class="App__main-view">
+    <div class="App__top-gradient"></div>
+    <div class="App__header-placeholder"></div>
+    <br>
+
+    <% 
+    songid = request.querystring("Songid")
+    Set rs1 = Server.CreateObject("ADODB.Recordset")
+sql1 = "SELECT BaiHat.*, ChuDe.TenChuDe, CaSi.TenCaSi, Dg.DiemDG FROM BaiHat " & _
+        "JOIN ChuDe ON BaiHat.IDChuDe = ChuDe.IDChuDe " & _
+        "JOIN CaSi ON BaiHat.BiDanh = CaSi.BiDanh " & _
+        "LEFT JOIN DanhGia AS Dg ON BaiHat.IDBaiHat = Dg.IDBaiHat " & _
+        "WHERE BaiHat.IDBaiHat LIKE '" & songid & "'"
+    rs1.open sql1, conn
+    %>
+
     <div class="song_infor">
-     <div class="playlist-content">
-               <div class="playlist-cover-song">
-                  <img src="images\ro.jpg" alt="">
-               </div>
-               <div class="playlist-info">
-                  <div class="playlist-title">Ronaldo</div>
-                  <div class="playlist-description">A soundtrack to fuel your good mood while on the road.</div>
-                  <div style="height: 10px;"></div>
-                  <div class="playlist-stats">
-                     <span> Spotify ·</span>
-                     <span>5,131,321 likes · </span>
-                     <span>100 songs, </span>
-                     <span>6 hr 57 min </span>
-                  </div>
-               </div>
-            </div></div>
+        <div class="playlist-content">
+            <div class="playlist-cover-song">
+                <img src="images/<%=rs1("AnhBH")%>" alt="">
+                <div style="height: 30px;"></div>
+            </div>
+
+            <div class="playlist-info">
+                <div class="playlist-title" style="margin-bottom:10px;"><%=rs1("TenBaiHat")%></div>
+         
+                Ca sĩ chính: <%=rs1("TenCaSi")%>-<%=rs1("BiDanh")%>
+                <div class="playlist-description">
+                    <div style="display: inline-block; margin-right: 60px;">
+                        Người sáng tác: <%=rs1("TacGia")%>
+                    </div>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" style="fill: white;transform: ;msFilter:;">
+                        <path d="M12.25 2c-5.514 0-10 4.486-10 10s4.486 10 10 10 10-4.486 10-10-4.486-10-10-10zM18 13h-6.75V6h2v5H18v2z"></path>
+                    </svg>: <%=rs1("NgayPhatHanh")%>
+                    <br>
+                    Về bài hát: <%=rs1("MoTa")%>
+                    <br>
+                    Chủ đề/Thể loại: <%=rs1("TenChuDe")%>
+                    <br>
+                    Quốc Gia: <%=rs1("QuocGia")%>
+                </div>
+
+                <div class="playlist-stats">
+                    <span>Lượt xem: <%=rs1("LuotXem")%> ·</span>
+                    <span>Đánh giá: <%=rs1("DiemDG")%>★</span>
+                </div>
+            
+        </div>
+    </div>
+</div>
+
   <br>
    <div class="App__main-song">
       <div class="left">
-         <iframe width="700" height="400" src="https://www.youtube.com/embed/y5mZWkXDWUI?si=2VKoz6AaaFptjVVn" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        <%=rs1("DuongDan")%>
        <div class="star-rating">
   <input type="radio" id="star1" name="rating" value="1">
   <label for="star1">★</label>
@@ -203,10 +232,37 @@
             </div>
          </div>
       </div>
-      <div class="right" style="background-color: red;">
-         
+      <div class="right">
+         <h2 style="color:white; ">Danh sách phát</h2>
+         <div class="playlist-songs" >
+                  <table>
+                     <tr>
+                        <th>#</th>
+                        <th>Title</th>
+                        <th>Country</th>
+                        <th>Rating</th>
+                     </tr>
+                     <tr class="songdetail"onclick="redirectFunction2('app_song.asp')" >
+                        <td>5</td>
+                        <td class="song-title">
+                           <div class="song-image">
+                              <img src="images\ri.jpg" alt="">
+                           </div>
+                           <div class="song-name-album">
+                              <div class="song-name">haizz</div>
+                              <div class="song-artist"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" style="fill: white;transform: ;msFilter:;"><path d="M12 16c2.206 0 4-1.794 4-4V6c0-2.217-1.785-4.021-3.979-4.021a.933.933 0 0 0-.209.025A4.006 4.006 0 0 0 8 6v6c0 2.206 1.794 4 4 4z"></path><path d="M11 19.931V22h2v-2.069c3.939-.495 7-3.858 7-7.931h-2c0 3.309-2.691 6-6 6s-6-2.691-6-6H4c0 4.072 3.061 7.436 7 7.931z"></path></svg>ten<div>
+                           </div>
+                        </td>
+                        <td class="song-date-added">vn</td>
+                        <td class="song-duration" style="font-size: 13px;">4  <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" style="fill: white;transform: ;msFilter:;"><path d="M21.947 9.179a1.001 1.001 0 0 0-.868-.676l-5.701-.453-2.467-5.461a.998.998 0 0 0-1.822-.001L8.622 8.05l-5.701.453a1 1 0 0 0-.619 1.713l4.213 4.107-1.49 6.452a1 1 0 0 0 1.53 1.057L12 18.202l5.445 3.63a1.001 1.001 0 0 0 1.517-1.106l-1.829-6.4 4.536-4.082c.297-.268.406-.686.278-1.065z"></path></svg></td>
+                     </tr>
+                    
+                  </table>
+               </div>
          </div>
 </div>
+<%
+conn.close%>
       <script src="javascript.js"></script>
    </body>
 </html>

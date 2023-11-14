@@ -129,7 +129,7 @@
                   </div>
                   <span>Song topic</span>
                </div>
-               <div class="App__category-item"onclick="redirectFunction2('app_top.asp')">
+               <div class="App__category-item">
                   <div class="icon">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: white;transform: ;msFilter:;"><path d="M6 18.573c2.206 0 4-1.794 4-4V4.428L19 7.7v7.43a3.953 3.953 0 0 0-2-.557c-2.206 0-4 1.794-4 4s1.794 4 4 4 4-1.794 4-4V7a.998.998 0 0 0-.658-.939l-11-4A.999.999 0 0 0 8 3v8.13a3.953 3.953 0 0 0-2-.557c-2.206 0-4 1.794-4 4s1.794 4 4 4z"></path></svg>
                   </div>
@@ -144,30 +144,27 @@
             <div class="App__top-gradient"></div>
             <div class="App__header-placeholder"></div>
             <br>
-           
-          
-         <section class="App__section App__your-shows">
-    <div class="App__section-header">
-        <h2>SpotiFake topic</h2>
-    </div>
-    <%
-        Set rs1 = Server.CreateObject("ADODB.Recordset")
-        sql1 = "SELECT IDChuDe, TenChuDe, AnhPLM FROM ChuDe"
-        rs1.Open sql1, conn
+           <%
+            Set rs1 = Server.CreateObject("ADODB.Recordset")
+            sql1="select IDTop,TenTop,AnhTOP from TopBXH "
+    rs1.open sql1, conn
+  
     %>
+    
+         <section class="App__section App__your-shows">
+    <div class="App__section-header"> 
+        <h2>SpotiFake top playlist</h2>
+    </div>
     <div class="App__section-grid-container">
-        <%
-            if rs1.EOF then
-                response.write("không có chủ đề!")
-            else
-                counter = 0
-                while not rs1.EOF
-                    tid = rs1("IDChuDe")
-                
-        %>
-                    <div class="App__section-grid-item" onclick="redirectFunction('<%=tid %>')">
+      <%
+    if not rs1.eof then
+    counter =0
+    while not rs1.eof
+              idtop=rs1("IDTop")
+           %>
+                    <div class="App__section-grid-item" onclick="redirectFunction3('<%=idtop%>')">
                         <div class="image-container">
-                            <img class="round-border-image" src="images\<%=rs1("AnhPLM")%>" style="width:178px; height: 180px;">
+                            <img class="round-border-image" src="images\<%=rs1("AnhTOP")%>" style="width:178px; height: 180px;">
                                    <div class="play-button">
                         <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;">
                            <path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z"></path>
@@ -175,15 +172,15 @@
                         </svg>
                      </div>                        
                         </div>
-                        <h3><%=rs1("TenChuDe")%></h3>
+                        <h3><%=rs1("TenTop")%></h3>
                     </div>
-        <%
+                      <%
                     counter = counter + 1
                     if counter = 5 then
         %>
-                        </div> 
+        </div> 
                         <div class="App__section-grid-container">
-        <%
+     <%
                         counter = 0
                     end if
                     rs1.MoveNext
@@ -194,10 +191,11 @@
         %>
     </div>
 </section>
-
+   
             
          </div>
       </div>
+     
       <script src="javascript.js"></script>
    </body>
-</html>
+</html> 
