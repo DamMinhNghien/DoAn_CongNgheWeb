@@ -10,25 +10,13 @@
    </head>
    <body>
       <div class="App">
-      <div class="App__top-bar">
+      <div class="App__top-bar"> 
          <div class="App__header">
-            <div class="App__song-navigation-prev">
-               <svg role="img" focusable="false" height="24" width="24" viewBox="0 0 24 24"onclick="goBack()">
-                  <polyline points="16 4 7 12 16 20" fill="none" stroke="#fff"></polyline>
-               </svg>
-            </div>
-            <div class="search-container">
-               <form method=POST action="app_search_song.asp">
-                  <div class="search-box">
-                     <button type="submit" class="search-button">
-                        <svg role="img" aria-hidden="true" class="search-icon" viewBox="0 0 16 16">
-                           <path d="M7 1.75a5.25 5.25 0 1 0 0 10.5 5.25 5.25 0 0 0 0-10.5zM.25 7a6.75 6.75 0 1 1 12.096 4.12l3.184 3.185a.75.75 0 1 1-1.06 1.06L11.304 12.2A6.75 6.75 0 0 1 .25 7z"></path>
-                        </svg>
-                     </button>
-                     <input class="search-input" type="text" placeholder="Bạn muốn nghe gì?" name="timkiem">
+           <div class="App__song-navigation-prev">
+                     <svg role="img" focusable="false" height="24" width="24" viewBox="0 0 24 24"onclick="goBack()">
+                        <polyline points="16 4 7 12 16 20" fill="none" stroke="#fff"></polyline>
+                     </svg>
                   </div>
-               </form>
-            </div>
             <%
                if Session("UID") <> "" and Session("UNAME") <> "" then
                    ' Lấy UID và UNAME từ Session
@@ -83,9 +71,9 @@
             <div class="signup-login-wrapper">
                <div class="signup-login">
                   <a href="./signup.asp" class="signup" >
-                  Sign Up</a>
-                  <a class="login" href="./login.asp">
-                  Login</a>
+                     Sign Up</a>
+                     <a class="login" href="./login.asp">
+                     Login</a>
                </div>
             </div>
             <% 
@@ -96,11 +84,11 @@
          </div>
       </div>
       <div class="App__nav-bar">
-         <div class="App__logo">
-            <svg viewBox="0 0 254 37" fill="none" xmlns="http://www.w3.org/2000/svg">
-               <text x="38" y="25" fill="#fff" style="font-size: 35px;">SpotiFake</text>
-            </svg>
-         </div>
+           <div class="App__logo">
+               <svg viewBox="0 0 254 37" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <text x="38" y="25" fill="#fff" style="font-size: 35px;">SpotiFake</text>
+               </svg>
+            </div>
          <div class="App__categories-nav">
             <div id="DivApp" class="App__category-item" onclick="redirectFunction2('app.asp')">
                <div class="icon">
@@ -118,7 +106,7 @@
                </div>
                <span>Search</span>
             </div>
-            <div class="App__category-item"onclick="redirectFunction2('app_myplaylist.asp')">
+            <div class="App__category-item" id="DivMyplaylist"onclick="redirectFunction2('app_myplaylist.asp')">
                <div class="icon">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: white;transform: ;msFilter:;">
                      <path d="M13 16.493C13 18.427 14.573 20 16.507 20s3.507-1.573 3.507-3.507c0-.177-.027-.347-.053-.517H20V6h2V4h-3a1 1 0 0 0-1 1v8.333a3.465 3.465 0 0 0-1.493-.346A3.51 3.51 0 0 0 13 16.493zM2 5h14v2H2z"></path>
@@ -147,7 +135,7 @@
                </div>
                <span>Song topic</span>
             </div>
-            <div class="App__category-item"onclick="redirectFunction2('app_top.asp')">
+            <div class="App__category-item" onclick="redirectFunction2('app_top.asp')">
                <div class="icon">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: white;transform: ;msFilter:;">
                      <path d="M6 18.573c2.206 0 4-1.794 4-4V4.428L19 7.7v7.43a3.953 3.953 0 0 0-2-.557c-2.206 0-4 1.794-4 4s1.794 4 4 4 4-1.794 4-4V7a.998.998 0 0 0-.658-.939l-11-4A.999.999 0 0 0 8 3v8.13a3.953 3.953 0 0 0-2-.557c-2.206 0-4 1.794-4 4s1.794 4 4 4z"></path>
@@ -163,113 +151,38 @@
       <div class="App__main-view">
          <div class="App__top-gradient"></div>
          <div class="App__header-placeholder"></div>
-         <br>
-         <br>
-      <%
-Dim searchKeyword
-searchKeyword = Request.Form("timkiem")
- ' Tạo truy vấn SQL để tìm kiếm các bản ghi có chứa từ khóa trong TenChuDe hoặc TenBaiHat
-    Set rs = Server.CreateObject("ADODB.Recordset")
-    Set rs1 = Server.CreateObject("ADODB.Recordset")
-
-    strSQL = "SELECT BaiHat.TenBaiHat, BaiHat.AnhBH, BaiHat.BiDanh, DanhGia.DiemDG, CaSi.TenCaSi FROM BaiHat LEFT JOIN DanhGia ON BaiHat.IDBaiHat = DanhGia.IDBaiHat JOIN CaSi ON BaiHat.BiDanh = CaSi.BiDanh WHERE TenBaiHat LIKE N'%" & searchKeyword & "%' ORDER BY TenBaiHat"
-    strSQL1 = "SELECT * FROM CaSi WHERE TenCaSi LIKE N'%" & searchKeyword & "%' ORDER BY TenCaSi"
-
-    rs.Open strSQL, conn
-    rs1.Open strSQL1, conn
-' if searchKeyword <> "" and rs1.eof and  rs.eof then
-'      Response.Write "<p style='color:white;margin-left:80px;'>Không tìm thấy kết quả nào!</p>"
-'      end if
-If searchKeyword <> "" and not rs1.eof or not rs.eof Then
-%>
-
-<div class="Search1">
-    <div class="left1">
-        
-        <table width="100%" align="center" style="border-collapse: collapse;">
-            <tr>
-                <th style="width:100%; text-align: left; font-size:20px;">List of singers</th>
-            </tr>
-            <% If Not rs1.EOF Then
-        Do While Not rs1.EOF %>
-            <tr   >
-                <td style="text-align: center;">
-                    <div style="display: flex; align-items: center;">
-                        <img style="object-fit:cover;border-radius: 50%; height: 100px; width: 100px; margin-right: 10px;margin-bottom: 10px;" src="images/<%=rs1("AnhCS")%>">
-                        <div>
-                            <a style="font-size: 20px;"><%=rs1("TenCaSi")%> -</a>
-                        </div>
-                        <div style="margin-left: 10px;">
-                            <a style="font-size: 20px;"><%=rs1("BiDanh")%></a>
-                        </div>
-                    </div>
-                </td>
-            </tr>
-              <% rs1.MoveNext
-        Loop
-        Else
-        %><tr>
-        <td>
-            <%  Response.Write "<p>Không tìm thấy kết quả.</p>"%>
-              </td>
-        </tr>
-        <% End If
-        %>
-        </table>
-      
+       <div class="myplaylist-container">
+        <div class="myplaylist">
+        <img src="images\100rapviet.jpg" alt="Playlist 1">
+            <h3>Playlist 1</h3>
+            <p>Description for Playlist 1.</p>
+        </div>
+        <div class="myplaylist">
+            <img src="images\100rapviet.jpg" alt="Playlist 2">
+            <h3>Playlist 2</h3>
+            <p>Description for Playlist 2.</p>
+        </div>
+        <div class="myplaylist">
+            <img src="images\100rapviet.jpg" alt="Playlist 3">
+            <h3>Playlist 3</h3>
+            <p>Description for Playlist 3.</p>
+        </div>
+        <div class="myplaylist">
+            <img src="images\100rapviet.jpg" alt="Playlist 4">
+            <h3>Playlist 4</h3>
+            <p>Description for Playlist 4.</p>
+        </div>
+        <div class="myplaylist">
+            <img src="images\100rapviet.jpg" alt="Playlist 5">
+            <h3>Playlist 5</h3>
+            <p>Description for Playlist 5.</p>
+        </div>
+        <div class="myplaylist">
+            <img src="images\100rapviet.jpg" alt="Playlist 6">
+            <h3>Playlist 6</h3>
+            <p>Description for Playlist 6.</p>
+        </div>
     </div>
-
-    <div class="right1">
-       
-        <table width="100%" align="center" style="border-collapse: collapse;">
-            <tr>
-                <th style="width:100%; text-align: left; font-size:20px;">List of songs</th>
-                <th></th>
-            </tr>
-          <% 
-          If Not rs.EOF Then
-        Do While Not rs.EOF %>
-            <tr>
-                <td style=" text-align: center;">
-                    <div style="display: flex; align-items: center;">
-                        <img style="object-fit:cover;height: 100px; width: 100px; margin-right: 10px;margin-bottom: 10px;" src="images/<%=rs("AnhBH")%>">
-                        <div>
-                            <a style="font-size: 20px;"><%=rs("TenBaiHat")%></a>
-                            <br>
-                            <a class="playlist-description" style="float: left;"><%=rs("TenCaSi")%> - <%=rs("BiDanh")%></a>
-                        </div>
-                  <td>
-                        <div style="margin-left: 150px;">
-                            <a style="font-size: 20px;">4★</a>
-                        </div>
-                  </td>
-                    </div>
-                </td>
-            </tr>
-                 <% rs.MoveNext
-        Loop
-        Else %><tr>
-        <td>
-            <%  Response.Write "<p>Không tìm thấy kết quả.</p>"%>
-              </td>
-        </tr>
-        <%  End If
-      
-        rs1.close
-        rs.close
-        conn.Close
-        else
-        
-          Response.Write "<p style='color:white;margin-left:80px;'>Không tìm thấy kết quả nào!</p>"
-      End if
-        %>
-    </div>
-        </table>
-   
-</div>
-
       <script src="javascript.js"></script>
    </body>
 </html>
-
-

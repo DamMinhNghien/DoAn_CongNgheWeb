@@ -6,12 +6,44 @@
   box-sizing: border-box;
   font-family: "Poppins", sans-serif;
 }
+.myplaylist-container {
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 20px;
 
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.myplaylist {
+  width: calc(33.33% - 20px);
+  margin: 10px;
+  float: left;
+  box-sizing: border-box;
+  overflow: hidden;
+  position: relative;
+  color: white;
+}
+.myplaylist img {
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.myplaylist h3 {
+  margin: 10px 0;
+}
+
+.myplaylist p {
+  margin: 0;
+  font-size: 14px;
+  color: #888;
+}
 .star-rating {
   display: flex;
   justify-content: center;
   align-items: center;
-   flex-direction: row-reverse;
+  flex-direction: row-reverse;
 }
 
 .star-rating input {
@@ -33,49 +65,42 @@
   color: gold;
   text-shadow: 0 0 10px gold;
 }
-.songdetail:hover{
-  cursor:pointer;
-  background-color:#333333;
+.songdetail:hover {
+  cursor: pointer;
+  background-color: #333333;
 }
-.song_infor{
-    width:100%;
-  
+.song_infor {
+  width: 100%;
 }
-.right{
-  margin-right:22px;
+.right {
+  margin-right: 22px;
 }
 .left iframe {
-  margin-right:30px;
+  margin-right: 30px;
   margin-left: 42px; /* Đặt margin-left thành auto để căn phải */
   display: block; /* Đảm bảo iframe là một khối đầy đủ chiều rộng */
 }
 .App__main-song {
   display: flex;
 }
-.App__main-song .left{
-  flex:6;
+.App__main-song .left {
+  flex: 6;
 }
 .App__main-song .right {
   flex: 4;
-  
 }
-.Search1{
-  display:flex;
-  margin-left:20px;
-  margin-right:20px;
-    color:white;
+.Search1 {
+  display: flex;
+  margin-left: 20px;
+  margin-right: 20px;
+  color: white;
 }
-.left1{
-  flex:5;
- 
+.left1 {
+  flex: 5;
 }
 .right1 {
-  flex:5;
- 
+  flex: 5;
 }
-.like-and-share .right {
-}
-
 .comments-container {
   max-width: 722px;
   margin-left: 20px;
@@ -105,7 +130,7 @@
 }
 
 .comment-box {
-  max-width:100%;
+  max-width: 100%;
   margin-left: 22px;
 }
 
@@ -165,19 +190,19 @@ body {
 }
 
 .playlist-cover-song img {
-  margin-left:35px;
-  border-radius:50%;
+  margin-left: 35px;
+  border-radius: 50%;
   width: 150px;
-  height:150px;
+  height: 150px;
   box-shadow: 0px 2px 35px -1px rgba(0, 0, 0, 0.45);
   -webkit-box-shadow: 0px 2px 35px -1px rgba(0, 0, 0, 0.45);
   -moz-box-shadow: 0px 2px 35px -1px rgba(0, 0, 0, 0.45);
 }
 .playlist-cover img {
-  margin-left:35px;
-object-fit:cover;
+  margin-left: 35px;
+  object-fit: cover;
   width: 150px;
-  height:150px;
+  height: 150px;
   box-shadow: 0px 2px 35px -1px rgba(0, 0, 0, 0.45);
   -webkit-box-shadow: 0px 2px 35px -1px rgba(0, 0, 0, 0.45);
   -moz-box-shadow: 0px 2px 35px -1px rgba(0, 0, 0, 0.45);
@@ -315,7 +340,7 @@ object-fit:cover;
 
 .song-image img {
   width: 34px;
-  object-fit:cover;
+  object-fit: cover;
   height: 34px;
 }
 
@@ -364,9 +389,9 @@ object-fit:cover;
   justify-content: center;
   align-items: center;
 }
-.App__song-navigation-prev{
-  cursor:pointer;
-  margin-top:12px;
+.App__song-navigation-prev {
+  cursor: pointer;
+  margin-top: 12px;
 }
 .App__section-grid-item:hover .play-button {
   opacity: 1;
@@ -390,7 +415,7 @@ object-fit:cover;
 .signup {
   background-color: #000;
   color: #888;
-  text-decoration:none;
+  text-decoration: none;
   padding: 10px 30px;
   border-radius: 20px;
   margin-left: 10px;
@@ -405,7 +430,7 @@ object-fit:cover;
   margin-left: 10px;
   cursor: pointer;
   transition: font-size 0.25s;
-  text-decoration:none;
+  text-decoration: none;
 }
 .signup:hover {
   color: white;
@@ -416,7 +441,7 @@ object-fit:cover;
   font-size: large;
 }
 .search-box {
-  margin-right:800px;
+  margin-right: 800px;
   display: flex;
   background-color: black;
   border-radius: 25px;

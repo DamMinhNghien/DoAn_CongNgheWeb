@@ -38,6 +38,12 @@ if (currentURL.includes("app_search.asp")) {
 } else if (currentURL.includes("topic.asp")) {
   var DivApp = document.getElementById("DivTopic");
   DivApp.classList.add("App__category-item--selected");
+} else if (currentURL.includes("app_top.asp")) {
+  var DivApp = document.getElementById("DivTop");
+  DivApp.classList.add("App__category-item--selected");
+} else if (currentURL.includes("app_myplaylist.asp")) {
+  var DivApp = document.getElementById("DivMyplaylist");
+  DivApp.classList.add("App__category-item--selected");
 }
  function goBack() {
         window.history.back();

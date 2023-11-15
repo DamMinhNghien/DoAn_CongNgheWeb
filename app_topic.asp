@@ -92,7 +92,7 @@
                   <text x="38" y="25" fill="#fff" style="font-size: 35px;">SpotiFake</text>
                </svg>
             </div>
-            <div class="App__categories-nav">
+            <div class="App__categories-nav" >
                <div id="DivApp" class="App__category-item" onclick="redirectFunction2('app.asp')">
                   <div class="icon">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: white;transform: ;msFilter:;"><path d="M3 13h1v7c0 1.103.897 2 2 2h12c1.103 0 2-.897 2-2v-7h1a1 1 0 0 0 .707-1.707l-9-9a.999.999 0 0 0-1.414 0l-9 9A1 1 0 0 0 3 13zm7 7v-5h4v5h-4zm2-15.586 6 6V15l.001 5H16v-5c0-1.103-.897-2-2-2h-4c-1.103 0-2 .897-2 2v5H6v-9.586l6-6z"></path></svg>
@@ -105,7 +105,7 @@
                   </div>
                   <span>Search</span>
                </div>
-               <div class="App__category-item">
+               <div class="App__category-item"onclick="redirectFunction2('app_myplaylist.asp')">
                   <div class="icon">
                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: white;transform: ;msFilter:;"><path d="M13 16.493C13 18.427 14.573 20 16.507 20s3.507-1.573 3.507-3.507c0-.177-.027-.347-.053-.517H20V6h2V4h-3a1 1 0 0 0-1 1v8.333a3.465 3.465 0 0 0-1.493-.346A3.51 3.51 0 0 0 13 16.493zM2 5h14v2H2z"></path><path d="M2 9h14v2H2zm0 4h9v2H2zm0 4h9v2H2z"></path></svg>
                   </div>
@@ -174,8 +174,8 @@
                            <path d="m9 17 8-5-8-5z"></path>
                         </svg>
                      </div>                        
-                        </div>
-                        <h3><%=rs1("TenChuDe")%></h3>
+                        </div >
+                        <h3 style="text-align:center;"><%=rs1("TenChuDe")%></h3>
                     </div>
         <%
                     counter = counter + 1

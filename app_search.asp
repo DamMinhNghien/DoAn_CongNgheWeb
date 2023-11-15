@@ -110,7 +110,7 @@
                </div>
                <span>Home</span>
             </div>
-            <div class="App__category-item" onclick="redirectFunction2('app_search.asp')">
+            <div class="App__category-item" id="DivSearch" onclick="redirectFunction2('app_search.asp')">
                <div class="icon">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: white;transform: ;msFilter:;">
                      <path d="M10 18a7.952 7.952 0 0 0 4.897-1.688l4.396 4.396 1.414-1.414-4.396-4.396A7.952 7.952 0 0 0 18 10c0-4.411-3.589-8-8-8s-8 3.589-8 8 3.589 8 8 8zm0-14c3.309 0 6 2.691 6 6s-2.691 6-6 6-6-2.691-6-6 2.691-6 6-6z"></path>
@@ -118,7 +118,7 @@
                </div>
                <span>Search</span>
             </div>
-            <div class="App__category-item">
+            <div class="App__category-item"onclick="redirectFunction2('app_myplaylist.asp')">
                <div class="icon">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: white;transform: ;msFilter:;">
                      <path d="M13 16.493C13 18.427 14.573 20 16.507 20s3.507-1.573 3.507-3.507c0-.177-.027-.347-.053-.517H20V6h2V4h-3a1 1 0 0 0-1 1v8.333a3.465 3.465 0 0 0-1.493-.346A3.51 3.51 0 0 0 13 16.493zM2 5h14v2H2z"></path>
@@ -196,7 +196,7 @@
                         </svg>
                      </div>
                   </div>
-                  <h3><%=rs1("TenChuDe")%></h3>
+                  <h3 style="text-align:center;"><%=rs1("TenChuDe")%></h3>
                </div>
                <%
                   counter = counter + 1
