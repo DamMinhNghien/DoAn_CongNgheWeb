@@ -53,8 +53,11 @@
                   </div>
                </button>
                <div class="dropdown-content">
-                  <form method=POST action="">
+<form method=POST action="app_account.asp">
                      <input type="submit" class="drop"  name="AccButton" value="Account"/>
+                  </form>
+                  <form method=POST action="app_history.asp">
+                     <input type="submit" class="drop"  name="AccHistory" value="History"/>
                   </form>
                   <%
                      If Request.Form("LogoutButton") = "Logout" Then
@@ -203,7 +206,7 @@ sql1 = "SELECT BaiHat.*, ChuDe.TenChuDe, CaSi.TenCaSi, Dg.DiemDG FROM BaiHat " &
   <br>
    <div class="App__main-song">
       <div class="left">
-        <%=rs1("DuongDan")%>
+        <iframe width="700" height="400" src="https://www.youtube.com/embed/Vt4kAu-ziRY?si=KssDHyQz_blnJkk3?rel=0&autoplay=1" title="YouTube video player" frameborder="0" allow="accelerometer;autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
        <div class="star-rating">
   <input type="radio" id="star1" name="rating" value="1">
   <label for="star1">★</label>

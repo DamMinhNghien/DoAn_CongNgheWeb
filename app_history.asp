@@ -52,7 +52,7 @@
                   </div>
                </button>
                <div class="dropdown-content">
-                  <form method=POST action="app_account.asp">
+                 <form method=POST action="app_account.asp">
                      <input type="submit" class="drop"  name="AccButton" value="Account"/>
                   </form>
                   <form method=POST action="app_history.asp">
@@ -64,11 +64,10 @@
                         Response.Redirect("app.asp")
                      
                      End If
-                     %>   
+                     %>
                   <form method=POST action="app.asp">
                      <input type="submit" class="drop"  name="LogoutButton" value="Logout"/>
                   </form>
-                 
                </div>
             </div>
             <% else %>
@@ -110,7 +109,7 @@
                </div>
                <span>Search</span>
             </div>
-            <div class="App__category-item"onclick="redirectFunction2('app_myplaylist.asp')">
+            <div class="App__category-item" id="DivMyplaylist"onclick="redirectFunction2('app_myplaylist.asp')">
                <div class="icon">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: white;transform: ;msFilter:;">
                      <path d="M13 16.493C13 18.427 14.573 20 16.507 20s3.507-1.573 3.507-3.507c0-.177-.027-.347-.053-.517H20V6h2V4h-3a1 1 0 0 0-1 1v8.333a3.465 3.465 0 0 0-1.493-.346A3.51 3.51 0 0 0 13 16.493zM2 5h14v2H2z"></path>
@@ -155,49 +154,40 @@
       <div class="App__main-view">
          <div class="App__top-gradient"></div>
          <div class="App__header-placeholder"></div>
-         <br>
-         <h1 style="color: white;text-align: center;">Where every song is a story, welcome to SpotiFake</h1>
-         <section class="App__section App__your-shows">
-            <div class="App__section-header">
-               <h2>SpotiFake topic</h2>
-               <a href="app_topic.asp" style="color: gray;">SEE ALL</a>
-            </div>
-            <%
-               Set rs1 = Server.CreateObject("ADODB.Recordset")
-                sql1="SELECT IDChuDe, TenChuDe, AnhPLM FROM ChuDe"
-                rs1.open sql1, conn 
-               
-                %>
-            <div class="App__section-grid-container">
-               <% if(rs1.eof)then
-                  response.write("không có chủ đề!")
-                  else 
-                  counter = 0
-                   while not rs1.EOF and counter<5
-                   tid=rs1("IDChuDe")
-                   tname=rs1("TenChuDe")
-                   timage=rs1("AnhPLM")
-                   %>
-               <div class="App__section-grid-item" onclick="redirectFunction('<%=tid %>','<%=tname %>','<%=timage%>')" >
-                  <div class="image-container">
-                     <img class="round-border-image" src="images\<%=rs1("AnhPLM")%>">
-                     <div class="play-button">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;">
-                           <path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z"></path>
-                           <path d="m9 17 8-5-8-5z"></path>
-                        </svg>
-                     </div>
-                  </div>
-                  <h3 style="text-align:center;"><%=rs1("TenChuDe")%></h3>
+        <div class="playlist-songs-container">
+             <h1 style="color:white;">Lịch sử truy cập bài hát</h1>
+               <div class="playlist-songs" >
+                  <table>
+                     <tr>
+                        <th>#</th>
+                        <th>Title</th>
+                        <th>Country</th>
+                        <th>Rating</th>
+                        <th>Date</th>
+                     </tr>
+                    
+                     <tr class="songdetail" onclick="redirectFunction1('1')" >
+                        <td>1</td>
+                        <td class="song-title">
+                           <div class="song-image">
+                              <img src="images\ro.jpg" alt="">
+                           </div>
+                           <div class="song-name-album">
+                              <div class="song-name">TenBaiHat</div>
+                              <div class="song-artist"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" style="fill: white;transform: ;msFilter:;"><path d="M12 16c2.206 0 4-1.794 4-4V6c0-2.217-1.785-4.021-3.979-4.021a.933.933 0 0 0-.209.025A4.006 4.006 0 0 0 8 6v6c0 2.206 1.794 4 4 4z"></path><path d="M11 19.931V22h2v-2.069c3.939-.495 7-3.858 7-7.931h-2c0 3.309-2.691 6-6 6s-6-2.691-6-6H4c0 4.072 3.061 7.436 7 7.931z"></path></svg>TÙng</div>
+                           </div>
+                        </td>
+                       
+                        <td class="song-date-added">QuocGia</td>
+                        <td class="song-duration" style="font-size: 13px;">4  <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" style="fill: white;transform: ;msFilter:;"><path d="M21.947 9.179a1.001 1.001 0 0 0-.868-.676l-5.701-.453-2.467-5.461a.998.998 0 0 0-1.822-.001L8.622 8.05l-5.701.453a1 1 0 0 0-.619 1.713l4.213 4.107-1.49 6.452a1 1 0 0 0 1.53 1.057L12 18.202l5.445 3.63a1.001 1.001 0 0 0 1.517-1.106l-1.829-6.4 4.536-4.082c.297-.268.406-.686.278-1.065z"></path></svg></td>
+                         <td class="song-album">Ngay xem</td>
+                     </tr>
+                    
+                  </table>
                </div>
-               <%
-                  counter = counter + 1
-                  rs1.movenext
-                  wend
-                  end if
-                  rs1.close
-                  conn.close
-                  %>
+            </div>
+         </div>
+      </div>
       <script src="javascript.js"></script>
    </body>
 </html>

@@ -6,6 +6,32 @@
   box-sizing: border-box;
   font-family: "Poppins", sans-serif;
 }
+.accounttable{
+  margin: 0 auto;
+            color:white;
+            font-size:20px;
+            padding: 20px;
+
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.accounttable td{
+   padding: 8px;
+   
+}
+.acct{
+  width:100%;
+  padding: 20px; 
+}
+.accinput{
+      border: 1px solid blue;
+    border-radius: 20px;
+    width: 300px; /* Set the desired width */
+    height: 40px;
+    box-sizing: border-box;
+    padding: 5px;
+    margin-bottom: 10px;
+}
 .myplaylist-container {
   max-width: 1200px;
   margin: 20px auto;

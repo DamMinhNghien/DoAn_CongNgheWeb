@@ -1,6 +1,6 @@
     <!--#include file="connection.asp"-->
     <%
-    session.Timeout=1
+    session.Timeout=15
     uname=Request.form("UName")
     upass=Request.form("UPass")
 

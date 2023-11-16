@@ -55,9 +55,12 @@
                      </div>
                   </button>
                   <div class="dropdown-content">
-                     <form method=POST action="">
-                        <input type="submit" class="drop"  name="AccButton" value="Account"/>
-                     </form>
+                     <form method=POST action="app_account.asp">
+                     <input type="submit" class="drop"  name="AccButton" value="Account"/>
+                  </form>
+                  <form method=POST action="app_history.asp">
+                     <input type="submit" class="drop"  name="AccHistory" value="History"/>
+                  </form>
                      <%
                         If Request.Form("LogoutButton") = "Logout" Then
                             Session.Abandon()

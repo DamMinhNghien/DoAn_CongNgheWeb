@@ -52,7 +52,7 @@
                   </div>
                </button>
                <div class="dropdown-content">
-                  <form method=POST action="app_account.asp">
+                 <form method=POST action="app_account.asp">
                      <input type="submit" class="drop"  name="AccButton" value="Account"/>
                   </form>
                   <form method=POST action="app_history.asp">
@@ -64,11 +64,10 @@
                         Response.Redirect("app.asp")
                      
                      End If
-                     %>   
+                     %>
                   <form method=POST action="app.asp">
                      <input type="submit" class="drop"  name="LogoutButton" value="Logout"/>
                   </form>
-                 
                </div>
             </div>
             <% else %>
@@ -110,7 +109,7 @@
                </div>
                <span>Search</span>
             </div>
-            <div class="App__category-item"onclick="redirectFunction2('app_myplaylist.asp')">
+            <div class="App__category-item" id="DivMyplaylist"onclick="redirectFunction2('app_myplaylist.asp')">
                <div class="icon">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: white;transform: ;msFilter:;">
                      <path d="M13 16.493C13 18.427 14.573 20 16.507 20s3.507-1.573 3.507-3.507c0-.177-.027-.347-.053-.517H20V6h2V4h-3a1 1 0 0 0-1 1v8.333a3.465 3.465 0 0 0-1.493-.346A3.51 3.51 0 0 0 13 16.493zM2 5h14v2H2z"></path>
@@ -155,49 +154,52 @@
       <div class="App__main-view">
          <div class="App__top-gradient"></div>
          <div class="App__header-placeholder"></div>
-         <br>
-         <h1 style="color: white;text-align: center;">Where every song is a story, welcome to SpotiFake</h1>
-         <section class="App__section App__your-shows">
-            <div class="App__section-header">
-               <h2>SpotiFake topic</h2>
-               <a href="app_topic.asp" style="color: gray;">SEE ALL</a>
-            </div>
-            <%
-               Set rs1 = Server.CreateObject("ADODB.Recordset")
-                sql1="SELECT IDChuDe, TenChuDe, AnhPLM FROM ChuDe"
-                rs1.open sql1, conn 
-               
-                %>
-            <div class="App__section-grid-container">
-               <% if(rs1.eof)then
-                  response.write("không có chủ đề!")
-                  else 
-                  counter = 0
-                   while not rs1.EOF and counter<5
-                   tid=rs1("IDChuDe")
-                   tname=rs1("TenChuDe")
-                   timage=rs1("AnhPLM")
-                   %>
-               <div class="App__section-grid-item" onclick="redirectFunction('<%=tid %>','<%=tname %>','<%=timage%>')" >
-                  <div class="image-container">
-                     <img class="round-border-image" src="images\<%=rs1("AnhPLM")%>">
-                     <div class="play-button">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;">
-                           <path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z"></path>
-                           <path d="m9 17 8-5-8-5z"></path>
-                        </svg>
-                     </div>
-                  </div>
-                  <h3 style="text-align:center;"><%=rs1("TenChuDe")%></h3>
-               </div>
-               <%
-                  counter = counter + 1
-                  rs1.movenext
-                  wend
-                  end if
-                  rs1.close
-                  conn.close
-                  %>
+
+        	<form method=POST action="app">
+            <div class="acct">
+			<table class="accounttable " width=100%>
+            <tr>
+            <th></th>
+            <th style="color:white;text-align:center;float:left;margin-right:300px;font-size:30px;">Thông tin tài khoản
+            <br></th>
+            </tr>
+				<tr>
+                    <td style="float:right;">ID tài khoản:</td>
+					<td >1</td>
+				</tr>
+                <tr>
+					<td style="float:right;">Tên tài khoản:</td>
+					<td><input class="accinput" type=text name=txtPimage  value=""></td>
+				</tr>
+                <tr>
+					<td style="float:right;">Mật khẩu:</td>
+					<td><input class="accinput" type=text  name=txtPimage  value=""></td>
+				</tr>
+                <tr>
+					<td style="float:right;">Số điện thoại:</td>
+					<td><input class="accinput" type=text   name=txtPimage  value=""></td>
+				</tr>
+				<tr>
+					<td style="float:right;">Ngày lập:</td>
+                    <td >22/12/2023</td>
+				</tr>
+				<tr>
+					<td style="float:right;">Trạng thái:</td>
+                    <td >hoạt động</td>
+				</tr>
+				<tr>
+					<td style="float:right;">Loại tài khoản:</td>
+                     <td >User</td>
+                     
+				</tr>
+                <tr>
+				<td >
+				</td>
+				<td><input class="login"  type=submit value="Cập nhật">
+                <!-- <input type=hidden value="" name="cid">-->
+                 <input class="login"  type=reset value="Hủy bỏ"></td>
+			</tr>
+				</div>
       <script src="javascript.js"></script>
    </body>
 </html>
