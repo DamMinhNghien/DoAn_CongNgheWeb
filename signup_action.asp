@@ -23,7 +23,7 @@ elseif(not rs1.eof) then
      session("signup_uname_error")=""
     Response.Redirect("signup.asp")
 else
-    sql = "insert into TaiKhoan(TenTK, MatKhau, NgayLap, TrangThai, LoaiTK, SDT) values ('" & uname & "', '" & upass & "', GETDATE(),'active', 'user', " & unumber & ")"
+    sql = "insert into TaiKhoan(TenTK, MatKhau, NgayLap, TrangThai, LoaiTK, SDT) values ('" & uname & "', '" & upass & "', GETDATE(),'1', 'user', " & unumber & ")"
     conn.execute(sql)
     response.redirect("signup_success.asp")
 end if

@@ -10,14 +10,9 @@
    </head>
    <body>
       <div class="App">
-      <div class="App__top-bar"> 
+      <div class="App__top-bar">
          <div class="App__header">
-           <div class="App__song-navigation-prev">
-                     <svg role="img" focusable="false" height="24" width="24" viewBox="0 0 24 24" onclick="goBack()">
-                        <polyline points="16 4 7 12 16 20" fill="none" stroke="#fff"></polyline>
-                     </svg>
-                  </div>
-                  
+            
             <%
                if Session("UID") <> "" and Session("UNAME") <> "" then
                    ' Lấy UID và UNAME từ Session
@@ -32,18 +27,13 @@
                Set rs = Server.CreateObject("ADODB.Recordset")
                sql="select * from TaiKhoan where IDTK like '" & UID & "'"
                rs.open sql, conn
-               
+             
                  if(not rs.eof) then 
                %>
             <div class="dropdown">
                <button class="App__user">
                   <div class="App__figure">
-                     <svg width="16" height="16" fill="currentColor" viewBox="0 0 18 20" xmlns="http://www.w3.org/2000/svg"
-                        data-testid="user-icon">
-                        <path
-                           d="M15.216 13.717L12 11.869C11.823 11.768 11.772 11.607 11.757 11.521C11.742 11.435 11.737 11.267 11.869 11.111L13.18 9.57401C14.031 8.58001 14.5 7.31101 14.5 6.00001V5.50001C14.5 3.98501 13.866 2.52301 12.761 1.48601C11.64 0.435011 10.173 -0.0879888 8.636 0.0110112C5.756 0.198011 3.501 2.68401 3.501 5.67101V6.00001C3.501 7.31101 3.97 8.58001 4.82 9.57401L6.131 11.111C6.264 11.266 6.258 11.434 6.243 11.521C6.228 11.607 6.177 11.768 5.999 11.869L2.786 13.716C1.067 14.692 0 16.526 0 18.501V20H1V18.501C1 16.885 1.874 15.385 3.283 14.584L6.498 12.736C6.886 12.513 7.152 12.132 7.228 11.691C7.304 11.251 7.182 10.802 6.891 10.462L5.579 8.92501C4.883 8.11101 4.499 7.07201 4.499 6.00001V5.67101C4.499 3.21001 6.344 1.16201 8.699 1.00901C9.961 0.928011 11.159 1.35601 12.076 2.21501C12.994 3.07601 13.5 4.24301 13.5 5.50001V6.00001C13.5 7.07201 13.117 8.11101 12.42 8.92501L11.109 10.462C10.819 10.803 10.696 11.251 10.772 11.691C10.849 12.132 11.115 12.513 11.503 12.736L14.721 14.585C16.127 15.384 17.001 16.884 17.001 18.501V20H18.001V18.501C18 16.526 16.932 14.692 15.216 13.717Z"
-                           fill="#fff"></path>
-                     </svg>
+                     <img class="App__image" style="object-fit:cover;border-radius: 50%;" src="images/<%=rs("anh")%>" alt="">
                   </div>
                   <span class="App__username"><%=UNAME%></span>
                   <div class="App__expand-arrow">
@@ -53,7 +43,7 @@
                   </div>
                </button>
                <div class="dropdown-content">
-<form method=POST action="app_account.asp">
+                  <form method=POST action="app_account.asp">
                      <input type="submit" class="drop"  name="AccButton" value="Account"/>
                   </form>
                   <form method=POST action="app_history.asp">
@@ -75,24 +65,24 @@
             <div class="signup-login-wrapper">
                <div class="signup-login">
                   <a href="./signup.asp" class="signup" >
-                     Sign Up</a>
-                     <a class="login" href="./login.asp">
-                     Login</a>
+                  Sign Up</a>
+                  <a class="login" href="./login.asp">
+                  Login </a>
                </div>
             </div>
             <% 
                end if 
-               rs.close
+     
                
                %>
          </div>
       </div>
       <div class="App__nav-bar">
-           <div class="App__logo">
-               <svg viewBox="0 0 254 37" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <text x="38" y="25" fill="#fff" style="font-size: 35px;">SpotiFake</text>
-               </svg>
-            </div>
+         <div class="App__logo">
+            <svg viewBox="0 0 254 37" fill="none" xmlns="http://www.w3.org/2000/svg">
+               <text x="38" y="25" fill="#fff" style="font-size: 35px;">SpotiFake</text>
+            </svg>
+         </div>
          <div class="App__categories-nav">
             <div id="DivApp" class="App__category-item" onclick="redirectFunction2('app.asp')">
                <div class="icon">
@@ -147,125 +137,398 @@
                </div>
                <span>Top music</span>
             </div>
+            <div class="App__category-item" onclick="redirectFunction2('app_Album.asp')">
+               <div class="icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: white;transform: ;msFilter:;"><circle cx="11.99" cy="11.99" r="2.01"></circle><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"></path><path d="M12 6a6 6 0 0 0-6 6h2a4 4 0 0 1 4-4z"></path></svg>
+               </div>
+               <span>Album</span>
+            </div>
          </div>
          <div class="App__divider-container">
             <hr>
          </div>
       </div>
- <div class="App__main-view">
-    <div class="App__top-gradient"></div>
-    <div class="App__header-placeholder"></div>
-    <br>
-
-    <% 
-    songid = request.querystring("Songid")
-    Set rs1 = Server.CreateObject("ADODB.Recordset")
-sql1 = "SELECT BaiHat.*, ChuDe.TenChuDe, CaSi.TenCaSi, Dg.DiemDG FROM BaiHat " & _
-        "JOIN ChuDe ON BaiHat.IDChuDe = ChuDe.IDChuDe " & _
-        "JOIN CaSi ON BaiHat.BiDanh = CaSi.BiDanh " & _
-        "LEFT JOIN DanhGia AS Dg ON BaiHat.IDBaiHat = Dg.IDBaiHat " & _
-        "WHERE BaiHat.IDBaiHat LIKE '" & songid & "'"
-    rs1.open sql1, conn
-    %>
-
-    <div class="song_infor">
-        <div class="playlist-content">
-            <div class="playlist-cover-song">
-                <img src="images/<%=rs1("AnhBH")%>" alt="">
-                <div style="height: 30px;"></div>
-            </div>
-
-            <div class="playlist-info">
-                <div class="playlist-title" style="margin-bottom:10px;"><%=rs1("TenBaiHat")%></div>
-         
-                Ca sĩ chính: <%=rs1("TenCaSi")%>-<%=rs1("BiDanh")%>
-                <div class="playlist-description">
-                    <div style="display: inline-block; margin-right: 60px;">
-                        Người sáng tác: <%=rs1("TacGia")%>
-                    </div>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" style="fill: white;transform: ;msFilter:;">
-                        <path d="M12.25 2c-5.514 0-10 4.486-10 10s4.486 10 10 10 10-4.486 10-10-4.486-10-10-10zM18 13h-6.75V6h2v5H18v2z"></path>
-                    </svg>: <%=rs1("NgayPhatHanh")%>
-                    <br>
-                    Về bài hát: <%=rs1("MoTa")%>
-                    <br>
-                    Chủ đề/Thể loại: <%=rs1("TenChuDe")%>
-                    <br>
-                    Quốc Gia: <%=rs1("QuocGia")%>
-                </div>
-
-                <div class="playlist-stats">
-                    <span>Lượt xem: <%=rs1("LuotXem")%> ·</span>
-                    <span>Đánh giá: <%=rs1("DiemDG")%>★</span>
-                </div>
+      <div class="App__main-view">
+      <div class="App__top-gradient"></div>
+      <div class="App__header-placeholder"></div>
+      <br>
+      <%songid = request.querystring("Songid") 
+      if UID <> "" then
+            Set rs4 = Server.CreateObject("ADODB.Recordset")
+            sql4 = "SELECT * FROM LichSu WHERE IDTK = '" & UID & "' AND IDBaiHat = '" & songid & "'"
+            rs4.Open sql4, conn
+            if rs4.EOF then
+             sql5 = "INSERT INTO LichSu (IDTK, IDBaiHat, NgayXem) VALUES ('" & UID & "', '" & songid & "', GETDATE())"
+                conn.execute sql5
+               else
+               sql5= "UPDATE LichSu SET NgayXem = GETDATE() WHERE IDTK = '" & UID & "' AND IDBaiHat = '" & songid & "'"
+                conn.execute sql5
+                end if
+               end if
+            %>
+         <%
+            score = Request.Form("rating")
+            Set rs3 = Server.CreateObject("ADODB.Recordset")
+            sql3 = "SELECT * FROM DanhGia WHERE IDTK = '" & UID & "' AND IDBaiHat = '" & songid & "'"
+            rs3.Open sql3, conn
             
-        </div>
-    </div>
-</div>
-
-  <br>
-   <div class="App__main-song">
-      <div class="left">
-        <iframe width="700" height="400" src="https://www.youtube.com/embed/Vt4kAu-ziRY?si=KssDHyQz_blnJkk3?rel=0&autoplay=1" title="YouTube video player" frameborder="0" allow="accelerometer;autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-       <div class="star-rating">
-  <input type="radio" id="star1" name="rating" value="1">
-  <label for="star1">★</label>
-  <input type="radio" id="star2" name="rating" value="2">
-  <label for="star2">★</label>
-  <input type="radio" id="star3" name="rating" value="3">
-  <label for="star3">★</label>
-  <input type="radio" id="star4" name="rating" value="4">
-  <label for="star4">★</label>
-  <input type="radio" id="star5" name="rating" value="5">
-  <label for="star5">★</label>
-</div>
-
-         <div class="comments-container">
-            <div class="comment-box">
-               <textarea class="comment-input" placeholder="Write a comment..."></textarea>
-               <button onclick="postComment()">Post</button>
-            </div> 
-            <!-- Comment list will be displayed here -->
-            <div class="comment">
-               <img src="images\mtp.jpg" alt="Commenter Avatar" width="50" height="50">
-               <div class="comment-content">
-                  <strong>Commenter Name</strong>
-                  <p style="font-size: 12px">This is a sample comment. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-               </div>
+            If score <> "" Then
+            
+               if  rs3.EOF then
+                sql2 = "INSERT INTO DanhGia (IDTK, IDBaiHat, DiemDG) VALUES ('" & UID & "', '" & songid & "', '" & score & "')"
+                conn.execute sql2
+               checkedRating=score
+               else
+              sql2 = "UPDATE DanhGia SET DiemDG = '" & score & "' WHERE IDTK = '" & UID & "' AND IDBaiHat = '" & songid & "'"
+               conn.execute sql2
+               checkedRating=score
+                End if
+            
+            Else
+            
+            Dim checkedRating
+                checkedRating = "" 
+               If rs3.EOF Then
+                checkedRating = ""
+               Else
+                checkedRating = rs3("DiemDG")
+              
+               End If
+            End If
+             rs3.close
+            %>
+      <% 
+         Set rs1 = Server.CreateObject("ADODB.Recordset")
+         sql1 = "SELECT BaiHat.*, ChuDe.TenChuDe, CaSi.TenCaSi, Dg.DiemDG FROM BaiHat " & _
+             "JOIN ChuDe ON BaiHat.IDChuDe = ChuDe.IDChuDe " & _
+             "JOIN CaSi ON BaiHat.BiDanh = CaSi.BiDanh " & _
+             "LEFT JOIN DanhGia AS Dg ON BaiHat.IDBaiHat = Dg.IDBaiHat " & _
+             "WHERE BaiHat.IDBaiHat LIKE '" & songid & "'"
+         rs1.open sql1, conn
+Set rs6 = Server.CreateObject("ADODB.Recordset")
+sql6 = "SELECT Count(DiemDG) as LuotDG, ROUND(AVG(DiemDG), 1) as TBDG FROM DanhGia WHERE IDBaiHat = '" & songid & "'"
+rs6.Open sql6, conn
+LuotDG=rs6("LuotDG")
+%>
+<div class="song_infor">
+   <div class="playlist-content">
+      <div class="playlist-cover-song">
+         <img src="images/<%=rs1("AnhBH")%>" alt="">
+         <div style="height: 30px;"></div>
+      </div>
+      <div class="playlist-info">
+         <div class="playlist-title" style="margin-bottom:10px;"><%=rs1("TenBaiHat")%></div>
+         Ca sĩ chính: <%=rs1("TenCaSi")%>-<%=rs1("BiDanh")%>
+         <div class="playlist-description">
+            <div style="display: inline-block; margin-right: 60px;">
+               Người sáng tác: <%=rs1("TacGia")%>
             </div>
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" style="fill: white;transform: ;msFilter:;">
+               <path d="M12.25 2c-5.514 0-10 4.486-10 10s4.486 10 10 10 10-4.486 10-10-4.486-10-10-10zM18 13h-6.75V6h2v5H18v2z"></path>
+            </svg>
+            : <%=rs1("NgayPhatHanh")%>
+            <br>
+            Về bài hát: <%=rs1("MoTa")%>
+            <br>
+            Chủ đề/Thể loại: <%=rs1("TenChuDe")%>
+            <br>
+            Quốc Gia: <%=rs1("QuocGia")%>
+         </div>
+         <div class="playlist-stats">
+             <%
+         If LuotDG=0 Then
+          %>
+            <span> Chưa có đánh giá nào! ·</span>
+         <%
+         Else
+         %>
+            <span>Lượt đánh giá: <%=LuotDG%> ·</span>
+            <span>Đánh giá: <%=rs6("TBDG")%> ★</span>
+            
+         <%
+         rs6.Close
+         End If
+         
+         %>
          </div>
       </div>
-      <div class="right">
-         <h2 style="color:white; ">Danh sách phát</h2>
-         <div class="playlist-songs" >
-                  <table>
-                     <tr>
-                        <th>#</th>
-                        <th>Title</th>
-                        <th>Country</th>
-                        <th>Rating</th>
-                     </tr>
-                     <tr class="songdetail"onclick="redirectFunction2('app_song.asp')" >
-                        <td>5</td>
-                        <td class="song-title">
-                           <div class="song-image">
-                              <img src="images\ri.jpg" alt="">
-                           </div>
-                           <div class="song-name-album">
-                              <div class="song-name">haizz</div>
-                              <div class="song-artist"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" style="fill: white;transform: ;msFilter:;"><path d="M12 16c2.206 0 4-1.794 4-4V6c0-2.217-1.785-4.021-3.979-4.021a.933.933 0 0 0-.209.025A4.006 4.006 0 0 0 8 6v6c0 2.206 1.794 4 4 4z"></path><path d="M11 19.931V22h2v-2.069c3.939-.495 7-3.858 7-7.931h-2c0 3.309-2.691 6-6 6s-6-2.691-6-6H4c0 4.072 3.061 7.436 7 7.931z"></path></svg>ten<div>
-                           </div>
-                        </td>
-                        <td class="song-date-added">vn</td>
-                        <td class="song-duration" style="font-size: 13px;">4  <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" style="fill: white;transform: ;msFilter:;"><path d="M21.947 9.179a1.001 1.001 0 0 0-.868-.676l-5.701-.453-2.467-5.461a.998.998 0 0 0-1.822-.001L8.622 8.05l-5.701.453a1 1 0 0 0-.619 1.713l4.213 4.107-1.49 6.452a1 1 0 0 0 1.53 1.057L12 18.202l5.445 3.63a1.001 1.001 0 0 0 1.517-1.106l-1.829-6.4 4.536-4.082c.297-.268.406-.686.278-1.065z"></path></svg></td>
-                     </tr>
-                    
-                  </table>
-               </div>
-         </div>
+   </div>
 </div>
-<%
-conn.close%>
+
+      <br>
+      <div class="App__main-song">
+      <div class="left">
+         <iframe width="700" height="400" src="https://www.youtube.com/embed/Vt4kAu-ziRY?si=KssDHyQz_blnJkk3?rel=0&autoplay=1" title="YouTube video player" frameborder="0" allow="accelerometer;autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+         
+         <form method="post" action="" id="ratingForm" class="star-rating">
+            <input type="radio" id="star5" name="rating" value="5" <% If checkedRating = "5" Then Response.Write("checked") %>>
+            <label for="star5" onclick="return confirm('Bạn có chắc muốn đánh giá bài hát này 5 sao ?') && submitForm('star5','<%= UID %>')">★</label>
+            <input type="radio" id="star4" name="rating" value="4" <% If checkedRating = "4" Then Response.Write("checked") %>>
+            <label for="star4" onclick="return confirm('Bạn có chắc muốn đánh giá bài hát này 4 sao ?') && submitForm('star4','<%= UID %>')">★</label>
+            <input type="radio" id="star3" name="rating" value="3" <% If checkedRating = "3" Then Response.Write("checked") %>>
+            <label for="star3" onclick="return confirm('Bạn có chắc muốn đánh giá bài hát này 3 sao ?') && submitForm('star3','<%= UID %>')">★</label>
+            <input type="radio" id="star2" name="rating" value="2" <% If checkedRating = "2" Then Response.Write("checked") %>>
+            <label for="star2" onclick="return confirm('Bạn có chắc muốn đánh giá bài hát này 2 sao ?') && submitForm('star2','<%= UID %>')">★</label>
+            <input type="radio" id="star1" name="rating" value="1" <% If checkedRating = "1" Then Response.Write("checked") %>>
+            <label for="star1" onclick="return confirm('Bạn có chắc muốn đánh giá bài hát này 1 sao ?') && submitForm('star1','<%= UID %>')">★</label>
+         </form>
+     <% Set rs2 = Server.CreateObject("ADODB.Recordset")
+             sql7  = "DECLARE @currentUserID INT; " & _
+                     "SET @currentUserID = '" & UID & "'; " & _
+                     "SELECT BinhLuan.*, TaiKhoan.TenTK " & _
+                     "FROM BinhLuan " & _
+                     "JOIN TaiKhoan ON BinhLuan.IDTK = TaiKhoan.IDTK " & _
+                     "WHERE IDBaiHat = '" & songid & "' " & _
+                     "ORDER BY " & _
+                     "CASE " & _
+                     "    WHEN BinhLuan.IDTK = @currentUserID THEN 0 " & _
+                     "    ELSE 1 " & _
+                     "END, " & _
+                     "BinhLuan.LuotThich DESC;"
+
+            rs2.Open sql7, conn 
+            %>
+            
+     <div class="comments-container">
+   <% If UID <> "" Then %>
+       <script>
+       var next=1;
+     function postComment() {
+    var commentText = document.getElementById("commentText").value;
+    var commentName = document.getElementById("CommentUName").value;
+    var idTK = '<%=UID%>'; // Replace with the actual value of UID
+    var idBaiHat = '<%=songid%>'; // Use the value of the songid parameter from the URL
+
+    // Basic validation
+    if (!commentText) {
+        alert("Vui lòng nhập bình luận.");
+        return;
+    }
+    <%
+Set rs7 = Server.CreateObject("ADODB.Recordset")
+             sql9  = "SELECT TOP 1 IDBinhLuan From BinhLuan ORDER BY IDBinhLuan DESC"
+            rs7.Open sql9, conn 
+            if rs7.eof then
+             newidbinhluan=0
+            else
+            newidbinhluan=rs7("IDBinhLuan")
+           end if
+           rs7.close
+            %>
+        
+     var IDNextComment=<%=newidbinhluan%>;
+     IDNextComment=IDNextComment+next;
+     next=next+1;
+    
+    var commentDiv = document.createElement("div");
+    commentDiv.className = "comment";
+    commentDiv.innerHTML = `
+        <img src="images/mtp.jpg" alt="Commenter Avatar" width="50" height="50" class="comment-avatar">
+        <div class="comment-content">
+            <div class="comment-meta">
+                <strong><%=rs("TenTK")%></strong>
+                <p class="comment-time">Vừa xong</p>
+            </div>
+            <p class="comment-text">${commentText}</p>
+        </div>
+         <button class="like-button " onclick="toggleLike(this, ${IDNextComment},<%=UID%>,<%=songid%>)">
+            <span class="like-icon" id="likeIcon">&#x2665;</span>
+</button>
+                <a style="color:white;" id="LikeCount${IDNextComment}">0</a>
+    `;
+
+    // Add the new comment to the comment list
+    var commentList = document.getElementById("commentList");
+   commentList.insertBefore(commentDiv, commentList.firstChild);
+
+    // Clear the content in the comment form
+    document.getElementById("commentText").value = "";
+
+    // Send the comment to the server using AJAX
+    sendCommentToServer(idTK, idBaiHat, commentText,IDNextComment);
+}
+
+function sendCommentToServer(idTK, idBaiHat, commentText,newidbinhluan) {
+    var xhr = new XMLHttpRequest();
+    //var url = "app_comment.asp"; // Update this path with the actual server-side script
+    var url = "app_comment.asp" +
+    "?IDTK=" + encodeURIComponent(idTK) +
+    "&IDBaiHat=" + encodeURIComponent(idBaiHat) +
+    "&Comment=" + encodeURIComponent(commentText) +
+    "&IDComment=" + encodeURIComponent(newidbinhluan);
+    xhr.open("GET", url, true);
+
+    // Handle errors and the completion of the AJAX request
+    xhr.onerror = function () {
+        console.error("Error sending the comment to the server.");
+    };
+
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                console.log("Comment sent successfully");
+                // You can handle the server's response here if needed
+            } else {
+                console.error("Error: " + xhr.status);
+            }
+        }
+    };
+
+    // Send the request with the FormData containing the fields
+    xhr.send();
+}
+   </script>
+      <!-- Commenter information -->
+      <div class="commenter-info">
+         <img src="images/mtp.jpg" alt="Commenter Avatar" class="commenter-avatar">
+         <span class="commenter-name" id="CommentUName"><%=rs("TenTK")%></span>
+      </div>
+
+      <!-- Comment box -->
+      <div class="comment-box">
+         <textarea class="comment-input" placeholder="Write a comment..." id="commentText"></textarea>
+         <button onclick="postComment()">Post</button>
+      </div>
+      <%
+      
+            if rs2.eof then %>
+            <div id="commentList">
+            <p style="color:white; text-align:center;">Chưa có bình luận nào</p></div>
+            <% else
+                while not rs2.eof %>
+      <div id="commentList">
+      <div class="comment" id="comment">
+               <img src="images/mtp.jpg" alt="Commenter Avatar" width="50" height="50" class="comment-avatar">
+               <div class="comment-content">
+                  <div class="comment-meta">
+                     <strong><%=rs2("TenTK")%></strong>
+                     <p class="comment-time" data-ngaygio="<%=rs2("NgayGio")%>"></p>
+
+                  </div>
+                  <p class="comment-text"><%=rs2("BinhLuan")%></p>
+                  
+               </div>
+                <%   idbinhluan=rs2("IDBinhLuan")
+                 Set rs5 = Server.CreateObject("ADODB.Recordset")
+             sql8  = "SELECT IDTK FROM ThongKeLike WHERE IDBaiHat = '" & songid & "'  AND IDBinhLuan = '" & idbinhluan & "'AND IDTK= '" & UID & "'"
+            rs5.Open sql8, conn
+            if rs5.eof then
+            idtk=0
+            else
+             idtk=rs5("IDTK")
+             end if
+              rs5.close
+  
+              %>
+           <button class="like-button <% If idtk = UID Then Response.Write "active" %> " onclick="toggleLike(this, <%= idbinhluan %>,<%=UID%>,<%=songid%>)">
+            <span class="like-icon" id="likeIcon">&#x2665;</span>
+</button>
+                <a style="color:white;" id="LikeCount<%=idbinhluan%>"><%=rs2("LuotThich")%></a>
+            </div></div>
+            <%
+            rs2.MoveNext
+            wend
+            end if
+            %>
+   <% Else %>
+   <div>
+   <a style="color:white ;">Bạn chưa đăng nhập để bình luận?</a>
+      <a style="color:white ;text-decoration: underline;font-weight: bold;" href="login.asp">Đăng nhập ngay</a>
+      </div>
+       <% if rs2.eof then %>
+  <div id="commentList">
+            <p style="color:white; text-align:center;">Chưa có bình luận nào</p></div>
+            <% else
+                while not rs2.eof %>
+     <div id="commentList">
+      <div class="comment" id="comment">
+               <img src="images/mtp.jpg" alt="Commenter Avatar" width="50" height="50" class="comment-avatar">
+               <div class="comment-content">
+                  <div class="comment-meta">
+                     <strong><%=rs2("TenTK")%></strong>
+                     <p class="comment-time" data-ngaygio="<%=rs2("NgayGio")%>"></p>
+
+                  </div>
+                  <p class="comment-text"><%=rs2("BinhLuan")%></p>
+                  
+               </div>
+                <%   idbinhluan=rs2("IDBinhLuan")
+                
+              %>
+           <button class="like-button" id="buttonlike" onclick="submitForm2('buttonlike', '<%=UID%>')">
+            <span class="like-icon" id="likeIcon">&#x2665;</span>
+</button>
+                <a style="color:white;" id="LikeCount<%=idbinhluan%>"><%=rs2("LuotThich")%></a>
+            </div></div>
+            <%
+            rs2.MoveNext
+            wend
+            end if
+            %>
+      
+   <% End If %>
+
+</div>
+
+      </div>
+      <div class="right">
+      <h2 style="color:white; ">Danh sách đề xuất</h2>
+      <% Set rs8 = Server.CreateObject("ADODB.Recordset")
+sql10 = "SELECT TOP 5 BaiHat.IDBaiHat, BaiHat.TenBaiHat, BaiHat.QuocGia, CaSi.TenCaSi, ROUND(AVG(DiemDG), 1) as TBDG FROM BaiHat JOIN CaSi ON BaiHat.BiDanh = CaSi.BiDanh JOIN DanhGia ON BaiHat.IDBaiHat = DanhGia.IDBaiHat WHERE BaiHat.IDBaiHat <> '" & songid & "' GROUP BY BaiHat.IDBaiHat, BaiHat.TenBaiHat, BaiHat.QuocGia, CaSi.TenCaSi ORDER BY RAND()"
+                rs8.open sql10, conn%>
+      <div class="playlist-songs" >
+       <%
+            if rs8.eof then%>
+            <p style="color:white;">không có bài hát nào được đề xuất</p>
+           <%else 
+            count=0 %>
+         <table>
+            <tr>
+               <th>#</th>
+               <th>Title</th>
+               <th>Country</th>
+               <th>Rating</th>
+            </tr>
+           <%while not rs8.eof 
+           idbh=rs8("IDBaiHat")
+           count=count+1
+           %>
+            <tr class="songdetail"onclick="redirectFunction1('<%=idbh%>')" >
+               <td><%=count%></td>
+               <td class="song-title">
+                  <div class="song-image">
+                     <img src="images\ri.jpg" alt="">
+                  </div>
+                  <div class="song-name-album">
+                     <div class="song-name"><%=rs8("TenBaiHat")%></div>
+                     <div class="song-artist">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" style="fill: white;transform: ;msFilter:;">
+                           <path d="M12 16c2.206 0 4-1.794 4-4V6c0-2.217-1.785-4.021-3.979-4.021a.933.933 0 0 0-.209.025A4.006 4.006 0 0 0 8 6v6c0 2.206 1.794 4 4 4z"></path>
+                           <path d="M11 19.931V22h2v-2.069c3.939-.495 7-3.858 7-7.931h-2c0 3.309-2.691 6-6 6s-6-2.691-6-6H4c0 4.072 3.061 7.436 7 7.931z"></path>
+                        </svg>
+                        <%=rs8("TenCaSi")%>
+                        <div>
+                        </div>
+               </td>
+               <td class="song-date-added"><%=rs8("QuocGia")%></td>
+               <td class="song-duration" style="font-size: 13px;"><%=rs8("TBDG") %><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" style="fill: white;transform: ;msFilter:;"><path d="M21.947 9.179a1.001 1.001 0 0 0-.868-.676l-5.701-.453-2.467-5.461a.998.998 0 0 0-1.822-.001L8.622 8.05l-5.701.453a1 1 0 0 0-.619 1.713l4.213 4.107-1.49 6.452a1 1 0 0 0 1.53 1.057L12 18.202l5.445 3.63a1.001 1.001 0 0 0 1.517-1.106l-1.829-6.4 4.536-4.082c.297-.268.406-.686.278-1.065z"></path></svg></td>
+            </tr>
+            <%
+            rs8.MoveNext
+            wend
+            rs8.close
+            end if%>
+         </table>
+         </div>
+         </div>
+      </div>
+      <%
+
+       
+         rs1.close
+                   rs.close
+         conn.close
+         %>
       <script src="javascript.js"></script>
    </body>
 </html>

@@ -12,20 +12,17 @@
       <div class="App">
       <div class="App__top-bar">
          <div class="App__header">
-            <div class="App__song-navigation-prev">
-               <svg role="img" focusable="false" height="24" width="24" viewBox="0 0 24 24"onclick="goBack()">
-                  <polyline points="16 4 7 12 16 20" fill="none" stroke="#fff"></polyline>
-               </svg>
-            </div>
+            
             <div class="search-container">
-               <form method=POST action="app_search_song.asp">
+            <%timkiemvalue=request.form("timkiem")%>
+               <form method=POST action="app_search.asp">
                   <div class="search-box">
                      <button type="submit" class="search-button">
                         <svg role="img" aria-hidden="true" class="search-icon" viewBox="0 0 16 16">
                            <path d="M7 1.75a5.25 5.25 0 1 0 0 10.5 5.25 5.25 0 0 0 0-10.5zM.25 7a6.75 6.75 0 1 1 12.096 4.12l3.184 3.185a.75.75 0 1 1-1.06 1.06L11.304 12.2A6.75 6.75 0 0 1 .25 7z"></path>
                         </svg>
                      </button>
-                     <input class="search-input" type="text" placeholder="Bạn muốn nghe gì?" name="timkiem">
+                     <input class="search-input" type="text" placeholder="Bạn muốn nghe gì?" name="timkiem" id="search-box" value="<%=timkiemvalue%>">
                   </div>
                </form>
             </div>
@@ -48,13 +45,8 @@
                %>
             <div class="dropdown">
                <button class="App__user">
-                  <div class="App__figure">
-                     <svg width="16" height="16" fill="currentColor" viewBox="0 0 18 20" xmlns="http://www.w3.org/2000/svg"
-                        data-testid="user-icon">
-                        <path
-                           d="M15.216 13.717L12 11.869C11.823 11.768 11.772 11.607 11.757 11.521C11.742 11.435 11.737 11.267 11.869 11.111L13.18 9.57401C14.031 8.58001 14.5 7.31101 14.5 6.00001V5.50001C14.5 3.98501 13.866 2.52301 12.761 1.48601C11.64 0.435011 10.173 -0.0879888 8.636 0.0110112C5.756 0.198011 3.501 2.68401 3.501 5.67101V6.00001C3.501 7.31101 3.97 8.58001 4.82 9.57401L6.131 11.111C6.264 11.266 6.258 11.434 6.243 11.521C6.228 11.607 6.177 11.768 5.999 11.869L2.786 13.716C1.067 14.692 0 16.526 0 18.501V20H1V18.501C1 16.885 1.874 15.385 3.283 14.584L6.498 12.736C6.886 12.513 7.152 12.132 7.228 11.691C7.304 11.251 7.182 10.802 6.891 10.462L5.579 8.92501C4.883 8.11101 4.499 7.07201 4.499 6.00001V5.67101C4.499 3.21001 6.344 1.16201 8.699 1.00901C9.961 0.928011 11.159 1.35601 12.076 2.21501C12.994 3.07601 13.5 4.24301 13.5 5.50001V6.00001C13.5 7.07201 13.117 8.11101 12.42 8.92501L11.109 10.462C10.819 10.803 10.696 11.251 10.772 11.691C10.849 12.132 11.115 12.513 11.503 12.736L14.721 14.585C16.127 15.384 17.001 16.884 17.001 18.501V20H18.001V18.501C18 16.526 16.932 14.692 15.216 13.717Z"
-                           fill="#fff"></path>
-                     </svg>
+                   <div class="App__figure">
+                     <img class="App__image" style="object-fit:cover;border-radius: 50%;" src="images/<%=rs("anh")%>" alt="">
                   </div>
                   <span class="App__username"><%=UNAME%></span>
                   <div class="App__expand-arrow">
@@ -64,7 +56,7 @@
                   </div>
                </button>
                <div class="dropdown-content">
-                 <form method=POST action="app_account.asp">
+                  <form method=POST action="app_account.asp">
                      <input type="submit" class="drop"  name="AccButton" value="Account"/>
                   </form>
                   <form method=POST action="app_history.asp">
@@ -113,7 +105,7 @@
                </div>
                <span>Home</span>
             </div>
-            <div class="App__category-item" id="DivSearch" onclick="redirectFunction2('app_search.asp')">
+            <div class="App__category-item" onclick="redirectFunction2('app_search.asp')">
                <div class="icon">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: white;transform: ;msFilter:;">
                      <path d="M10 18a7.952 7.952 0 0 0 4.897-1.688l4.396 4.396 1.414-1.414-4.396-4.396A7.952 7.952 0 0 0 18 10c0-4.411-3.589-8-8-8s-8 3.589-8 8 3.589 8 8 8zm0-14c3.309 0 6 2.691 6 6s-2.691 6-6 6-6-2.691-6-6 2.691-6 6-6z"></path>
@@ -158,6 +150,12 @@
                </div>
                <span>Top music</span>
             </div>
+            <div class="App__category-item" onclick="redirectFunction2('app_Album.asp')">
+               <div class="icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: white;transform: ;msFilter:;"><circle cx="11.99" cy="11.99" r="2.01"></circle><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"></path><path d="M12 6a6 6 0 0 0-6 6h2a4 4 0 0 1 4-4z"></path></svg>
+               </div>
+               <span>Album</span>
+            </div>
          </div>
          <div class="App__divider-container">
             <hr>
@@ -167,109 +165,70 @@
          <div class="App__top-gradient"></div>
          <div class="App__header-placeholder"></div>
          <br>
-         <h1 style="color: white;text-align: center;">Where every song is a story, welcome to SpotiFake</h1>
-         <section class="App__section App__your-shows">
-            <div class="App__section-header">
-               <h2>SpotiFake topic</h2>
-               <a href="app_topic.asp" style="color: gray;">SEE ALL</a>
-            </div>
-            <%
-               Set rs1 = Server.CreateObject("ADODB.Recordset")
-                sql1="SELECT IDChuDe, TenChuDe, AnhPLM FROM ChuDe"
-                rs1.open sql1, conn 
-               
-                %>
-            <div class="App__section-grid-container">
-               <% if(rs1.eof)then
-                  response.write("không có chủ đề!")
-                  else 
-                  counter = 0
-                   while not rs1.EOF and counter<5
-                   tid=rs1("IDChuDe")
-                   tname=rs1("TenChuDe")
-                   timage=rs1("AnhPLM")
-                   %>
-               <div class="App__section-grid-item" onclick="redirectFunction('<%=tid %>','<%=tname %>','<%=timage%>')" >
-                  <div class="image-container">
-                     <img class="round-border-image" src="images\<%=rs1("AnhPLM")%>">
-                     <div class="play-button">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;">
-                           <path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z"></path>
-                           <path d="m9 17 8-5-8-5z"></path>
-                        </svg>
-                     </div>
-                  </div>
-                  <h3 style="text-align:center;"><%=rs1("TenChuDe")%></h3>
-               </div>
-               <%
-                  counter = counter + 1
-                  rs1.movenext
-                  wend
-                  end if
-                  rs1.close
-                  conn.close
-                  %>
-         </section>
-         <section class="App__section App__your-shows">
-         <div class="App__section-header">
-         <h3>Your top mixes</h3>
-         <span>SEE ALL</span>
-         </div>
-         <div class="App__section-grid-container">
-         <div class="App__section-grid-item">
-         <div class="featured-image"></div>
-         <h3>TED Radio Hour</h3>
-         <span>NPR</span>
-         </div>
-         <div class="App__section-grid-item">
-         <div class="featured-image"></div>
-         <h3>Short Wave</h3>
-         <span>NPR</span>
-         </div>
-         <div class="App__section-grid-item">
-         <div class="featured-image"></div>
-         <h3>Post Reports</h3>
-         <span>The Washington Post</span>
-         </div>
-         <div class="App__section-grid-item">
-         <div class="featured-image"></div>
-         <h3>Planet Money</h3>
-         <span>NPR</span>
-         </div>
-         <div class="App__section-grid-item">
-         <div class="featured-image"></div>
-         <h3>How I Built this...</h3>
-         <span>NPR</span>
-         </div>
-         <div class="App__section-grid-item">
-         <div class="featured-image"></div>
-         <h3>TED Radio Hour</h3>
-         <span>NPR</span>
-         </div>
-         <div class="App__section-grid-item">
-         <div class="featured-image"></div>
-         <h3>Short Wave</h3>
-         <span>NPR</span>
-         </div>
-         <div class="App__section-grid-item">
-         <div class="featured-image"></div>
-         <h3>Post Reports</h3>
-         <span>The Washington Post</span>
-         </div>
-         <div class="App__section-grid-item">
-         <div class="featured-image"></div>
-         <h3>Planet Money</h3>
-         <span>NPR</span>
-         </div>
-         <div class="App__section-grid-item">
-         <div class="featured-image"></div>
-         <h3>How I Built this...</h3>
-         <span>NPR</span>
-         </div>
-         </div>
-         </section>
-         </div>
-      </div>
+         <br>
+      <script src="https://code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
+<script>
+$(document).ready(function(){
+
+  // Gọi ajax ngay khi trang load
+  $.ajax({
+    type: "GET", 
+    url: "app_seggustion.asp",
+    data: 'keyword=' + $("#search-box").val(),
+    success: function(data){
+      $("#left1").show();
+      $("#left1").html(data);
+    }
+  });
+
+  $.ajax({
+    type: "GET",
+    url: "app_right1.asp",
+    data: 'keyword=' + $("#search-box").val(), 
+    success: function(data){
+      $("#right1").show();  
+      $("#right1").html(data);
+    }
+  });
+
+});
+    $(document).ready(function(){
+        $("#search-box").keyup(function(){
+            $.ajax({
+                type: "GET",
+                url: "app_seggustion.asp",
+                data: 'keyword=' + $(this).val(),
+                success: function(data){
+                    $("#left1").show();
+                    $("#left1").html(data);
+                }
+            });
+            $.ajax({
+                type: "GET",
+                url: "app_right1.asp",
+                data: 'keyword=' + $(this).val(),
+                success: function(data){
+                    $("#right1").show();
+                    $("#right1").html(data);
+                }
+            });
+        });
+    });
+
+    function selectCountry(val) {
+        $("#search-box").val(val);
+        $("#left1").hide();
+        $("#right1").hide();
+    }
+</script>
+<div class="Search1">
+    <div class="left1" id="left1"></div>
+    <div class="right1" id="right1"></div>
+</div>
+
+
       <script src="javascript.js"></script>
    </body>
 </html>
+
+

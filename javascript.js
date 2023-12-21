@@ -44,7 +44,246 @@ if (currentURL.includes("app_search.asp")) {
 } else if (currentURL.includes("app_myplaylist.asp")) {
   var DivApp = document.getElementById("DivMyplaylist");
   DivApp.classList.add("App__category-item--selected");
+} else if (currentURL.includes("app_Album.asp")) {
+  var DivApp = document.getElementById("DivAlbum");
+  DivApp.classList.add("App__category-item--selected");
 }
- function goBack() {
-        window.history.back();
+
+function submitForm(inputId, uID) {
+  var uid = uID;
+
+  if (uid === "") {
+    var wantToLogin = confirm(
+      "Vui lòng đăng nhập trước khi đánh giá. Bạn có muốn đăng nhập ngay bây giờ?"
+    );
+
+    if (wantToLogin) {
+      // Redirect to the login page with a parameter indicating the need to reset the form
+      window.location.href = "login.asp?resetForm=true";
     }
+  } else {
+    // Check if there's a URL parameter indicating the need to reset the form
+   
+
+    // Trigger the click event on the specified element
+    document.getElementById(inputId).click();
+
+    // Submit the form with id "ratingForm"
+    document.getElementById("ratingForm").submit();
+  }
+}
+function submitForm2(inputId, uID) {
+  var uid = uID;
+
+  if (uid === "") {
+    var wantToLogin = confirm(
+      "Vui lòng đăng nhập trước khi đánh giá. Bạn có muốn đăng nhập ngay bây giờ?"
+    );
+
+    if (wantToLogin) {
+      // Redirect to the login page with a parameter indicating the need to reset the form
+      window.location.href = "login.asp?resetForm=true";
+    }
+  } else {
+    // Check if there's a URL parameter indicating the need to reset the form
+
+    // Trigger the click event on the specified element
+    document.getElementById(inputId).click();
+
+  }
+}
+
+ document.addEventListener("DOMContentLoaded", function () {
+   // Lấy tất cả các phần tử có class "comment-time"
+   var commentTimeElements = document.querySelectorAll(".comment-time");
+
+   // Lặp qua từng phần tử để cập nhật thời gian
+   commentTimeElements.forEach(function (commentTimeElement) {
+     // Lấy thời gian từ thuộc tính data-ngaygio
+     var ngayGioString = commentTimeElement.getAttribute("data-ngaygio");
+     var ngayGio = new Date(ngayGioString);
+
+     // Tính thời gian hiện tại và thời gian viết bài
+     var now = new Date();
+     var timeDifference = now - ngayGio;
+     var secondsDifference = Math.floor(timeDifference / 1000);
+     var minutesDifference = Math.floor(secondsDifference / 60);
+     var hoursDifference = Math.floor(minutesDifference / 60);
+     var daysDifference = Math.floor(hoursDifference / 24);
+
+     // Xác định xem nên hiển thị thông tin theo giây, phút, giờ hay ngày
+     var timeAgo;
+     if (secondsDifference < 60) {
+       timeAgo = secondsDifference + " giây trước";
+     } else if (minutesDifference < 60) {
+       timeAgo = minutesDifference + " phút trước";
+     } else if (hoursDifference < 24) {
+       timeAgo = hoursDifference + " giờ trước";
+     } else {
+       timeAgo = daysDifference + " ngày trước";
+     }
+
+     // Cập nhật nội dung của phần tử
+     commentTimeElement.textContent = timeAgo;
+   });
+ });
+
+
+function Like(idbinhluan) {
+  var currentLikeCount = parseInt(
+    document.getElementById("LikeCount" + idbinhluan).innerText
+  );
+
+  // Tăng giá trị LikeCount lên 1
+  var newLikeCount = currentLikeCount + 1;
+
+  // Cập nhật giá trị LikeCount trong HTML
+  document.getElementById("LikeCount" + idbinhluan).innerText = newLikeCount;
+}
+function UnLike(idbinhluan) {
+  var currentLikeCount = parseInt(
+    document.getElementById("LikeCount" + idbinhluan).innerText
+  );
+
+  // Tăng giá trị LikeCount lên 1
+  var newLikeCount = currentLikeCount - 1;
+
+  // Cập nhật giá trị LikeCount trong HTML
+  document.getElementById("LikeCount" + idbinhluan).innerText = newLikeCount;
+}
+function toggleLike(element, idbinhluan,idTK,idBaiHat) {
+  var isLiked = element.classList.contains("active");
+
+  if (isLiked) {
+     UnLike(idbinhluan);
+    element.classList.toggle("active", !isLiked);
+    var xhr = new XMLHttpRequest();
+    //var url = "app_comment.asp"; // Update this path with the actual server-side script
+    var url =
+      "app_comment_Unlike.asp" + "?IDbinhluan=" + encodeURIComponent(idbinhluan) +
+       "&IDTK=" + encodeURIComponent(idTK) +
+      "&IDBaiHat=" + encodeURIComponent(idBaiHat);
+    xhr.open("GET", url, true);
+
+    // Handle errors and the completion of the AJAX request
+    xhr.onerror = function () {
+      console.error("Error sending the comment to the server.");
+    };
+
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === XMLHttpRequest.DONE) {
+        if (xhr.status === 200) {
+          console.log("Comment sent successfully");
+          // You can handle the server's response here if needed
+        } else {
+          console.error("Error: " + xhr.status);
+        }
+      }
+    };
+
+    // Send the request with the FormData containing the fields
+    xhr.send();
+  } else {
+    Like(idbinhluan);
+    element.classList.toggle("active");
+    var xhr = new XMLHttpRequest();
+    //var url = "app_comment.asp"; // Update this path with the actual server-side script
+    var url =
+      "app_comment_like.asp" +
+      "?IDbinhluan=" +
+      encodeURIComponent(idbinhluan) +
+      "&IDTK=" +
+      encodeURIComponent(idTK) +
+      "&IDBaiHat=" +
+      encodeURIComponent(idBaiHat);
+    xhr.open("GET", url, true);
+
+    // Handle errors and the completion of the AJAX request
+    xhr.onerror = function () {
+      console.error("Error sending the comment to the server.");
+    };
+
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === XMLHttpRequest.DONE) {
+        if (xhr.status === 200) {
+          console.log("Comment sent successfully");
+          // You can handle the server's response here if needed
+        } else {
+          console.error("Error: " + xhr.status);
+        }
+      }
+    };
+
+    // Send the request with the FormData containing the fields
+    xhr.send();
+  }
+}
+function toggleLike(element, idbinhluan,idTK,idBaiHat) {
+  var isLiked = element.classList.contains("active");
+
+  if (isLiked) {
+     UnLike(idbinhluan);
+    element.classList.toggle("active", !isLiked);
+    var xhr = new XMLHttpRequest();
+    //var url = "app_comment.asp"; // Update this path with the actual server-side script
+    var url =
+      "app_comment_Unlike.asp" + "?IDbinhluan=" + encodeURIComponent(idbinhluan) +
+       "&IDTK=" + encodeURIComponent(idTK) +
+      "&IDBaiHat=" + encodeURIComponent(idBaiHat);
+    xhr.open("GET", url, true);
+
+    // Handle errors and the completion of the AJAX request
+    xhr.onerror = function () {
+      console.error("Error sending the comment to the server.");
+    };
+
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === XMLHttpRequest.DONE) {
+        if (xhr.status === 200) {
+          console.log("Comment sent successfully");
+          // You can handle the server's response here if needed
+        } else {
+          console.error("Error: " + xhr.status);
+        }
+      }
+    };
+
+    // Send the request with the FormData containing the fields
+    xhr.send();
+  } else {
+    Like(idbinhluan);
+    element.classList.toggle("active");
+    var xhr = new XMLHttpRequest();
+    //var url = "app_comment.asp"; // Update this path with the actual server-side script
+    var url =
+      "app_comment_like.asp" +
+      "?IDbinhluan=" +
+      encodeURIComponent(idbinhluan) +
+      "&IDTK=" +
+      encodeURIComponent(idTK) +
+      "&IDBaiHat=" +
+      encodeURIComponent(idBaiHat);
+    xhr.open("GET", url, true);
+
+    // Handle errors and the completion of the AJAX request
+    xhr.onerror = function () {
+      console.error("Error sending the comment to the server.");
+    };
+
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === XMLHttpRequest.DONE) {
+        if (xhr.status === 200) {
+          console.log("Comment sent successfully");
+          // You can handle the server's response here if needed
+        } else {
+          console.error("Error: " + xhr.status);
+        }
+      }
+    };
+
+    // Send the request with the FormData containing the fields
+    xhr.send();
+  }
+}
+
+

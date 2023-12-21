@@ -14,11 +14,7 @@
          <div class="App__top-bar">
             <div class="App__header">
                <div class="App__song-navigation">
-                  <div class="App__song-navigation-prev">
-                     <svg role="img" focusable="false" height="24" width="24" viewBox="0 0 24 24" onclick="goBack()">
-                        <polyline points="16 4 7 12 16 20" fill="none" stroke="#fff"></polyline>
-                     </svg>
-                  </div>
+                  
                </div>
                <%
                   if Session("UID") <> "" and Session("UNAME") <> "" then
@@ -40,10 +36,8 @@
                <div class="dropdown">
                   <button class="App__user">
                      <div class="App__figure">
-                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 18 20" xmlns="http://www.w3.org/2000/svg" data-testid="user-icon">
-                           <path d="M15.216 13.717L12 11.869C11.823 11.768 11.772 11.607 11.757 11.521C11.742 11.435 11.737 11.267 11.869 11.111L13.18 9.57401C14.031 8.58001 14.5 7.31101 14.5 6.00001V5.50001C14.5 3.98501 13.866 2.52301 12.761 1.48601C11.64 0.435011 10.173 -0.0879888 8.636 0.0110112C5.756 0.198011 3.501 2.68401 3.501 5.67101V6.00001C3.501 7.31101 3.97 8.58001 4.82 9.57401L6.131 11.111C6.264 11.266 6.258 11.434 6.243 11.521C6.228 11.607 6.177 11.768 5.999 11.869L2.786 13.716C1.067 14.692 0 16.526 0 18.501V20H1V18.501C1 16.885 1.874 15.385 3.283 14.584L6.498 12.736C6.886 12.513 7.152 12.132 7.228 11.691C7.304 11.251 7.182 10.802 6.891 10.462L5.579 8.92501C4.883 8.11101 4.499 7.07201 4.499 6.00001V5.67101C4.499 3.21001 6.344 1.16201 8.699 1.00901C9.961 0.928011 11.159 1.35601 12.076 2.21501C12.994 3.07601 13.5 4.24301 13.5 5.50001V6.00001C13.5 7.07201 13.117 8.11101 12.42 8.92501L11.109 10.462C10.819 10.803 10.696 11.251 10.772 11.691C10.849 12.132 11.115 12.513 11.503 12.736L14.721 14.585C16.127 15.384 17.001 16.884 17.001 18.501V20H18.001V18.501C18 16.526 16.932 14.692 15.216 13.717Z" fill="#fff"></path>
-                        </svg>
-                     </div>
+                     <img class="App__image" style="object-fit:cover;border-radius: 50%;" src="images/<%=rs("anh")%>" alt="">
+                  </div>
                      <span class="App__username"><%=UNAME%></span>
                      <div class="App__expand-arrow">
                         <svg role="img" height="16" width="16" viewBox="0 0 16 16">
@@ -145,6 +139,12 @@
                   </div>
                   <span>Top music</span>
                </div>
+               <div class="App__category-item" onclick="redirectFunction2('app_Album.asp')">
+               <div class="icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: white;transform: ;msFilter:;"><circle cx="11.99" cy="11.99" r="2.01"></circle><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"></path><path d="M12 6a6 6 0 0 0-6 6h2a4 4 0 0 1 4-4z"></path></svg>
+               </div>
+               <span>Album</span>
+            </div>
             </div>
             <div class="App__divider-container">
                <hr>
@@ -155,22 +155,31 @@
             <div class="App__header-placeholder"></div>
             <br>
          '    <%
-         '    topid=request.querystring("Topid")
-         '          Set rs1 = Server.CreateObject("ADODB.Recordset")
-         '          Set rs2 = Server.CreateObject("ADODB.Recordset")
-         '    sql1="select * from TopBXH "
-         '  rs1.open sql1, conn
-         '  sql2=rs1("TopCategories")
-         '  rs2.open sql2, conn
+            topid=request.querystring("Topid")
+                  Set rs1 = Server.CreateObject("ADODB.Recordset")
+            sql1="select * from TopBXH where IDTop = '" & topid & "'"
+          rs1.open sql1, conn
+          Loai=rs1("Loai")
+          Detail=rs1("TopCategories")
+          
+           Set rs2 = Server.CreateObject("ADODB.Recordset")
+sql2 = "SELECT TOP 10 BaiHat.IDBaiHat, BaiHat.TenBaiHat, BaiHat.AnhBH, BaiHat.QuocGia, CaSi.TenCaSi, ROUND(AVG(DiemDG), 1) as TBDG, Count(DiemDG) as LuotDG " & _
+       "FROM BaiHat " & _
+       "JOIN CaSi ON BaiHat.BiDanh = CaSi.BiDanh " & _
+       "JOIN DanhGia ON BaiHat.IDBaiHat = DanhGia.IDBaiHat " & _
+       "WHERE BaiHat." & Loai & " LIKE '" & Detail & "' " & _
+       "GROUP BY BaiHat.IDBaiHat, BaiHat.TenBaiHat, BaiHat.AnhBH, BaiHat.QuocGia, CaSi.TenCaSi " & _
+       "ORDER BY TBDG DESC"
+                 rs2.open sql2, conn
          '    %>
 
             <div class="playlist-content">
                <div class="playlist-cover">
-                  <img src="images\ronan.jpg" alt="">
+                  <img src="images\<%=rs1("AnhTOP")%>" alt="">
                </div>
                <div class="playlist-info">
-                  <div class="playlist-title">tentop</div>
-                  <div class="playlist-description">motatop</div>
+                  <div class="playlist-title"><%=rs1("TenTop")%></div>
+                  <div class="playlist-description"><%=rs1("MotaTop")%></div>
                   <div style="height: 60px;"></div>
                   <div class="playlist-stats">
                      <span> Spotify ·</span>
@@ -199,48 +208,57 @@
                   </div>
                 
                </div>
-               <div class="playlist-songs" >
+               
+               <div class="playlist-songs">
+                                     <%
+if rs2.eof then%>
+   <h1 style="color: white;text-align: center;">Hiện không có bài hát nào!</h1>
+     <%
+                  else
+                  %>
                   <table>
                      <tr>
                         <th>#</th>
                         <th>Title</th>
                         <th>Country</th>
-                        <th>View</th>
+                        <th>Rating time</th>
                         <th>Rating</th>
                      </tr>
                      
-'                      <%
-'                       count=1
-' Do While Not rs2.EOF
-'     Songid = rs2("IDBaiHat")
-' %>
+
+                   
+                  <%
+ count=1
+ While Not rs2.eof
+     %>
     <tr class="songdetail" onclick="redirectFunction1('1')">
         <td><%=count%></td>
         <td class="song-title">
             <div class="song-image">
-                <img src="images\100rapviet.jpg" alt="">
+                <img src="images\<%=rs2("AnhBH")%>" alt="">
             </div>
             <div class="song-name-album">
-                <div class="song-name">tenbaihat</div>
+                <div class="song-name"><%=rs2("TenBaiHat")%></div>
                 <div class="song-artist">
                     <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" style="fill: white;transform: ;msFilter:;">
                         <path d="M12 16c2.206 0 4-1.794 4-4V6c0-2.217-1.785-4.021-3.979-4.021a.933.933 0 0 0-.209.025A4.006 4.006 0 0 0 8 6v6c0 2.206 1.794 4 4 4z"></path>
                         <path d="M11 19.931V22h2v-2.069c3.939-.495 7-3.858 7-7.931h-2c0 3.309-2.691 6-6 6s-6-2.691-6-6H4c0 4.072 3.061 7.436 7 7.931z"></path>
-                    </svg>tencasi
+                    </svg><%=rs2("TenCaSi")%>
                 </div>
             </div>
         </td>
-        <td class="song-date-added">national</td>
-        <td class="song-album">view</td>
-        <td class="song-duration" style="font-size: 13px;">diem<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" style="fill: white;transform: ;msFilter:;"><path d="M21.947 9.179a1.001 1.001 0 0 0-.868-.676l-5.701-.453-2.467-5.461a.998.998 0 0 0-1.822-.001L8.622 8.05l-5.701.453a1 1 0 0 0-.619 1.713l4.213 4.107-1.49 6.452a1 1 0 0 0 1.53 1.057L12 18.202l5.445 3.63a1.001 1.001 0 0 0 1.517-1.106l-1.829-6.4 4.536-4.082c.297-.268.406-.686.278-1.065z"></path></svg></td>
+        <td class="song-date-added"><%=rs2("QuocGia")%></td>
+        <td class="song-album"><%=rs2("LuotDG")%></td>
+        <td class="song-duration" style="font-size: 13px;"><%=rs2("TBDG")%><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" style="fill: white;transform: ;msFilter:;"><path d="M21.947 9.179a1.001 1.001 0 0 0-.868-.676l-5.701-.453-2.467-5.461a.998.998 0 0 0-1.822-.001L8.622 8.05l-5.701.453a1 1 0 0 0-.619 1.713l4.213 4.107-1.49 6.452a1 1 0 0 0 1.53 1.057L12 18.202l5.445 3.63a1.001 1.001 0 0 0 1.517-1.106l-1.829-6.4 4.536-4.082c.297-.268.406-.686.278-1.065z"></path></svg></td>
     </tr>
 ' <%
-' count=count+1
-'     rs2.MoveNext
-' Loop
-' count=1
-' rs2.Close
-' %>
+count=count+1
+    rs2.MoveNext
+wend
+end if
+rs1.close
+rs2.Close
+ %>
 
       <script src="javascript.js"></script>
    </body>

@@ -6,6 +6,32 @@
   box-sizing: border-box;
   font-family: "Poppins", sans-serif;
 }
+  .like-button {
+    background-color: #202020; /* Màu nền của nút */
+    padding: 0; /* Loại bỏ padding để nút ôm gọn icon */
+    border: none; /* Loại bỏ đường viền của nút */
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Hiệu ứng chuyển đổi màu nền */
+    display: flex;
+    align-items: center;
+  }
+
+  .like-button .like-icon {
+    cursor: pointer;
+    color: #888; /* Default color */
+    font-size: 36px; /* Adjust the font size to make it larger */
+    margin: 0 10px; /* Khoảng cách giữa icon và nút */
+    transition: color 0.3s; /* Hiệu ứng chuyển đổi màu icon */
+  }
+
+  .like-button.active .like-icon {
+    color: #f00; /* Color when selected */
+  }
+
+  .like-button:hover {
+    background-color: #626366; /* Màu nền khi nút được di chuột qua */
+  }
+
 .accounttable{
   margin: 0 auto;
             color:white;
@@ -65,32 +91,29 @@
   font-size: 14px;
   color: #888;
 }
-.star-rating {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: row-reverse;
-}
+  .star-rating {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row-reverse;
+  }
 
-.star-rating input {
-  display: none;
-}
+  .star-rating input {
+    display: none;
+  }
 
-.star-rating label {
-  font-size: 24px;
-  color: #ccc;
-  cursor: pointer;
-}
+  .star-rating label {
+    font-size: 24px;
+    color: #ccc;
+    cursor: pointer;
+    transition: color 0.3s, text-shadow 0.3s;
+    
+  }
 
-.star-rating input:checked + label {
-  color: gold;
-  text-shadow: 0 0 10px gold;
-}
-
-.star-rating input:checked ~ label {
-  color: gold;
-  text-shadow: 0 0 10px gold;
-}
+  .star-rating input:checked ~ label {
+    color: gold;
+    text-shadow: 0 0 10px gold;
+  }
 .songdetail:hover {
   cursor: pointer;
   background-color: #333333;
@@ -128,44 +151,125 @@
   flex: 5;
 }
 .comments-container {
-  max-width: 722px;
-  margin-left: 20px;
-  margin-top: 20px;
-  border-color: white;
-  border-radius: 15%;
+   max-width: 722px;
+   margin: 20px auto;
+   background-color: #202020; /* Adjust background color */
+   padding: 15px;
+   border-radius: 15px;
+   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
-.comment {
-  margin-bottom: 10px;
-  padding: 10px;
-
-  border-radius: 5px;
-  color: white;
-  display: flex;
-  align-items: center;
+.commenter-info {
+   display: flex;
+   align-items: center;
+   margin-bottom: 10px;
 }
 
-.comment img {
-  border-radius: 50%;
-  margin-right: 10px;
-  margin-left: 22px;
+.commenter-avatar {
+   border-radius: 50%;
+   margin-right: 10px;
+   width: 40px; /* Adjust as needed */
+   height: 40px; /* Adjust as needed */
 }
 
-.comment-content {
-  flex: 1;
+.commenter-name {
+   font-weight: bold;
+   color: white;
+   font-size: 16px; /* Adjust as needed */
 }
 
 .comment-box {
-  max-width: 100%;
-  margin-left: 22px;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   margin-bottom: 10px;
+   border-radius: 10px;
+   padding: 15px;
+   background-color: black;
+   box-shadow: 0 0 5px rgba(255, 255, 255, 0.5); /* White box shadow */
 }
 
 .comment-input {
-  width: 100%;
-  margin-bottom: 10px;
-  padding: 5px;
-  background-color: black;
-  color: white;
+   width: 100%;
+   margin-bottom: 10px;
+   padding: 10px;
+   background-color: #303030; /* Darker background color */
+   color: white;
+   border: 1px solid white;
+   border-radius: 8px;
+   resize: none;
+}
+
+.comment-box button {
+   padding: 10px 20px;
+   background-color: white;
+   color: black;
+   border: none;
+   cursor: pointer;
+   border-radius: 5px;
+   font-weight: bold;
+   transition: background-color 0.3s;
+}
+
+.comment-box button:hover {
+   background-color: #eaeaea; /* Hover background color */
+}
+
+.comment {
+   display: flex;
+   align-items: center;
+   margin-bottom: 10px;
+   padding: 15px;
+   border-radius: 10px;
+   box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+   background-color: #202020; /* Adjust background color */
+   border: 1px solid #626366; /* White border */
+}
+
+
+.comment-avatar {
+   border-radius: 50%;
+   margin-right: 15px;
+   width: 50px; /* Adjust as needed */
+   height: 50px; /* Adjust as needed */
+}
+
+.comment-content {
+   flex: 1;
+}
+
+.comment-meta {
+   display: flex;
+  
+   align-items: center;
+   margin-bottom: 5px;
+}
+
+.comment-meta strong {
+   color: white;
+}
+
+.comment-time {
+   font-size: 12px;
+    padding-left:10px;
+   color: #ccc;
+}
+
+.comment-text {
+   font-size: 14px;
+   color: white;
+   margin: 0;
+   
+}
+
+
+.comment-box button {
+   padding: 5px 10px;
+   background-color: white;
+   color: black;
+   border: none;
+   cursor: pointer;
+   border-radius: 5px;
 }
 
 button {
@@ -467,7 +571,7 @@ body {
   font-size: large;
 }
 .search-box {
-  margin-right: 800px;
+  margin-right: 600px;
   display: flex;
   background-color: black;
   border-radius: 25px;
@@ -505,6 +609,7 @@ body {
 .dropdown {
   position: relative;
   display: inline-block;
+  margin-left:auto;
 }
 /* Tùy chỉnh kiểu và màu sắc theo nhu cầu của bạn */
 .dropdown-content {
@@ -512,6 +617,7 @@ body {
   position: absolute;
   background-color: #000;
   color: #fff;
+
   border-radius: 5px;
   padding: 10px;
   min-width: 160px;
@@ -645,6 +751,7 @@ body {
 }
 
 .App__user {
+  
   border: 0;
   display: flex;
   flex-direction: row;
@@ -657,14 +764,16 @@ body {
 }
 
 .App__figure {
-  width: 25px;
-  height: 25px;
-  background-color: #2a2a2a;
-  border-radius: 50%;
   margin-right: 8px;
   margin-left: 2px;
-  display: grid;
-  place-items: center;
+}
+
+.App__image {
+  width: 25px;
+  height: 25px;
+  object-fit: cover;
+  border-radius: 50%;
+  background-color: #2a2a2a;
 }
 
 .App__username {
