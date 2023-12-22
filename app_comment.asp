@@ -9,7 +9,7 @@ Response.Write "IDTK: " & idTK & "<br>"
 Response.Write "IDBaiHat: " & idBaiHat & "<br>"
 Response.Write "CommentText: " & commentText & "<br>"
 Response.Write "NewIDBinhLuan: " & NewIDBinhLuan & "<br>"
-SQL = "INSERT INTO BinhLuan (IDTK, IDBaiHat, BinhLuan, NgayGio,LuotThich,IDBinhLuan) VALUES ('" & idTK & "', '" & idBaiHat & "', '" & commentText & "', GETDATE(),'0','" & NewIDBinhLuan & "')"
+SQL = "INSERT INTO BinhLuan (IDTK, IDBaiHat, BinhLuan, NgayGio,LuotThich,IDBinhLuan) VALUES ('" & idTK & "', '" & idBaiHat & "',N'" & commentText & "', GETDATE(),'0','" & NewIDBinhLuan & "')"
 Response.Write SQL
 conn.execute SQL
 conn.close

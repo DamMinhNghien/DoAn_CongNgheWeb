@@ -120,9 +120,27 @@
                         <path d="M14 7H9V2H7v5H2v2h5v5h2V9h5z"></path>
                         <path fill="none" d="M0 0h16v16H0z"></path>
                      </svg>
-                  </div>
-                  <span>Create Playlist</span>
-               </div>
+                   </div>
+                <input type="submit" id="addpl" name="fav_language" value="none">
+               <label  class ="crtpl" for="addpl" onclick="submitForm3('<%= UID %>')">Create PlayList</label>
+            </div>
+            <!-- Alert Popup -->
+            <div id="alertPopup" class="alert">      
+               <span onclick="closeAlert()" style="float:right; cursor:pointer;">&times;</span>
+                  
+                     <p><form action="app_myplaylist_insert.asp" method="post" >
+                    <input type="hidden" name="txtUID" value="<%=UID%>">
+                    <div class="alert__plname">
+                     <label class = "fdName" for="folderName">Playlist Name:</label>
+                     <input class = "txName" type="text" id="folderName" name="plName" required>
+   </div>
+                    <div class="alert__plimg">
+                     <label class = "imgfd" for="image">Choose Image:</label>
+                     <input class = "imgimg" type="file" id="image" name="plimage" accept="image/*" required>
+</div>
+                    <button class = "btfd" type="submit">Create</button></p>
+                        </div>
+                       </form>
                <div class="App__category-item" onclick="redirectFunction2('app_topic.asp')">
                   <div class="icon">
                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: white;transform: ;msFilter:;">
@@ -171,6 +189,7 @@ sql2 = "SELECT TOP 10 BaiHat.IDBaiHat, BaiHat.TenBaiHat, BaiHat.AnhBH, BaiHat.Qu
        "GROUP BY BaiHat.IDBaiHat, BaiHat.TenBaiHat, BaiHat.AnhBH, BaiHat.QuocGia, CaSi.TenCaSi " & _
        "ORDER BY TBDG DESC"
                  rs2.open sql2, conn
+                 songid=rs2("IDBaiHat")
          '    %>
 
             <div class="playlist-content">
@@ -180,35 +199,10 @@ sql2 = "SELECT TOP 10 BaiHat.IDBaiHat, BaiHat.TenBaiHat, BaiHat.AnhBH, BaiHat.Qu
                <div class="playlist-info">
                   <div class="playlist-title"><%=rs1("TenTop")%></div>
                   <div class="playlist-description"><%=rs1("MotaTop")%></div>
-                  <div style="height: 60px;"></div>
-                  <div class="playlist-stats">
-                     <span> Spotify ·</span>
-                     <span>5,131,321 likes · </span>
-                     <span>100 songs, </span>
-                     <span>6 hr 57 min </span>
-                  </div>
+                  <div style="height: 50px;"></div>
                </div>
             </div>
-            <div class="playlist-songs-container">
-               <div class="playlist-buttons">
-                  <div class="playlist-buttons-left">
-                     <div class="playlist-buttons-resume-pause">
-                        
-                     </div>
-                     <div class="playlist-buttons-like">
-                        <svg height="32" width="32" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                           <path fill="#1DB954" d="M8.667 1.912a6.257 6.257 0 00-7.462 7.677c.24.906.683 1.747 1.295 2.457l7.955 9.482a2.015 2.015 0 003.09 0l7.956-9.482a6.188 6.188 0 001.382-5.234l-.49.097.49-.099a6.303 6.303 0 00-5.162-4.98h-.002a6.24 6.24 0 00-5.295 1.65.623.623 0 01-.848 0 6.257 6.257 0 00-2.91-1.568z"></path>
-                        </svg>
-                     </div>
-                     <div class="playlist-buttons-three-dot">
-                        <svg role="img" height="32" width="32" aria-hidden="true" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                           <path fill="#CACACA" d="M4.5 13.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3zm15 0a1.5 1.5 0 100-3 1.5 1.5 0 000 3zm-7.5 0a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"></path>
-                        </svg>
-                     </div>
-                  </div>
-                
-               </div>
-               
+            <div class="playlist-songs-container">              
                <div class="playlist-songs">
                                      <%
 if rs2.eof then%>
@@ -231,7 +225,7 @@ if rs2.eof then%>
  count=1
  While Not rs2.eof
      %>
-    <tr class="songdetail" onclick="redirectFunction1('1')">
+    <tr class="songdetail" onclick="redirectFunction1('<%=Songid%>')">
         <td><%=count%></td>
         <td class="song-title">
             <div class="song-image">

@@ -1,9 +1,9 @@
 <!--#include file="connection.asp"-->
 <% Set rs = Server.CreateObject("ADODB.Recordset")
 	keyword = Request.Querystring("keyword")
-sql = "SELECT TOP 5 BaiHat.IDBaiHat,BaiHat.AnhBH, BaiHat.TenBaiHat,BaiHat.BiDanh,CaSi.TenCaSi, ROUND(AVG(DiemDG), 1) as TBDG FROM BaiHat JOIN CaSi ON BaiHat.BiDanh = CaSi.BiDanh JOIN DanhGia ON BaiHat.IDBaiHat = DanhGia.IDBaiHat WHERE BaiHat.TenBaiHat LIKE N'%" & KeyWord & "%' GROUP BY BaiHat.IDBaiHat,BaiHat.AnhBH, BaiHat.TenBaiHat,BaiHat.BiDanh, CaSi.TenCaSi ORDER BY TenBaiHat"
+
+    sql = "SELECT TOP 5 BaiHat.IDBaiHat,BaiHat.AnhBH, BaiHat.TenBaiHat,BaiHat.BiDanh,CaSi.TenCaSi FROM BaiHat JOIN CaSi ON BaiHat.BiDanh = CaSi.BiDanh WHERE BaiHat.TenBaiHat LIKE N'%" & KeyWord & "%' GROUP BY BaiHat.IDBaiHat,BaiHat.AnhBH, BaiHat.TenBaiHat,BaiHat.BiDanh, CaSi.TenCaSi ORDER BY TenBaiHat"
 	rs.open sql, conn 
-    songid=rs("IDBaiHat")
 %>
 
 <html>
@@ -27,7 +27,9 @@ sql = "SELECT TOP 5 BaiHat.IDBaiHat,BaiHat.AnhBH, BaiHat.TenBaiHat,BaiHat.BiDanh
         <%
         Else
             While Not rs.EOF 
+              songid=rs("IDBaiHat")
         %>
+        
         <tr class="songdetail" onclick="redirectFunction1('<%=Songid%>')" >
         
             <td style=" text-align: center;" >
@@ -40,11 +42,7 @@ sql = "SELECT TOP 5 BaiHat.IDBaiHat,BaiHat.AnhBH, BaiHat.TenBaiHat,BaiHat.BiDanh
                     </div>
                 </div>
             </td>
-            <td>
-                <div style="margin-right: 10px;">
-                    <a style="font-size: 20px;color:white;"><%=rs("TBDG")%>★</a>
-                </div>
-            </td>
+           
         </tr>
         <% 
         rs.MoveNext

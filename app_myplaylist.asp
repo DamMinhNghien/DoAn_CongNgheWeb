@@ -119,8 +119,26 @@
                      <path fill="none" d="M0 0h16v16H0z"></path>
                   </svg>
                </div>
-               <span>Create Playlist</span>
+                <input type="submit" id="addpl" name="fav_language" value="none">
+               <label  class ="crtpl" for="addpl" onclick="submitForm3('<%= UID %>')">Create PlayList</label>
             </div>
+            <!-- Alert Popup -->
+            <div id="alertPopup" class="alert">      
+               <span onclick="closeAlert()" style="float:right; cursor:pointer;">&times;</span>
+                  
+                     <p><form action="app_myplaylist_insert.asp" method="post" >
+                    <input type="hidden" name="txtUID" value="<%=UID%>">
+                    <div class="alert__plname">
+                     <label class = "fdName" for="folderName">Playlist Name:</label>
+                     <input class = "txName" type="text" id="folderName" name="plName" required>
+   </div>
+                    <div class="alert__plimg">
+                     <label class = "imgfd" for="image">Choose Image:</label>
+                     <input class = "imgimg" type="file" id="image" name="plimage" accept="image/*" required>
+</div>
+                    <button class = "btfd" type="submit">Create</button></p>
+                        </div>
+                       </form>
             <div class="App__category-item" onclick="redirectFunction2('app_topic.asp')">
                <div class="icon">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: white;transform: ;msFilter:;">
@@ -152,36 +170,27 @@
          <div class="App__top-gradient"></div>
          <div class="App__header-placeholder"></div>
        <div class="myplaylist-container">
-        <div class="myplaylist">
-        <img src="images\100rapviet.jpg" alt="Playlist 1">
-            <h3>Playlist 1</h3>
-            <p>Description for Playlist 1.</p>
+
+       <%
+                sql1="select * from PlayListCaNhan where IDTK like '" & UID & "'"
+               rs1.open sql1, conn
+               if rs1.eof then %>
+                       <h1 style="color: white;text-align: center;">Hiện không có Playlist nào!</h1>
+       <% else
+            while not rs1.eof   
+             idalbum=rs1("IDPlayList")     
+       %>
+      
+        <div class="myplaylist" onclick="redirectFunction4('<%=idalbum%>')">
+        <img src="images\<%=rs1("AnhPL")%>" alt="Playlist 1">
+            <h3><%=rs1("TenPlayList")%></h3>
+      
         </div>
-        <div class="myplaylist">
-            <img src="images\100rapviet.jpg" alt="Playlist 2">
-            <h3>Playlist 2</h3>
-            <p>Description for Playlist 2.</p>
-        </div>
-        <div class="myplaylist">
-            <img src="images\100rapviet.jpg" alt="Playlist 3">
-            <h3>Playlist 3</h3>
-            <p>Description for Playlist 3.</p>
-        </div>
-        <div class="myplaylist">
-            <img src="images\100rapviet.jpg" alt="Playlist 4">
-            <h3>Playlist 4</h3>
-            <p>Description for Playlist 4.</p>
-        </div>
-        <div class="myplaylist">
-            <img src="images\100rapviet.jpg" alt="Playlist 5">
-            <h3>Playlist 5</h3>
-            <p>Description for Playlist 5.</p>
-        </div>
-        <div class="myplaylist">
-            <img src="images\100rapviet.jpg" alt="Playlist 6">
-            <h3>Playlist 6</h3>
-            <p>Description for Playlist 6.</p>
-        </div>
+       <%
+       rs1.movenext
+       wend
+       rs1.close
+       end if%>
     </div>
       <script src="javascript.js"></script>
    </body>

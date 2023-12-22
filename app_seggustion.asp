@@ -3,7 +3,7 @@
 	keyword = Request.Querystring("keyword")
 	sql =  "SELECT TOP 5 * FROM CaSi WHERE TenCaSi LIKE N'%" & KeyWord & "%' ORDER BY TenCaSi"
 	rs.open sql, conn 
-    SingerID=rs("BiDanh")
+
 %>
 
 <html>
@@ -17,8 +17,9 @@
                 <th style="width:100%; text-align: left; font-size:20px;">List of singers</th>
             </tr>
             <% If Not rs.EOF Then
-        Do While Not rs.EOF %>
-            <tr class="songdetail" onclick="redirectFunction1('<%=SingerID%>')" >
+        Do While Not rs.EOF
+            SingerID=rs("BiDanh") %>
+            <tr class="songdetail" onclick="redirectFunction5('<%=SingerID%>')" >
                 <td style="text-align: center;">
                     <div style="display: flex; align-items: center;">
                         <img style="object-fit:cover;border-radius: 50%; height: 100px; width: 100px; margin-right: 10px;margin-bottom: 10px;" src="images/<%=rs("AnhCS")%>">

@@ -6,7 +6,7 @@
 	select case action		
 	
 	case "add_new"
-		adIDTK=3
+		adIDTK=Request.Form("txtIDTK")
 		adAnhPL=Request.Form("txtAnhPL")
 		adTenPlayList=Request.Form("txtTenPlayList")
 		'Kiểm tra nếu tên danh mục có rồi thì báo lỗi

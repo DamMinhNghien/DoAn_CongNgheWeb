@@ -121,8 +121,26 @@
                         <path fill="none" d="M0 0h16v16H0z"></path>
                      </svg>
                   </div>
-                  <span>Create Playlist</span>
-               </div>
+                <input type="submit" id="addpl" name="fav_language" value="none">
+               <label  class ="crtpl" for="addpl" onclick="submitForm3('<%= UID %>')">Create PlayList</label>
+            </div>
+            <!-- Alert Popup -->
+            <div id="alertPopup" class="alert">      
+               <span onclick="closeAlert()" style="float:right; cursor:pointer;">&times;</span>
+                  
+                     <p><form action="app_myplaylist_insert.asp" method="post" >
+                    <input type="hidden" name="txtUID" value="<%=UID%>">
+                    <div class="alert__plname">
+                     <label class = "fdName" for="folderName">Playlist Name:</label>
+                     <input class = "txName" type="text" id="folderName" name="plName" required>
+   </div>
+                    <div class="alert__plimg">
+                     <label class = "imgfd" for="image">Choose Image:</label>
+                     <input class = "imgimg" type="file" id="image" name="plimage" accept="image/*" required>
+</div>
+                    <button class = "btfd" type="submit">Create</button></p>
+                        </div>
+                       </form>
                <div class="App__category-item" onclick="redirectFunction2('app_topic.asp')">
                   <div class="icon">
                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: white;transform: ;msFilter:;">
@@ -156,57 +174,28 @@
             <br>
             <%
 tid = Request.QueryString("TId")
-Set rs1 = Server.CreateObject("ADODB.Recordset")
-rs1.cursorLocation = 3
-rs1.pagesize = 10
+sql2="select * from ChuDe Where IDChuDe = '" & tid & "'"
+rs2.Open sql2,conn
 sql1 = "SELECT BaiHat.IDBaiHat, BaiHat.TenBaiHat, BaiHat.NgayPhatHanh, BaiHat.QuocGia, CaSi.TenCaSi, BaiHat.AnhBH, ChuDe.TenChuDe, ChuDe.MoTaChuDe, ChuDe.AnhPLM FROM BaiHat JOIN CaSi ON BaiHat.BiDanh = CaSi.BiDanh JOIN ChuDe ON BaiHat.IDChuDe = ChuDe.IDChuDe WHERE BaiHat.IDChuDe LIKE '" & tid & "'"
 rs1.Open sql1, conn
-pagecount = rs1.pagecount
-p = Cint(Request("page"))
-	if (p<1) then
-		p = 1
-	end if 
-	if (p>pagecount) then 
-		p = pagecount 
-	end if
-   rs1.AbsolutePage = p
 
+         
 %>
             <h1 style="color: white;text-align: center;">SpotiFake topic playlist</h1>
             <div class="playlist-content">
                <div class="playlist-cover">
-                  <img src="images\<%=rs1("AnhPLM")%>" alt="">
+                  <img src="images\<%=rs2("AnhPLM")%>" alt="">
                </div>
                <div class="playlist-info">
                   <div class="playlist-public"> Topic</div>
-                  <div class="playlist-title"><%=rs1("TenChuDe")%></div>
-                  <div class="playlist-description">A soundtrack to fuel your good mood while on the road.</div>
-                  <div style="height: 10px;"></div>
-                  <div class="playlist-stats">
-            
-                     <span>100 songs, </span>
-                  </div>
+                  <div class="playlist-title"><%=rs2("TenChuDe")%></div>
+                  <div class="playlist-description"><%=rs2("MotaChuDe")%></div>
+                  <div style="height: 20px;"></div>
+                  
                </div>
             </div>
             <div class="playlist-songs-container">
-               <div class="playlist-buttons">
-                  <div class="playlist-buttons-left">
-                     <div class="playlist-buttons-resume-pause">
-                        
-                     </div>
-                     <div class="playlist-buttons-like">
-                        <svg height="32" width="32" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                           <path fill="#1DB954" d="M8.667 1.912a6.257 6.257 0 00-7.462 7.677c.24.906.683 1.747 1.295 2.457l7.955 9.482a2.015 2.015 0 003.09 0l7.956-9.482a6.188 6.188 0 001.382-5.234l-.49.097.49-.099a6.303 6.303 0 00-5.162-4.98h-.002a6.24 6.24 0 00-5.295 1.65.623.623 0 01-.848 0 6.257 6.257 0 00-2.91-1.568z"></path>
-                        </svg>
-                     </div>
-                     <div class="playlist-buttons-three-dot">
-                        <svg role="img" height="32" width="32" aria-hidden="true" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                           <path fill="#CACACA" d="M4.5 13.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3zm15 0a1.5 1.5 0 100-3 1.5 1.5 0 000 3zm-7.5 0a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"></path>
-                        </svg>
-                     </div>
-                  </div>
-                
-               </div>
+              
                <% if rs1.eof then %>
                 <h1 style="color: white;text-align: center;">Hiện không có bài hát nào!</h1>
                <%
@@ -222,7 +211,7 @@ p = Cint(Request("page"))
                         <th>Rating</th>
                      </tr>
                      <%
-               while not rs1.eof and rs1.absolutepage=p
+               while not rs1.eof 
                %>
                      <%Songid=rs1("IDBaiHat")%>
                      <tr class="songdetail" onclick="redirectFunction1('<%=Songid%>')" >
@@ -248,17 +237,7 @@ p = Cint(Request("page"))
                   </table>
                </div>
                
-                   <center>
-			<%
-				for i = 1 to pagecount
-					if (i=p) then
-						response.write("<span style='color:red;'>" & i & "</span> ")
-					else 
-Response.Write("<a href='?page=" & i & "&TId=" & tid & "' style='color:white;'>" & i & "</a> ") 		end if 
-					
-				next 
-			%>
-		</center>
+                   
             </div>
             <%end if %>
          </div>

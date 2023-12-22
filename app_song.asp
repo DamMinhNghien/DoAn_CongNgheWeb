@@ -118,9 +118,27 @@
                      <path d="M14 7H9V2H7v5H2v2h5v5h2V9h5z"></path>
                      <path fill="none" d="M0 0h16v16H0z"></path>
                   </svg>
-               </div>
-               <span>Create Playlist</span>
+                </div>
+                <input type="submit" id="addpl" name="fav_language" value="none">
+               <label  class ="crtpl" for="addpl" onclick="submitForm3('<%= UID %>')">Create PlayList</label>
             </div>
+            <!-- Alert Popup -->
+            <div id="alertPopup" class="alert">      
+               <span onclick="closeAlert()" style="float:right; cursor:pointer;">&times;</span>
+                  
+                     <p><form action="app_myplaylist_insert.asp" method="post" >
+                    <input type="hidden" name="txtUID" value="<%=UID%>">
+                    <div class="alert__plname">
+                     <label class = "fdName" for="folderName">Playlist Name:</label>
+                     <input class = "txName" type="text" id="folderName" name="plName" required>
+   </div>
+                    <div class="alert__plimg">
+                     <label class = "imgfd" for="image">Choose Image:</label>
+                     <input class = "imgimg" type="file" id="image" name="plimage" accept="image/*" required>
+</div>
+                    <button class = "btfd" type="submit">Create</button></p>
+                        </div>
+                       </form>
             <div class="App__category-item" onclick="redirectFunction2('app_topic.asp')">
                <div class="icon">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: white;transform: ;msFilter:;">
@@ -198,6 +216,8 @@
              rs3.close
             %>
       <% 
+      sql13 = "select * from BaiHat Where IDBaiHat= '" & songid & "'"
+         rs11.open sql13, conn
          Set rs1 = Server.CreateObject("ADODB.Recordset")
          sql1 = "SELECT BaiHat.*, ChuDe.TenChuDe, CaSi.TenCaSi, Dg.DiemDG FROM BaiHat " & _
              "JOIN ChuDe ON BaiHat.IDChuDe = ChuDe.IDChuDe " & _
@@ -213,7 +233,7 @@ LuotDG=rs6("LuotDG")
 <div class="song_infor">
    <div class="playlist-content">
       <div class="playlist-cover-song">
-         <img src="images/<%=rs1("AnhBH")%>" alt="">
+         <img src="images/<%=rs11("AnhBH")%>" alt="">
          <div style="height: 30px;"></div>
       </div>
       <div class="playlist-info">
@@ -258,7 +278,7 @@ LuotDG=rs6("LuotDG")
       <br>
       <div class="App__main-song">
       <div class="left">
-         <iframe width="700" height="400" src="https://www.youtube.com/embed/Vt4kAu-ziRY?si=KssDHyQz_blnJkk3?rel=0&autoplay=1" title="YouTube video player" frameborder="0" allow="accelerometer;autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+         <iframe width="700" height="400" src=<%=rs1("DuongDan")%> title="YouTube video player" frameborder="0" allow="accelerometer;autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
          
          <form method="post" action="" id="ratingForm" class="star-rating">
             <input type="radio" id="star5" name="rating" value="5" <% If checkedRating = "5" Then Response.Write("checked") %>>
@@ -288,8 +308,82 @@ LuotDG=rs6("LuotDG")
 
             rs2.Open sql7, conn 
             %>
-            
-     <div class="comments-container">
+            <% if UID <>"" then%>
+            <%
+            sql12 = "SELECT PlayListCaNhan.IDPlayList, PlayListCaNhan.TenPlayList " & _
+        "FROM PlayListCaNhan " & _
+        "JOIN BaiHatPlayListCN ON BaiHatPlayListCN.IDPlayList = PlayListCaNhan.IDPlayList " & _
+        "WHERE IDTK='" & UID & "' AND IDBaiHat='" & songid & "'"
+rs10.Open sql12, conn
+   if rs10.eof then
+      IDPL=""
+      else 
+      IDPL=rs10("IDPlayList")
+      end if
+      response.write(IDPL)
+sql11 = "select * From dbo.PlayListCaNhan where IDTK='" & UID &"' and IDPlayList<>'" & IDPL &"'"
+rs9.Open sql11, conn
+
+%>
+
+<p style="color:white;margin-left:520px;">Thêm vào Playlist của bạn</p>
+
+<%
+if rs9.eof then
+   if rs10.eof then
+%>
+    <select name="IDPlayList" style="margin-left:620px;">
+        <option value="">Ko có Playlist</option>
+    </select>
+    <%else%>
+     <form method="POST" action="app_song_add.asp">
+    <select name="IDPlayList" style="margin-left:620px;" onchange="this.form.submit()">
+    
+  <option value="<%=rs10("IDPlayList")%>"><%=rs10("TenPlayList")%></option>
+   <option value="">Choose Playlist</option>
+   </select>
+     <input type="hidden" name="songID" value="<%=songid%>" >
+
+ <input type="hidden" name="UID" value="<%=UID%>" >
+</form>
+<%
+   end if
+else
+%>
+  <form method="POST" action="app_song_add.asp">
+ 
+  <select name="IDPlayList" style="margin-left:620px;" onchange="this.form.submit()">
+  <%if rs10.eof then
+  %>
+   <option value="">Choose Playlist</option>
+ <%else%>
+  <option value="<%=rs10("IDPlayList")%>"><%=rs10("TenPlayList")%></option>
+  <option value="">Choose Playlist</option>
+  <%end if%>
+ <% While Not rs9.EOF
+    If rs9("IDPlayList") <> IDPL Then
+%>
+        <option value="<%=rs9("IDPlayList")%>"><%=rs9("TenPlayList")%></option>
+<%
+    End If
+    rs9.MoveNext
+Wend
+   %>
+   <%
+  end if
+  %>
+  <%
+  rs9.close
+%>
+
+</select>
+  <input type="hidden" name="songID" value="<%=songid%>" >
+
+ <input type="hidden" name="UID" value="<%=UID%>" >
+</form>
+            <%
+             end if %>
+   <div class="comments-container">
    <% If UID <> "" Then %>
        <script>
        var next=1;
@@ -474,7 +568,7 @@ function sendCommentToServer(idTK, idBaiHat, commentText,newidbinhluan) {
       <div class="right">
       <h2 style="color:white; ">Danh sách đề xuất</h2>
       <% Set rs8 = Server.CreateObject("ADODB.Recordset")
-sql10 = "SELECT TOP 5 BaiHat.IDBaiHat, BaiHat.TenBaiHat, BaiHat.QuocGia, CaSi.TenCaSi, ROUND(AVG(DiemDG), 1) as TBDG FROM BaiHat JOIN CaSi ON BaiHat.BiDanh = CaSi.BiDanh JOIN DanhGia ON BaiHat.IDBaiHat = DanhGia.IDBaiHat WHERE BaiHat.IDBaiHat <> '" & songid & "' GROUP BY BaiHat.IDBaiHat, BaiHat.TenBaiHat, BaiHat.QuocGia, CaSi.TenCaSi ORDER BY RAND()"
+sql10 = "SELECT TOP 5 BaiHat.AnhBH,BaiHat.IDBaiHat, BaiHat.TenBaiHat, BaiHat.QuocGia, CaSi.TenCaSi,ChuDe.TenChuDe FROM BaiHat JOIN ChuDe on ChuDe.IDChuDe=BaiHat.IDChuDe join CaSi ON BaiHat.BiDanh = CaSi.BiDanh WHERE BaiHat.IDBaiHat <> '" & songid & "' GROUP BY BaiHat.AnhBH,BaiHat.IDBaiHat, BaiHat.TenBaiHat, BaiHat.QuocGia, CaSi.TenCaSi,ChuDe.TenChuDe ORDER BY RAND()"
                 rs8.open sql10, conn%>
       <div class="playlist-songs" >
        <%
@@ -487,7 +581,7 @@ sql10 = "SELECT TOP 5 BaiHat.IDBaiHat, BaiHat.TenBaiHat, BaiHat.QuocGia, CaSi.Te
                <th>#</th>
                <th>Title</th>
                <th>Country</th>
-               <th>Rating</th>
+               <th>Topic</th>
             </tr>
            <%while not rs8.eof 
            idbh=rs8("IDBaiHat")
@@ -497,7 +591,7 @@ sql10 = "SELECT TOP 5 BaiHat.IDBaiHat, BaiHat.TenBaiHat, BaiHat.QuocGia, CaSi.Te
                <td><%=count%></td>
                <td class="song-title">
                   <div class="song-image">
-                     <img src="images\ri.jpg" alt="">
+                     <img src="images\<%=rs8("AnhBH")%>" alt="">
                   </div>
                   <div class="song-name-album">
                      <div class="song-name"><%=rs8("TenBaiHat")%></div>
@@ -511,7 +605,7 @@ sql10 = "SELECT TOP 5 BaiHat.IDBaiHat, BaiHat.TenBaiHat, BaiHat.QuocGia, CaSi.Te
                         </div>
                </td>
                <td class="song-date-added"><%=rs8("QuocGia")%></td>
-               <td class="song-duration" style="font-size: 13px;"><%=rs8("TBDG") %><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" style="fill: white;transform: ;msFilter:;"><path d="M21.947 9.179a1.001 1.001 0 0 0-.868-.676l-5.701-.453-2.467-5.461a.998.998 0 0 0-1.822-.001L8.622 8.05l-5.701.453a1 1 0 0 0-.619 1.713l4.213 4.107-1.49 6.452a1 1 0 0 0 1.53 1.057L12 18.202l5.445 3.63a1.001 1.001 0 0 0 1.517-1.106l-1.829-6.4 4.536-4.082c.297-.268.406-.686.278-1.065z"></path></svg></td>
+               <td class="song-duration" style="font-size: 13px;"><%=rs8("TenChuDe")%></td>
             </tr>
             <%
             rs8.MoveNext

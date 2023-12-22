@@ -119,8 +119,26 @@
                      <path fill="none" d="M0 0h16v16H0z"></path>
                   </svg>
                </div>
-               <span>Create Playlist</span>
+                <input type="submit" id="addpl" name="fav_language" value="none">
+               <label  class ="crtpl" for="addpl" onclick="submitForm3('<%= UID %>')">Create PlayList</label>
             </div>
+            <!-- Alert Popup -->
+            <div id="alertPopup" class="alert">      
+               <span onclick="closeAlert()" style="float:right; cursor:pointer;">&times;</span>
+                  
+                     <p><form action="app_myplaylist_insert.asp" method="post" >
+                    <input type="hidden" name="txtUID" value="<%=UID%>">
+                    <div class="alert__plname">
+                     <label class = "fdName" for="folderName">Playlist Name:</label>
+                     <input class = "txName" type="text" id="folderName" name="plName" required>
+   </div>
+                    <div class="alert__plimg">
+                     <label class = "imgfd" for="image">Choose Image:</label>
+                     <input class = "imgimg" type="file" id="image" name="plimage" accept="image/*" required>
+</div>
+                    <button class = "btfd" type="submit">Create</button></p>
+                        </div>
+                       </form>
             <div class="App__category-item" onclick="redirectFunction2('app_topic.asp')">
                <div class="icon">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: white;transform: ;msFilter:;">

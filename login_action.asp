@@ -13,10 +13,14 @@
     if (rs.eof) then 
         session("login_error")="Tên đăng nhập hoặc mật khẩu không đúng!"
         response.redirect("login.asp")
-    else
-    
+        end if
+    if not rs.eof and uname = "admin" then 
+         response.redirect("AdMin_BH_Search.asp")
+         end if
+    if not rs.eof then 
     sql1="select IDTK from TaiKhoan where TenTK like '" & uname & "'"
     rs1.open sql1, conn
+    
     uid= rs1("IDTK")
         session("UID") = uid
         session("UNAME") = uname

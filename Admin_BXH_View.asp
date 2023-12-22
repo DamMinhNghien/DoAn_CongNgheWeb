@@ -1,4 +1,4 @@
-<!--#include file="connectionDA.asp"-->
+<!--#include file="connection.asp"-->
 
 <%
 	    action = Request("action")
@@ -21,18 +21,18 @@
             If Not rs.eof Then
                 Session("product_error") = "Top đã tồn tại !"
             Else 
-                If adTenChuDe <> "" And adBiDanh = "" And adQuocGia = "" Then
-                    sql = "INSERT INTO TopBXH(TenTop, AnhTOP, MotaTop, Loai, TopCategories) VALUES ('" & adTenTop & "', '" & adAnhTOP & "', '" & adMotaTop & "','ChuDe','" & adTenChuDe & "')"
+                If adTenChuDe <> "" And adBiDanh = "" And adQuocGia = "" Then                             
+                    sql = "INSERT INTO TopBXH(TenTop, AnhTOP, MotaTop, Loai, TopCategories) VALUES (N'" & adTenTop & "', '" & adAnhTOP & "',N'" & adMotaTop & "','IDChuDe',N'15')"
                     conn.execute sql 
                     Session("product_error") = "Thêm mới thành công"
                     Response.Redirect("Admin_BXH_Search.asp")
                 ElseIf adTenChuDe = "" And adBiDanh <> "" And adQuocGia = "" Then
-                    sql = "INSERT INTO TopBXH(TenTop, AnhTOP, MotaTop, Loai, TopCategories) VALUES ('" & adTenTop & "', '" & adAnhTOP & "', '" & adMotaTop & "','BiDanh','" & adBiDanh & "')"
+                    sql = "INSERT INTO TopBXH(TenTop, AnhTOP, MotaTop, Loai, TopCategories) VALUES (N'" & adTenTop & "', '" & adAnhTOP & "',N'" & adMotaTop & "','BiDanh',N'" & adBiDanh & "')"
                     conn.execute sql 
                     Session("product_error") = "Thêm mới thành công"
                     Response.Redirect("Admin_BXH_Search.asp")
                 ElseIf adTenChuDe = "" And adBiDanh = "" And adQuocGia <> "" Then
-                    sql = "INSERT INTO TopBXH(TenTop, AnhTOP, MotaTop, Loai, TopCategories) VALUES (N'" & adTenTop & "', '" & adAnhTOP & "', '" & adMotaTop & "','QuocGia','" & adQuocGia & "')"
+                    sql = "INSERT INTO TopBXH(TenTop, AnhTOP, MotaTop, Loai, TopCategories) VALUES (N'" & adTenTop & "', '" & adAnhTOP & "',N'" & adMotaTop & "','QuocGia',N'" & adQuocGia & "')"
                     conn.execute sql 
                     Session("product_error") = "Thêm mới thành công"
                     Response.Redirect("Admin_BXH_Search.asp")
@@ -63,7 +63,7 @@
 			Session("product_error") = "Tên Top: " & adTenTop & " đã có rồi!"	
             response.write "<meta http-equiv='refresh' content='1;url=Admin_BXH_View.asp?action=edit&IDTop=" & adIDTop & "'>"
 		else 
-			sql = "UPDATE TopBXH SET TenTop='" & adTenTop & "', AnhTop = '" & adAnhTOP & "',MotaTop= '" & adMotaTopP & "',Loai='" & adLoai & "',TopCategories='" & adTopCategories & "'  WHERE IDTop = '" & adIDTop & "'"
+			sql = "UPDATE TopBXH SET TenTop=N'" & adTenTop & "', AnhTop = '" & adAnhTOP & "',MotaTop=N'" & adMotaTopP & "',Loai='" & adLoai & "',TopCategories='" & adTopCategories & "'  WHERE IDTop = '" & adIDTop & "'"
 			conn.execute sql 
 			Session("product_error") = "Cập nhật thành công"
 			response.redirect("Admin_BXH_Search.asp")
