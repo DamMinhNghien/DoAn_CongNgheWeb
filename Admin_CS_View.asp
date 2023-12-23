@@ -18,7 +18,7 @@
 			Session("product_error") = "Ca Sĩ đã tồn tại !"	
             response.write "<meta http-equiv='refresh' content='2;url=Admin_CS_View.asp?action=add'>"
 		else 
-			sql = "INSERT INTO CaSi(BiDanh, TenCaSi, AnhCS) VALUES ('" & adBiDanh & "',N'" & adTenCaSi & "', '" & adAnhCS & "')"
+			sql = "INSERT INTO CaSi(BiDanh, TenCaSi, AnhCS) VALUES ('" & adBiDanh & "', N'" & adTenCaSi & "', '" & adAnhCS & "')"
 			conn.execute sql 
 			Session("product_error") = "Thêm mới thành công"
 			response.redirect("Admin_CS_Search.asp")
@@ -26,26 +26,11 @@
 		rs.close 
 	
 	case "delete"
-		' Kiểm tra xem có bài hát nào thuộc ca sĩ có BiDanh là adBiDanh hay không
-sqlCheck = "SELECT COUNT(*) AS CountBaiHat FROM BaiHat WHERE BiDanh = '" & adBiDanh & "'"
-rs.open sqlCheck, conn
 
-' Lấy giá trị đếm
-CountBaiHat = rs("CountBaiHat")
-
-' Đóng recordset
-rs.close
-
-' Kiểm tra nếu có bài hát
-if CountBaiHat > 0 then
-    ' Hiển thị thông báo không thể xóa ca sĩ
-    Session("product_error")="Không thể xoá Ca sĩ vì còn tồn tại thông tin liên quan "
-else
-    ' Nếu không có bài hát, thực hiện xóa ca sĩ
     sqlDelete = "DELETE FROM CaSi WHERE BiDanh = '" & adBiDanh & "'"
     conn.execute sqlDelete
     response.redirect("Admin_CS_Search.asp")
-end if
+
 	
 	case "save_edit"
 		adBiDanh1 = Request.Form("txtBiDanh")
@@ -59,7 +44,7 @@ end if
 			Session("product_error") = "Tên ca sĩ: " & adTenCaSi & " đã có rồi!"	
          
 		else 
-			sql = "UPDATE CaSi SET  TenCaSi='" & adTenCaSi & "', AnhCS = '" & adAnhCS & "' WHERE BiDanh = '" & adBiDanh & "'"
+			sql = "UPDATE CaSi SET  TenCaSi=N'" & adTenCaSi & "', AnhCS = '" & adAnhCS & "' WHERE BiDanh = '" & adBiDanh & "'"
 			conn.execute sql 
 			Session("product_error") = "Cập nhật thành công"
 			response.redirect("Admin_CS_Search.asp")
@@ -99,7 +84,7 @@ end if
                     <tr valign=top>
                         <td><%=rs("BiDanh")%></td>
                         <td><input type=text name=txtTenCaSi value="<%=rs("TenCaSi")%>"></td>
-                        <td><input type=text name=txtAnhCS value="<%=rs("AnhCS")%>"></td>
+                        <td><input type=file name=txtAnhCS value="<%=rs("AnhCS")%>"></td>
                         <td><input type=submit value="Cập nhật"></td>
                         <td><input type=button onclick="window.location='Admin_CS_Search.asp';" value="Hủy bỏ"></td>
                     </tr>   
@@ -132,7 +117,7 @@ end if
             </tr>
             <tr>
                 <td>Ảnh Ca Sĩ :</td>
-                <td><input type=text  style="width:180px" name=txtAnhCS></td>
+                <td><input type=file style="width:180px" name=txtAnhCS></td>
             </tr>
             <tr>
                 <td align=right><input type=submit value="Thêm mới"></td>

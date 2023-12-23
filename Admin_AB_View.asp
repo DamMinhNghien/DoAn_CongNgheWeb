@@ -14,13 +14,15 @@
 		rs.open sql, conn 
 
 		if (not rs.eof) then
-			Session("product_error")="Album đã tồn tại !"	
+			Session("product_error")="Album đã tồn tại !"
+			 response.write "<meta http-equiv='refresh' content='2;url=Admin_AB_View.asp?action=add'>"	
 		else 
 			sql = "insert into PlayListCaNhan(IDTK,AnhPL,TenPlayList) values ('" & adIDTK & "','" & adAnhPL& "',N'" & adTenPlayList & "')"
 			'Response.write(sql)
 			conn.execute sql 
 			Session("product_error")="Thêm mới thành công"
 			response.redirect("Admin_AB_Search.asp")
+			
 		end if
 		rs.close 
 	
@@ -29,7 +31,9 @@
 ' Kiểm tra xem có bài hát nào thuộc chủ đề có ID là adIDChuDe hay không
 
     ' Nếu không có bài hát, thực hiện xóa chủ đề
+	sqldelete2="Delete from BaiHatPlayListCN WHERE IDPlayList = 	" & adIDPlayList
     sqlDelete = "DELETE FROM PlayListCaNhan WHERE IDPlayList = 	" & adIDPlayList
+	conn.execute sqldelete2
     conn.execute sqlDelete
     response.redirect("Admin_AB_Search.asp")
 
@@ -45,7 +49,7 @@
 			Session("product_error")="Album: " & adTenPlayList&" đã có rồi!"
 				
 		else 
-			sql = "update PlayListCaNhan set TenPlayList='" & adTenPlayList & "',AnhPL='" & adAnhPL& "' where IDPlayList = " & adIDPlayList
+			sql = "update PlayListCaNhan set TenPlayList=N'" & adTenPlayList & "',AnhPL='" & adAnhPL& "' where IDPlayList = " & adIDPlayList
 			'Response.write(sql)
 			conn.execute sql 
 			Session("product_error")="Cập nhật thành công"
@@ -87,7 +91,7 @@
 							<tr valign=top>
 								<td><%=rs("IDPlayList")%></td>
 								<td><input type=text name=txtTenPlayList value="<%=rs("TenPlayList")%>"></td>
-								<td><input type=text name=txtAnhPL value="<%=rs("AnhPL")%>"></td>
+								<td><input type=file name=txtAnhPL value="<%=rs("AnhPL")%>"></td>
 								<td><input type=submit value="Cập nhật"></td>
 								<td><input type=button onclick="window.location='Admin_AB_Search.asp';" value="Hủy bỏ"></td>
 							</tr>	
@@ -119,7 +123,7 @@
 				</tr>
 				<tr>
 					<td>Ảnh :</td>
-					<td><input style="width:180px" type=text name=txtAnhPL></td>
+					<td><input style="width:180px" type=file name=txtAnhPL></td>
 				</tr>
 				<tr>
 					<td align=right><input type=submit value="Thêm mới"></td>

@@ -305,10 +305,34 @@ function submitForm3(uID) {
       window.location.href = "login.asp?resetForm=true";
     }
   } else {
+   
     // Check if there's a URL parameter indicating the need to reset the form
 
     // Trigger the click event on the specified element
     document.getElementById("alertPopup").style.display = "block";
+  }
+}
+function closeAlert() {
+  // Close the alert popup
+  document.getElementById("alertPopup").style.display = "none";
+}
+function submitForm4(uID) {
+  var uid = uID;
+
+  if (uid === "") {
+    var wantToLogin = confirm(
+      "Vui lòng đăng nhập trước khi tạo playlist của bạn. Bạn có muốn đăng nhập ngay bây giờ?"
+    );
+
+    if (wantToLogin) {
+      // Redirect to the login page with a parameter indicating the need to reset the form
+      window.location.href = "login.asp?resetForm=true";
+    }
+  } else {
+    // Check if there's a URL parameter indicating the need to reset the form
+    window.location.href = "app_myplaylist.asp";
+    // Trigger the click event on the specified element
+    document.getElementById("alertPopup").style.display = "none";
   }
 }
 function closeAlert() {

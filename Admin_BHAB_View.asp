@@ -111,7 +111,7 @@ response.redirect("Admin_BHAB_View.asp?action=chitiet&IDPlayList=" & adIDPlayLis
 			<%
 				if (Request("action")="add") then 
 			rs4.open "select * from BaiHat inner join CaSi on BaiHat.BiDanh=CaSi.BiDanh", conn
-		
+			
 			%>
 			<h1 align=center>Thêm mới một bài hát vào  </h1>
 		<center><font color=red><%=Session("product_add_error")%></font></center>
@@ -136,7 +136,7 @@ response.redirect("Admin_BHAB_View.asp?action=chitiet&IDPlayList=" & adIDPlayLis
 					</tr>
 				<tr>
 					<td align=right><input type=submit value="Thêm mới"></td>
-					<td><input type=reset value="Làm lại">
+					<td>
 						<input type=hidden name="action" value="add_new">
 				</tr>
 			</table>

@@ -21,8 +21,8 @@
             If Not rs.eof Then
                 Session("product_error") = "Top đã tồn tại !"
             Else 
-                If adTenChuDe <> "" And adBiDanh = "" And adQuocGia = "" Then                             
-                    sql = "INSERT INTO TopBXH(TenTop, AnhTOP, MotaTop, Loai, TopCategories) VALUES (N'" & adTenTop & "', '" & adAnhTOP & "',N'" & adMotaTop & "','IDChuDe',N'15')"
+                If adTenChuDe <> "" And adBiDanh = "" And adQuocGia = "" Then
+                    sql = "INSERT INTO TopBXH(TenTop, AnhTOP, MotaTop, Loai, TopCategories) VALUES (N'" & adTenTop & "', '" & adAnhTOP & "', N'" & adMotaTop & "','IDChuDE',N'" & adTenChuDe & "')"
                     conn.execute sql 
                     Session("product_error") = "Thêm mới thành công"
                     Response.Redirect("Admin_BXH_Search.asp")
@@ -32,13 +32,18 @@
                     Session("product_error") = "Thêm mới thành công"
                     Response.Redirect("Admin_BXH_Search.asp")
                 ElseIf adTenChuDe = "" And adBiDanh = "" And adQuocGia <> "" Then
-                    sql = "INSERT INTO TopBXH(TenTop, AnhTOP, MotaTop, Loai, TopCategories) VALUES (N'" & adTenTop & "', '" & adAnhTOP & "',N'" & adMotaTop & "','QuocGia',N'" & adQuocGia & "')"
+                    sql = "INSERT INTO TopBXH(TenTop, AnhTOP, MotaTop, Loai, TopCategories) VALUES (N'" & adTenTop & "', '" & adAnhTOP & "', N'" & adMotaTop & "','QuocGia','" & adQuocGia & "')"
                     conn.execute sql 
                     Session("product_error") = "Thêm mới thành công"
                     Response.Redirect("Admin_BXH_Search.asp")
-                Else
-                    Session("product_error") = "Thêm mới không thành công"
-                    Response.Redirect("Admin_BXH_View.asp")
+                ElseIF adTenChuDe <>"" And adBiDanh <> "" And adQuocGia <>"" Then
+                    Session("product_error") = "Thêm mới không thành công , chỉ chọn 1 trường dữ liệu! "
+                ElseIF adTenChuDe ="" And adBiDanh <> "" And adQuocGia <>"" Then
+                    Session("product_error") = "Thêm mới không thành công , chỉ chọn 1 trường dữ liệu! "
+                    ElseIF adTenChuDe <>"" And adBiDanh ="" And adQuocGia <>"" Then
+                    Session("product_error") = "Thêm mới không thành công , chỉ chọn 1 trường dữ liệu! "
+                    ElseIF adTenChuDe <>"" And adBiDanh <> "" And adQuocGia ="" Then
+                    Session("product_error") = "Thêm mới không thành công , chỉ chọn 1 trường dữ liệu! "
                 End If 
             End If
 		rs.close    
@@ -63,7 +68,7 @@
 			Session("product_error") = "Tên Top: " & adTenTop & " đã có rồi!"	
             response.write "<meta http-equiv='refresh' content='1;url=Admin_BXH_View.asp?action=edit&IDTop=" & adIDTop & "'>"
 		else 
-			sql = "UPDATE TopBXH SET TenTop=N'" & adTenTop & "', AnhTop = '" & adAnhTOP & "',MotaTop=N'" & adMotaTopP & "',Loai='" & adLoai & "',TopCategories='" & adTopCategories & "'  WHERE IDTop = '" & adIDTop & "'"
+			sql = "UPDATE TopBXH SET TenTop=N'" & adTenTop & "', AnhTop = '" & adAnhTOP & "',MotaTop= N'" & adMotaTopP & "',Loai='" & adLoai & "',TopCategories=N'" & adTopCategories & "'  WHERE IDTop = '" & adIDTop & "'"
 			conn.execute sql 
 			Session("product_error") = "Cập nhật thành công"
 			response.redirect("Admin_BXH_Search.asp")
@@ -121,9 +126,18 @@
                     <tr valign=top>
                        <td><%=rs("IDTop")%></td>
                         <td><input type=text name=txtTenTop value="<%=rs("TenTop")%>"></td>
-                        <td><input type=text name=txtAnhT value="<%=rs("AnhTOP")%>"></td>
+                        <td><input type=file name=txtAnhT value="<%=rs("AnhTOP")%>"></td>
                          <td><input type=text name=txtMotaTop value="<%=rs("MotaTop")%>"></td>
-                         <td><input type=text name=txtMotaTop value="<%=rs("Loai")%>"></td>
+                         	<td>
+					<select name=txtLoai>
+								
+									<option value="QuocGia">QuocGia</option>
+                                    <option value="ChuDe">ChuDe</option>
+								<option value="BiDanh">BiDanh</option>
+								
+								
+							</select>
+				</td>
                           <td><input type=text name=txtTopCategories value="<%=rs("TopCategories")%>"></td>
                         <td><input type=submit value="Cập nhật"></td>
                         <td><input type=button onclick="window.location='Admin_BXH_Search.asp';" value="Hủy bỏ"></td>
@@ -156,7 +170,7 @@
             </tr>
             <tr>
                 <td>Ảnh Top:</td>
-                <td><input style="width:180px" type=text name=txtAnhTOP></td>
+                <td><input style="width:180px" type=file name=txtAnhTOP></td>
             </tr>
             <tr>
                 <td>Mô Tả :</td>
@@ -216,7 +230,7 @@
                                     rs4.open "select * from ChuDe",conn
                                      while not rs4.eof 
 								%>
-									<option value="<%=rs4("TenChuDe")%>"><%=rs4("TenChuDe")%></option>
+									<option value="<%=rs4("IDChuDe")%>"><%=rs4("TenChuDe")%></option>
 								<%
 									rs4.movenext
 									wend

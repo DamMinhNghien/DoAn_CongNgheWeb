@@ -15,6 +15,7 @@
 
 		if (not rs.eof) then
 			Session("product_error")="Chủ đề đã tồn tại !"	
+			 response.write "<meta http-equiv='refresh' content='2;url=Admin_CD_View.asp?action=add'>"
 		else 
 			sql = "insert into ChuDe(TenChuDe,AnhPLM,MoTaChuDe) values (N'" & adTenChuDe & "','" & adAnhPLM & "',N'" & adMoTaChuDe & "')"
 			'Response.write(sql)
@@ -26,27 +27,12 @@
 	
 	
 	case "delete"
-' Kiểm tra xem có bài hát nào thuộc chủ đề có ID là adIDChuDe hay không
-sqlCheck = "SELECT COUNT(*) AS BaiHat FROM BaiHat WHERE IDChuDe = " & adIDChuDe
-rs.open sqlCheck, conn
 
-' Lấy giá trị đếm
-CountBaiHat = rs("BaiHat")
-
-' Đóng recordset
-rs.close
-
-' Kiểm tra nếu có bài hát
-if CountBaiHat > 0 then
-    ' Ghi ra thông báoô
-	
-   Session("product_error")="Không thể xoá chủ đề vì còn tồn tại thông tin liên quan "
-else
     ' Nếu không có bài hát, thực hiện xóa chủ đề
     sqlDelete = "DELETE FROM ChuDe WHERE IDChuDe = " & adIDChuDe
     conn.execute sqlDelete
     response.redirect("Admin_CD_Search.asp")
-end if
+
 
 	case "save_edit"
         adTenChuDe=Request.Form("txtTenChuDe")
@@ -59,7 +45,7 @@ end if
 			Session("product_error")="Tên chủ đề : " & adTenChuDe&" đã có rồi!"
 				
 		else 
-			sql = "update ChuDe set TenChuDe=N'" & adTenChuDe & "',AnhPLM='" & adAnhPLM& "',MoTaChuDe =N'" & adMoTaChuDe & "' where IDChuDe = " & adIDChuDe
+			sql = "update ChuDe set TenChuDe=N'" & adTenChuDe & "',AnhPLM='" & adAnhPLM& "',MoTaChuDe = N'" & adMoTaChuDe & "' where IDChuDe = " & adIDChuDe
 			'Response.write(sql)
 			conn.execute sql 
 			Session("product_error")="Cập nhật thành công"
@@ -102,7 +88,7 @@ end if
 							<tr valign=top>
 								<td><%=rs("IDChuDe")%></td>
 								<td><input type=text name=txtTenChuDe value="<%=rs("TenChuDe")%>"></td>
-								<td><input type=text name=txtAnhPLM value="<%=rs("AnhPLM")%>"></td>
+								<td><input type=file name=txtAnhPLM value="<%=rs("AnhPLM")%>"></td>
                                 <td><input type=text name=txtMoTaChuDe value="<%=rs("MoTaChuDe")%>"></td>
 								<td><input type=submit value="Cập nhật"></td>
 								<td><input type=button onclick="window.location='Admin_CD_Search.asp';" value="Hủy bỏ"></td>
@@ -135,7 +121,7 @@ end if
 				</tr>
 				<tr>
 					<td>Ảnh :</td>
-					<td><input style="width:180px" type=text name=txtAnhPLM></td>
+					<td><input style="width:180px" type=file name=txtAnhPLM></td>
 				</tr>
 				<tr>
 					<td>Mô tả chủ đề:</td>

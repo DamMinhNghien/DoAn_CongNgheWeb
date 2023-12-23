@@ -100,7 +100,7 @@
                </div>
                <span>Search</span>
             </div>
-            <div class="App__category-item"onclick="redirectFunction2('app_myplaylist.asp')">
+              <div class="App__category-item"onclick="submitForm4('<%=UID%>') && redirectFunction2('app_myplaylist.asp')" >
                <div class="icon">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: white;transform: ;msFilter:;">
                      <path d="M13 16.493C13 18.427 14.573 20 16.507 20s3.507-1.573 3.507-3.507c0-.177-.027-.347-.053-.517H20V6h2V4h-3a1 1 0 0 0-1 1v8.333a3.465 3.465 0 0 0-1.493-.346A3.51 3.51 0 0 0 13 16.493zM2 5h14v2H2z"></path>
@@ -295,7 +295,7 @@ LuotDG=rs6("LuotDG")
      <% Set rs2 = Server.CreateObject("ADODB.Recordset")
              sql7  = "DECLARE @currentUserID INT; " & _
                      "SET @currentUserID = '" & UID & "'; " & _
-                     "SELECT BinhLuan.*, TaiKhoan.TenTK " & _
+                     "SELECT BinhLuan.*, TaiKhoan.* " & _
                      "FROM BinhLuan " & _
                      "JOIN TaiKhoan ON BinhLuan.IDTK = TaiKhoan.IDTK " & _
                      "WHERE IDBaiHat = '" & songid & "' " & _
@@ -417,7 +417,7 @@ Set rs7 = Server.CreateObject("ADODB.Recordset")
     var commentDiv = document.createElement("div");
     commentDiv.className = "comment";
     commentDiv.innerHTML = `
-        <img src="images/mtp.jpg" alt="Commenter Avatar" width="50" height="50" class="comment-avatar">
+        <img src="images/<%=rs("anh")%>" alt="Commenter Avatar" width="50" height="50" class="comment-avatar">
         <div class="comment-content">
             <div class="comment-meta">
                 <strong><%=rs("TenTK")%></strong>
@@ -474,7 +474,7 @@ function sendCommentToServer(idTK, idBaiHat, commentText,newidbinhluan) {
    </script>
       <!-- Commenter information -->
       <div class="commenter-info">
-         <img src="images/mtp.jpg" alt="Commenter Avatar" class="commenter-avatar">
+         <img src="images/<%=rs("anh")%>" alt="Commenter Avatar" class="commenter-avatar">
          <span class="commenter-name" id="CommentUName"><%=rs("TenTK")%></span>
       </div>
 
@@ -492,7 +492,7 @@ function sendCommentToServer(idTK, idBaiHat, commentText,newidbinhluan) {
                 while not rs2.eof %>
       <div id="commentList">
       <div class="comment" id="comment">
-               <img src="images/mtp.jpg" alt="Commenter Avatar" width="50" height="50" class="comment-avatar">
+               <img src="images/<%=rs2("anh")%>" alt="Commenter Avatar" width="50" height="50" class="comment-avatar">
                <div class="comment-content">
                   <div class="comment-meta">
                      <strong><%=rs2("TenTK")%></strong>
@@ -536,7 +536,7 @@ function sendCommentToServer(idTK, idBaiHat, commentText,newidbinhluan) {
                 while not rs2.eof %>
      <div id="commentList">
       <div class="comment" id="comment">
-               <img src="images/mtp.jpg" alt="Commenter Avatar" width="50" height="50" class="comment-avatar">
+               <img src="images/<%=rs2("anh")%>" alt="Commenter Avatar" width="50" height="50" class="comment-avatar">
                <div class="comment-content">
                   <div class="comment-meta">
                      <strong><%=rs2("TenTK")%></strong>

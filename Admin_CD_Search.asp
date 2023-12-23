@@ -2,7 +2,7 @@
 <%
 	rs.cursorLocation = 3
 	rs.pagesize = 2 
-	str = Request("txtSearch")
+	str  = Request.Querystring("search-box")
 	sql = "select * from ChuDe where  TenChuDe like '%" & str & "%'"
 	rs.open sql, conn 'lấy dữ liệu
 	 
@@ -35,6 +35,75 @@
 </script>
 	<head>
 		<meta charset="utf-8">
+        <style type="text/css">
+		
+	.frmSearch {
+    border: 1px solid #a8d4b1;
+    background-color: #c6f7d0;
+    margin: 10px 0;
+    padding: 20px;
+    border-radius: 4px;
+}
+
+/* Định nghĩa lớp country-list */
+#country-list {
+    float: left;
+    list-style: none;
+    margin-top: -3px;
+    padding: 0;
+    width: 190px;
+    position: absolute;
+}
+
+/* Định nghĩa lớp cho mỗi item trong country-list */
+#country-list li {
+    padding: 10px;
+    background: #f0f0f0;
+    border-bottom: #bbb9b9 1px solid;
+    text-align: center; /* Can giữa nội dung */
+    line-height: 20px; /* Đảm bảo nội dung giữa các chiều cao */
+}
+
+
+/* Hiệu ứng khi di chuột qua mỗi item trong country-list */
+#country-list li:hover {
+    background: #ece3d2;
+    cursor: pointer;
+}
+
+/* Định nghĩa lớp search-box */
+#search-box {
+    padding: 10px;
+    border: 1px solid #a8d4b1;
+    border-radius: 4px;
+}
+		</style>
+        <script src="https://code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
+		<script>
+		$(document).ready(function(){
+			$("#search-box").keyup(function(){
+				$.ajax({
+				type: "GET",
+				url: "seggustionCD.asp",
+				data:'keyword='+$(this).val(),
+				beforeSend: function(){
+					$("#search-box").css("background","#FFF url(LoaderIcon.gif) no-repeat 165px");
+				},
+				success: function(data){
+					$("#suggesstion-box").show();
+					$("#suggesstion-box").html(data);
+
+				}
+				});
+			});
+		});
+		
+		function selectCountry(val) {
+		$("#search-box").val(val);
+		$("#suggesstion-box").hide();
+		}
+		
+		</script>
 	</head>
 		    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -122,7 +191,7 @@
 <body>
     <div class="header">
         <div class="header-logo">Quản Lý Admin</div>
-          <a href="login.asp" id="logout" onclick="logout()">Logout</a>
+        <a href="#" id="logout" onclick="logout()">Logout</a>
     </div>
 
     <div id="navbar">
@@ -135,12 +204,15 @@
     </div>
 	</br>
 	<body>
-		<center>
-			<form action="Admin_CD_Search.asp" method="POST">
-				Nhập tên sản phẩm cần tìm:
-				<input type="text" size="50" name="txtSearch" value="<%=str%>">
-				<input type="submit" name="cmd" value="Tìm kiếm">
-			</form>
+			<center>
+			<form name=f method=get >
+		    <div class="frmSearch">
+			<input type=text name=search-box id="search-box" >
+			<input type=submit value="Search">
+			<div id="suggesstion-box"></div>
+			
+		</div>
+		</form>	
 		</center>
         <center><a href="Admin_CD_View.asp?action=add">Thêm mới một chủ đề </a></center>
 		

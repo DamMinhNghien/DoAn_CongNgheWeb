@@ -1,4 +1,5 @@
 	<!--#include file="connection.asp"-->
+	
 
 	<%
 		action =Request("action")
@@ -23,9 +24,10 @@
 			rs.open sql, conn 
 
 			if (not rs.eof) then
-				Session("product_error")="Bài Hát  đã tồn tại !"	
+				Session("product_error")="Bài Hát  đã tồn tại !"
+				 response.write "<meta http-equiv='refresh' content='2;url=Admin_BH_View.asp?action=add'>"	
 			else 
-				sql = "insert into BaiHat(TenBaiHat,TacGia,MoTa,NgayPhatHanh,AnhBH,IDChuDe,QuocGia,DuongDan,BiDanh)values (N'" & adTenBaiHat & "',N'" & adTacGia & "',N'" & adMoTa & "','" & adNgayPhatHanh& "','" & adAnhBH & "'," & adIDChuDe& ",'" & adQuocGia & "','" & adDuongDan & "','" & adBiDanh & "')"
+				sql = "insert into BaiHat(TenBaiHat,TacGia,MoTa,NgayPhatHanh,AnhBH,IDChuDe,QuocGia,DuongDan,BiDanh)values (N'" & adTenBaiHat & "',N'" & adTacGia & "',N'" & adMoTa & "','" & adNgayPhatHanh& "','" & adAnhBH & "'," & adIDChuDe& ",'" & adQuocGia & "','" & adDuongDan & "',N'" & adBiDanh & "')"
 				
 				conn.execute sql 
 				Session("product_error")="Thêm mới thành công"
@@ -35,7 +37,18 @@
 		
 		
 		case "delete"
+		sql10Delete="DELETE FROM LichSu WHERE IDBaiHat = " & adIDbaiHat
+			sql11Delete="DELETE FROM BaiHatPlayListCN WHERE IDBaiHat = " & adIDbaiHat 
+				sql12Delete="DELETE FROM DanhGia WHERE IDBaiHat = " & adIDbaiHat
+					sql13Delete="DELETE FROM BinhLuan WHERE IDBaiHat = " & adIDbaiHat
+						sql14Delete="DELETE FROM ThongKeLike WHERE IDBaiHat = " & adIDbaiHat
 		sqlDelete = "DELETE FROM BaiHat WHERE IDBaiHat = " & adIDbaiHat
+		conn.execute sql10Delete
+		conn.execute sql11Delete
+		conn.execute sql12Delete
+			conn.execute sql14Delete
+		conn.execute sql13Delete
+	
 		conn.execute sqlDelete
 		case "save_edit"
 			adTenBaiHat=Request.Form("txtTenBaiHat")
@@ -114,7 +127,7 @@
 									<td><input type=text name=txtTacGia value="<%=rs("TacGia")%>"></td>
 									<td><input type=text name=txtMoTa value="<%=rs("MoTa")%>"></td>
 									<td><input type=text name=txtNgayPhatHanh value="<%=rs("NgayPhatHanh")%>"></td>
-									<td><input type=text name=txtAnhBH value="<%=rs("AnhBH")%>"></td>
+									<td><input type=file name=txtAnhBH value="<%=rs("AnhBH")%>"></td>
 									<td>
 										<select name=txtIDChuDe>
 											<% 
@@ -196,12 +209,12 @@
 						<td><input type=text  style="width:180px" name=txtMoTa></td>
 					</tr>
 					<tr>
-						<td>NgayPhatHanh:</td>
+						<td>Ngày Phát Hành:</td>
 						<td><input type=text  style="width:180px" name=txtNgayPhatHanh></td>
 					</tr>
 					<tr>
-						<td>ẢNH bài hát :</td>
-						<td><input type=text  style="width:180px" name=txtAnhBH></td>
+						<td>Ảnh bài hát :</td>
+						<td><input type=file  style="width:180px" name=txtAnhBH></td>
 					</tr>
 					<tr>
 						<td>Chủ đề:</td>
@@ -221,8 +234,11 @@
 					</tr>
 					<tr>
 						<td>Quốc gia :</td>
-						<td><input type=text  style="width:180px" name=txtQuocGia></td>
+						<td>
+						  <select style="width: 180px" name="txtQuocGia" id="txtQuocGia"></select>
+						  </td>
 					</tr>
+
 					<tr>
 						<td>ĐườnG dẫn :</td>
 						<td><input type=text  style="width:180px" name=txtDuongDan></td>
@@ -259,5 +275,216 @@
 					conn.close
 					Session("product_error") =""
 				%>
+									<script>
+    // Danh sách tất cả các quốc gia
+    var countries = [
+  "Afghanistan",
+  "Albania",
+  "Algeria",  
+  "Andorra",
+  "Angola",
+  "Antigua and Barbuda",
+  "Argentina",
+  "Armenia",
+  "Australia",
+  "Austria",
+  "Azerbaijan",
+  "Bahamas",
+  "Bahrain",
+  "Bangladesh",
+  "Barbados",
+  "Belarus",
+  "Belgium",
+  "Belize",
+  "Benin",
+  "Bhutan",
+  "Bolivia",
+  "Bosnia and Herzegovina",
+  "Botswana",
+  "Brazil",
+  "Brunei",
+  "Bulgaria",
+  "Burkina Faso",
+  "Burundi",
+  "Cabo Verde",
+  "Cambodia",
+  "Cameroon",
+  "Canada",
+  "Central African Republic",
+  "Chad",
+  "Chile",
+  "China",
+  "Colombia",
+  "Comoros",
+  "Congo",
+  "Costa Rica",
+  "Côte d'Ivoire",
+  "Croatia",
+  "Cuba",
+  "Cyprus",
+  "Czech Republic",
+  "Democratic Republic of the Congo", 
+  "Denmark",
+  "Djibouti",
+  "Dominica",
+  "Dominican Republic",
+  "East Timor",  
+  "Ecuador",
+  "Egypt",
+  "El Salvador",
+  "Equatorial Guinea",
+  "Eritrea",
+  "Estonia",
+  "Eswatini",
+  "Ethiopia",
+  "Fiji",
+  "Finland",
+  "France",
+  "Gabon",
+  "Gambia",
+  "Georgia",
+  "Germany",
+  "Ghana",
+  "Greece",
+  "Grenada",
+  "Guatemala",
+  "Guinea",
+  "Guinea-Bissau",
+  "Guyana",
+  "Haiti",
+  "Holy See",
+  "Honduras",  
+  "Hungary",
+  "Iceland",
+  "India",
+  "Indonesia",
+  "Iran",
+  "Iraq",
+  "Ireland",
+  "Israel",
+  "Italy",
+  "Jamaica",
+  "Japan",
+  "Jordan",
+  "Kazakhstan",
+  "Kenya",
+  "Kiribati",
+  "North Korea",
+  "South Korea",
+  "Kosovo",
+  "Kuwait",
+  "Kyrgyzstan",
+  "Laos",
+  "Latvia",
+  "Lebanon",
+  "Lesotho",
+  "Liberia",
+  "Libya",
+  "Liechtenstein",
+  "Lithuania",
+  "Luxembourg",
+  "Madagascar",
+  "Malawi",
+  "Malaysia",
+  "Maldives",
+  "Mali",
+  "Malta",
+  "Marshall Islands",
+  "Mauritania", 
+  "Mauritius",
+  "Mexico",
+  "Micronesia",
+  "Moldova",
+  "Monaco",
+  "Mongolia",
+  "Montenegro",
+  "Morocco",
+  "Mozambique",
+  "Myanmar", 
+  "Namibia",
+  "Nauru",
+  "Nepal",
+  "Netherlands",
+  "New Zealand",
+  "Nicaragua",
+  "Niger",
+  "Nigeria",
+  "North Macedonia",
+  "Norway",
+  "Oman",
+  "Pakistan",
+  "Palau",
+  "Panama",
+  "Papua New Guinea",
+  "Paraguay",
+  "Peru",
+  "Philippines",
+  "Poland",
+  "Portugal",
+  "Qatar",
+  "Romania",
+  "Russia",
+  "Rwanda",
+  "Saint Kitts and Nevis",
+  "Saint Lucia",
+  "Saint Vincent and the Grenadines",
+  "Samoa",
+  "San Marino",
+  "Sao Tome and Principe",
+  "Saudi Arabia",
+  "Senegal",
+  "Serbia",
+  "Seychelles",
+  "Sierra Leone",
+  "Singapore",
+  "Slovakia",
+  "Slovenia",
+  "Solomon Islands",
+  "Somalia",
+  "South Africa",
+  "South Sudan",
+  "Spain",
+  "Sri Lanka",
+  "Sudan",
+  "Suriname",
+  "Sweden",
+  "Switzerland",
+  "Syria",
+  "Tajikistan",
+  "Tanzania",
+  "Thailand", 
+  "East Timor",
+  "Togo",
+  "Tonga",
+  "Trinidad and Tobago",
+  "Tunisia",
+  "Turkey",
+  "Turkmenistan",
+  "Tuvalu",
+  "Uganda",
+  "Ukraine",
+  "United Arab Emirates",
+  "United Kingdom",
+  "United States of America",
+  "Uruguay",
+  "Uzbekistan",
+  "Vanuatu",
+  "Venezuela", 
+  "Vietnam",
+  "Yemen",
+  "Zambia",
+  "Zimbabwe"
+];
+    
+    var selectQuocGia = document.getElementById("txtQuocGia");
+
+  
+    for (var i = 0; i < countries.length; i++) {
+        var option = document.createElement("option");
+        option.value = countries[i];
+        option.text = countries[i];
+        selectQuocGia.add(option);
+    }
+</script>
 		</body>
 	</html>

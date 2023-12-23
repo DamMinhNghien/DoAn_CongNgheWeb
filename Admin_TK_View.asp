@@ -25,7 +25,7 @@
 	response.write "<meta http-equiv='refresh' content='1;url=Admin_TK_View.asp?action=add'>"
 
 		else 
-			sql = "insert into TaiKhoan(TenTK,MatKhau,Anh,NgayLap,TrangThai,LoaiTK,SDT) values ('" & adTenTK & "','" & adMatKhau & "','" & adAnh& "','" & adNgayLap & "'," & adTrangThai & ",'" & adLoaiTK & "','" &adSDT & "')"
+			sql = "insert into TaiKhoan(TenTK,MatKhau,anh,NgayLap,TrangThai,LoaiTK,SDT) values (N'" & adTenTK & "',N'" & adMatKhau & "','" & adAnh& "','" & adNgayLap & "'," & adTrangThai & ",N'" & adLoaiTK & "','" &adSDT & "')"
 			'Response.write(sql)
 			conn.execute sql 
 			Session("product_error")="Thêm mới thành công"
@@ -35,9 +35,26 @@
 	
 	
 	case "delete"
-		sql="delete from TaiKhoan where IDTK = " & adIDTK
-		rs.open sql,conn
-		conn.execute sql
+		sql16 = "DELETE FROM ThongKeLike WHERE IDBinhLuan IN (SELECT IDBinhLuan FROM BinhLuan WHERE IDTK = " & adIDTK & ")"
+sql17="delete from ThongKeLike where IDTK = " & adIDTK
+sql12="delete from LichSu where IDTK = " & adIDTK
+            sql11="delete from PlayListCaNhan where IDTK = " & adIDTK
+        sql18 = "DELETE FROM BaiHatPlayListCN WHERE IDPlayList IN (SELECT IDPlayList FROM PlayListCaNhan WHERE IDTK = " & adIDTK & ")"
+        sql13="delete from DanhGia where IDTK = " & adIDTK
+        
+    sql="delete from TaiKhoan where IDTK = " & adIDTK    
+        sql14="delete from BinhLuan where IDTK = " & adIDTK
+    
+        conn.execute sql18
+        conn.execute sql12
+        conn.execute sql11
+        
+        conn.execute sql13
+        conn.execute sql16
+    
+        conn.execute sql17
+        conn.execute sql14
+        conn.execute sql
 		response.redirect("Admin_TK_Search.asp")
 	case "save_edit"
         adTenTK=Request.Form("txtTenTK")
@@ -100,7 +117,7 @@
 								<td><%=rs("IDTK")%></td>
 								<td><input type=text name=txt  TenTK value="<%=rs("TenTK")%>"></td>
 								<td><input type=text name=txtMatKhau value="<%=rs("MatKhau")%>"></td>
-								<td><input type=text name=txtAnh value="<%=rs("Anh")%>"></td>
+								<td><input type=file name=txtAnh value="<%=rs("Anh")%>"></td>
 								<td><%=rs("NgayLap")%></td>
 								<td>
 									<input type=radio
@@ -129,24 +146,7 @@
 					<%
 					else 
 				%>
-					<tr>
-						<td><%=rs("IDTK")%></td>
-						<td><%=rs("TenTK")%></td>
-						<td><%=rs("MatKhau")%></td>
-						<td><%=rs("Anh")%></td>
-						<td><%=rs("NgayLap")%></td>
-						<td><%
-								if (rs("TrangThai")=1) then
-									response.write("Hoạt động")
-								else 
-									response.write("Ngừng hoạt động")
-								end if 
-						%></td>
-						<td><%=rs("LoaiTK")%></td>
-						<td><%=rs("SDT")%></td>
-						<td><a href="Admin_TK_View.asp?action=edit&IDTK=<%=rs("IDTK")%>">Sửa</a></td>
-						<td><a onclick="return confirm('Bạn có chắc muốn xoá <%=rs("TenTK")%> hay ko?');"  href="Admin_TK_View.asp?action=delete&IDTK=<%=rs("IDTK")%>">Xóa</a></td>
-					</tr>
+					
 				<%
 					end if 
 					rs.movenext
@@ -177,7 +177,7 @@
 				</tr>
 				<tr>
 					<td>Ảnh:</td>
-					<td><input style="width:180px" type=text name=txtAnh></td>
+					<td><input style="width:180px" type=file name=txtAnh></td>
 				</tr>
 				<tr>
 					<td>Ngày lập:</td>
